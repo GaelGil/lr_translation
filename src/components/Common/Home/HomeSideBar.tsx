@@ -7,12 +7,12 @@ import {
   Anchor,
   Stack,
   Flex,
-  Image,
   ActionIcon,
 } from "@mantine/core";
 import { useState } from "react";
 import { FiColumns, FiArrowRight } from "react-icons/fi";
-import { LOGO, PROJECT_NAME } from "@/const";
+import { useEffect } from "react";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { Link } from "@tanstack/react-router";
 const items = [
   { title: "Research", link: "https://openai.com/research" },
@@ -33,6 +33,16 @@ interface HomeSideBarProps {
 
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
   const [hovered, setHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+  useEffect(() => {
+    const handleMouseMove = () => {
+      setIsOpen(!isOpen);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const listItems = items.map(({ title, link }) => (
     <Group key={title} gap="sm" px="md" py="sm" align="center" fz={"14px"}>
@@ -67,14 +77,26 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 <FiArrowRight size={18} color="white" />
               </ActionIcon>
             ) : (
-              <Image src={LOGO} alt={`${PROJECT_NAME} Logo`} h={25} w={25} />
+              <>
+                {isOpen ? (
+                  <LuEye size={32} color="white" />
+                ) : (
+                  <LuEyeClosed size={32} color="white" />
+                )}
+              </>
             )}
           </Box>
         ) : (
           <>
             <Flex align="center" gap="xs">
               <Anchor underline="never" component={Link} to="/">
-                <Image src={LOGO} alt={`${PROJECT_NAME} Logo`} h={32} w={32} />
+                <>
+                  {isOpen ? (
+                    <LuEye size={32} color="white" />
+                  ) : (
+                    <LuEyeClosed size={32} color="white" />
+                  )}
+                </>
               </Anchor>
             </Flex>
             <ActionIcon onClick={toggle} variant="subtle" size="sm">

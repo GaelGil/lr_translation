@@ -1,5 +1,4 @@
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
-import { useState } from "react";
 import { Box, Text } from "@mantine/core";
 
 // fix default icon (Leaflet default icons need config)
@@ -15,7 +14,7 @@ type MarkerPoint = {
 };
 
 export default function LeafletMap() {
-  const [markers, setMarkers] = useState<MarkerPoint[]>([
+  const markers: MarkerPoint[] = [
     {
       id: "1",
       lat: 37.7612,
@@ -52,7 +51,7 @@ export default function LeafletMap() {
       url: "https://www.parksconservancy.org/parks/park-web-cams",
       live: false,
     },
-  ]);
+  ];
 
   // https://sfcam.live/
   // https://ops.alertcalifornia.org/
