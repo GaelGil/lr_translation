@@ -43,7 +43,22 @@ export default function LeafletMap() {
       url: "CXYr04BWvmc",
       live: true,
     },
+    {
+      id: "4",
+      lat: 37.8057,
+      lng: -122.451755,
+      city: "San Francisco",
+      type_: "D",
+      url: "https://www.parksconservancy.org/parks/park-web-cams",
+      live: false,
+    },
   ]);
+
+  // https://sfcam.live/
+  // https://ops.alertcalifornia.org/
+  // https://www.extranomical.com/live-web-cams/
+  // https://www.sanfranciscopolice.org/publicsafetycameras
+  // https://www.parksconservancy.org/parks/park-web-cams
 
   return (
     <MapContainer
@@ -54,7 +69,11 @@ export default function LeafletMap() {
       // maxBoundsViscosity={1.0}
       style={{ height: "100vh", width: "100%" }}
     >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+        attribution="© OpenStreetMap, © CARTO"
+        subdomains="abcd"
+      />
 
       {markers.map((p) => (
         <CircleMarker
