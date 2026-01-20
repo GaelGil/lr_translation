@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { AppShell, Anchor, Group, Button } from "@mantine/core";
 import HomeBanner from "../components/Common/Home/HomeBanner";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
+import LeafletMap from "@/components/Map";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -43,7 +44,7 @@ function HomePage() {
         <HomeSideBar collapsed={collapsed} toggle={toggleCollapsed} />
       </AppShell.Navbar>
       <AppShell.Main>
-        <HomeBanner />
+        <LeafletMap />
       </AppShell.Main>
     </AppShell>
   );
