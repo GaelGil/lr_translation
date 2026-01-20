@@ -1,6 +1,6 @@
-import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { useState } from "react";
-import { Box, Menu } from "@mantine/core";
+import { Box, Text } from "@mantine/core";
 
 // fix default icon (Leaflet default icons need config)
 
@@ -8,25 +8,43 @@ type MarkerPoint = {
   id: string;
   lat: number;
   lng: number;
+  city: string;
+  type_: string;
+  url: string;
+  live: boolean;
 };
 
 export default function LeafletMap() {
   const [markers, setMarkers] = useState<MarkerPoint[]>([
-    { id: "1", lat: 37.7702, lng: -122.4636 },
-    { id: "2", lat: 37.7602, lng: -122.4273 },
+    {
+      id: "1",
+      lat: 37.7612,
+      lng: -122.4349,
+      city: "San Francisco",
+      type_: "A",
+      url: "/-_VOJgsVJ0E?si=bHXtsqUsDNZaorXI&amp;controls=0",
+      live: true,
+    },
+    {
+      id: "2",
+      lat: 37.803,
+      lng: -122.40123,
+      city: "San Francisco",
+      type_: "B",
+      url: "0aF8elLpiMo",
+      live: false,
+    },
+    {
+      id: "3",
+      lat: 37.7874,
+      lng: -122.3885,
+      city: "San Francisco",
+      type_: "C",
+      url: "CXYr04BWvmc",
+      live: true,
+    },
   ]);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = (index: number) => {
-    if (isOpen) {
-      setHoveredId(null);
-    } else {
-      setIsOpen(!isOpen);
-    }
-
-    setHoveredId(String(index));
-  };
   return (
     <MapContainer
       center={[37.76062130454376, -122.42187034608556]}
@@ -38,46 +56,32 @@ export default function LeafletMap() {
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {/* <ClickHandler addPoint={(p) => setPoints((arr) => [...arr, p])} /> */}
-
       {markers.map((p) => (
-        <>
-          {/* <Box key={p.id} onMouse> */}
-          <Box key={p.id} onClick={() => handleClick(Number(p.id))}>
-            <CircleMarker
-              key={p.id}
-              center={[p.lat, p.lng]}
-              radius={6}
-              pathOptions={{
-                color: "#000",
-                fillColor: "#ff0000",
-                fillOpacity: 1,
-              }}
-            />
-          </Box>
-          {/* </Box> */}
-          {isOpen && hoveredId === p.id && (
-            <>
-              <Menu
-                width={200}
-                position="top-end"
-                shadow="md"
-                onClose={() => setIsOpen(false)}
-              >
-                <Menu.Target>
-                  <button onClick={() => handleClick(Number(p.id))}>
-                    Open menu
-                  </button>
-                </Menu.Target>
-
-                <Menu.Dropdown>
-                  <Menu.Label>Actions</Menu.Label>
-                  <Menu.Item onClick={() => setIsOpen(false)}>Close</Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
-            </>
-          )}
-        </>
+        <CircleMarker
+          key={p.id}
+          center={[p.lat, p.lng]}
+          radius={6}
+          pathOptions={{
+            color: "#000",
+            fillColor: "#ff0000",
+            fillOpacity: 1,
+          }}
+        >
+          <Popup>
+            <Box>
+              <Text>City: {p.city}</Text>
+              <Text>Type: {p.type_}</Text>
+              <Text>Live: {p.live ? "yes" : "no"}</Text>
+              <iframe
+                // width="560"
+                // height="315"
+                src={`https://www.youtube.com/embed/${p.url}`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              />
+            </Box>
+          </Popup>
+        </CircleMarker>
       ))}
     </MapContainer>
   );
