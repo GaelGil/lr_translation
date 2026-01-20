@@ -3,14 +3,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
 import { AppShell, Anchor, Group, Button } from "@mantine/core";
 import HomeBanner from "../components/Common/Home/HomeBanner";
-import { isLoggedIn } from "@/hooks/useAuth";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
 function HomePage() {
-  const loggedIn = isLoggedIn();
   const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false);
 
   const fullWidth = 200;
@@ -32,13 +30,13 @@ function HomePage() {
     >
       <AppShell.Header withBorder={false} bg={"black"}>
         <Group h="100%" px="md" justify="flex-end">
-          <Anchor
+          {/* <Anchor
             component={Link}
             to={loggedIn ? "/chat" : "/auth/login"}
             underline="never"
           >
             <Button radius="xl">{loggedIn ? "Chat" : "Login"}</Button>
-          </Anchor>
+          </Anchor> */}
         </Group>
       </AppShell.Header>
       <AppShell.Navbar p="md" withBorder={false} bg={"black"}>
