@@ -1,8 +1,7 @@
 // routes/index.tsx
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Anchor, Group, Button } from "@mantine/core";
-import HomeBanner from "../components/Common/Home/HomeBanner";
+import { AppShell, Group } from "@mantine/core";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
 import LeafletMap from "@/components/Map";
 export const Route = createFileRoute("/")({

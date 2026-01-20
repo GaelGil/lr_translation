@@ -1,39 +1,8 @@
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  useMapEvents,
-  CircleMarker,
-} from "react-leaflet";
-import L from "leaflet";
+import { MapContainer, TileLayer, CircleMarker } from "react-leaflet";
 import { useState } from "react";
-import { Menu } from "@mantine/core";
-
-type Point = { id: string; lat: number; lng: number };
+import { Box, Menu } from "@mantine/core";
 
 // fix default icon (Leaflet default icons need config)
-delete (L.Icon.Default.prototype as any)._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/images/marker-shadow.png",
-});
-
-function ClickHandler({ addPoint }: { addPoint: (p: Point) => void }) {
-  useMapEvents({
-    click(e) {
-      addPoint({
-        id: crypto.randomUUID(),
-        lat: e.latlng.lat,
-        lng: e.latlng.lng,
-      });
-    },
-  });
-  return null;
-}
 
 type MarkerPoint = {
   id: string;
@@ -73,16 +42,20 @@ export default function LeafletMap() {
 
       {markers.map((p) => (
         <>
-          <CircleMarker
-            key={p.id}
-            center={[p.lat, p.lng]}
-            radius={6}
-            pathOptions={{
-              color: "#000",
-              fillColor: "#ff0000",
-              fillOpacity: 1,
-            }}
-          />
+          {/* <Box key={p.id} onMouse> */}
+          <Box key={p.id} onClick={() => handleClick(Number(p.id))}>
+            <CircleMarker
+              key={p.id}
+              center={[p.lat, p.lng]}
+              radius={6}
+              pathOptions={{
+                color: "#000",
+                fillColor: "#ff0000",
+                fillOpacity: 1,
+              }}
+            />
+          </Box>
+          {/* </Box> */}
           {isOpen && hoveredId === p.id && (
             <>
               <Menu
