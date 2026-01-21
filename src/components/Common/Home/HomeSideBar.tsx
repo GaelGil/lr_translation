@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { Link } from "@tanstack/react-router";
 import { FaGithub, FaBookOpen } from "react-icons/fa";
+import { useRef } from "react";
 const items = [
   { title: "About", link: "/about", icon: FaBookOpen },
   { title: "Github", link: "/about", icon: FaGithub },
@@ -28,14 +29,22 @@ interface HomeSideBarProps {
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
   const [hovered, setHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
+  const timeoutRef = useRef<number | null>(null);
   useEffect(() => {
-    const handleMouseMove = () => {
-      setIsOpen(!isOpen);
+    let timeoutId: number;
+
+    const scheduleToggle = () => {
+      const randomDelay = Math.random() * 2000 + 500; // 500ms–2500ms
+
+      timeoutId = window.setTimeout(() => {
+        setIsOpen((prev) => !prev);
+        scheduleToggle(); // schedule next random toggle
+      }, randomDelay);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    scheduleToggle();
 
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const listItems = items.map((item) => (
