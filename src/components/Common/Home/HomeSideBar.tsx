@@ -14,9 +14,9 @@ import { FiColumns, FiArrowRight } from "react-icons/fi";
 import { useEffect } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { Link } from "@tanstack/react-router";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaBookOpen } from "react-icons/fa";
 const items = [
-  { title: "About", link: "/about", icon: FaGithub },
+  { title: "About", link: "/about", icon: FaBookOpen },
   { title: "Github", link: "/about", icon: FaGithub },
 ];
 

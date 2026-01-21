@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { Box, Text } from "@mantine/core";
+import { FaCircle } from "react-icons/fa";
 
 // fix default icon (Leaflet default icons need config)
 
@@ -89,12 +90,11 @@ export default function LeafletMap() {
             <Box>
               <Text>City: {p.city}</Text>
               <Text>Type: {p.type_}</Text>
-              <Text>Live: {p.live ? "yes" : "no"}</Text>
+              <Text>
+                Live: <FaCircle color={p.live ? "green" : "red"} />
+              </Text>
               <iframe
-                // width="560"
-                // height="315"
                 src={`https://www.youtube.com/embed/${p.url}`}
-                title="YouTube video player"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               />
             </Box>
