@@ -18,8 +18,6 @@ function HomePage() {
 
   return (
     <AppShell
-      // layout="alt"
-      // header={{ height: 0 }}
       navbar={{
         width: sidebarWidth,
         breakpoint: "sm",
@@ -31,7 +29,7 @@ function HomePage() {
       <AppShell.Navbar p="md" withBorder={false} bg={"black"}>
         <HomeSideBar collapsed={collapsed} toggle={toggleCollapsed} />
       </AppShell.Navbar>
-      <AppShell.Main>
+      <AppShell.Main m={0} pt={0}>
         <LeafletMap />
       </AppShell.Main>
     </AppShell>

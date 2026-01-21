@@ -14,16 +14,10 @@ import { FiColumns, FiArrowRight } from "react-icons/fi";
 import { useEffect } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { Link } from "@tanstack/react-router";
+import { FaGithub } from "react-icons/fa";
 const items = [
-  { title: "Research", link: "https://openai.com/research" },
-  { title: "Safety", link: "https://openai.com/safety" },
-  { title: "For Business", link: "https://openai.com/business" },
-  { title: "For Developers", link: "https://openai.com/developers" },
-  { title: "ChatGPT", link: "https://openai.com/chatgpt" },
-  { title: "Sora", link: "https://openai.com/sora" },
-  { title: "Stories", link: "https://openai.com/stories" },
-  { title: "Company", link: "https://openai.com/company" },
-  { title: "News", link: "https://openai.com/news" },
+  { title: "About", link: "/about", icon: FaGithub },
+  { title: "Github", link: "/about", icon: FaGithub },
 ];
 
 interface HomeSideBarProps {
@@ -44,12 +38,15 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const listItems = items.map(({ title, link }) => (
-    <Group key={title} gap="sm" px="md" py="sm" align="center" fz={"14px"}>
-      <Anchor key={title} href={link} target="_blank">
-        <Text c="white" ml={2}>
-          {title}
-        </Text>
+  const listItems = items.map((item) => (
+    <Group key={item.title} gap="sm" px="md" py="sm" align="center" fz={"14px"}>
+      <Anchor key={item.title} href={item.link} target="_blank">
+        <Flex align="center" gap="xs">
+          <Text c="white" ml={2}>
+            {item.title}
+          </Text>
+          {item.icon && <item.icon />}
+        </Flex>
       </Anchor>
     </Group>
   ));
