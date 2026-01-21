@@ -15,7 +15,6 @@ import { useEffect } from "react";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { Link } from "@tanstack/react-router";
 import { FaGithub, FaBookOpen } from "react-icons/fa";
-import { useRef } from "react";
 const items = [
   { title: "About", link: "/about", icon: FaBookOpen },
   { title: "Github", link: "/about", icon: FaGithub },
@@ -29,16 +28,17 @@ interface HomeSideBarProps {
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
   const [hovered, setHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(true);
-  const timeoutRef = useRef<number | null>(null);
+
+  // Randomly toggle the open state
   useEffect(() => {
     let timeoutId: number;
 
     const scheduleToggle = () => {
-      const randomDelay = Math.random() * 2000 + 500; // 500ms–2500ms
+      const randomDelay = Math.random() * 2000 + 500; // 0.5 to 2.5 seconds
 
       timeoutId = window.setTimeout(() => {
         setIsOpen((prev) => !prev);
-        scheduleToggle(); // schedule next random toggle
+        scheduleToggle(); // Schedule the next toggle
       }, randomDelay);
     };
 
@@ -47,6 +47,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  // Render the side bar items
   const listItems = items.map((item) => (
     <Group key={item.title} gap="sm" px="md" py="sm" align="center" fz={"14px"}>
       <Anchor key={item.title} href={item.link} target="_blank">
@@ -62,7 +63,6 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
 
   return (
     <Stack>
-      {/* Controls */}
       <Flex
         align="center"
         justify={collapsed ? "center" : "space-between"}

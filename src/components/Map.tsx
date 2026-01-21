@@ -15,7 +15,9 @@ type MarkerPoint = {
 };
 
 export default function LeafletMap() {
+  // state variables for markers
   const [markers, setMarkers] = useState<MarkerPoint[]>([]);
+  // Load the CSV data
   useEffect(() => {
     Papa.parse<MarkerPoint>("data.csv", {
       download: true,
