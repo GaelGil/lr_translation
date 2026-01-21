@@ -1,8 +1,8 @@
 import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
 import { Box, Text } from "@mantine/core";
 import { FaCircle } from "react-icons/fa";
-
-// fix default icon (Leaflet default icons need config)
+import { useEffect, useState } from "react";
+import Papa from "papaparse";
 
 type MarkerPoint = {
   id: string;
@@ -15,50 +15,15 @@ type MarkerPoint = {
 };
 
 export default function LeafletMap() {
-  const markers: MarkerPoint[] = [
-    {
-      id: "1",
-      lat: 37.7612,
-      lng: -122.4349,
-      city: "San Francisco",
-      type_: "A",
-      url: "/-_VOJgsVJ0E?si=bHXtsqUsDNZaorXI&amp;controls=0",
-      live: true,
-    },
-    {
-      id: "2",
-      lat: 37.803,
-      lng: -122.40123,
-      city: "San Francisco",
-      type_: "B",
-      url: "0aF8elLpiMo",
-      live: false,
-    },
-    {
-      id: "3",
-      lat: 37.7874,
-      lng: -122.3885,
-      city: "San Francisco",
-      type_: "C",
-      url: "CXYr04BWvmc",
-      live: true,
-    },
-    {
-      id: "4",
-      lat: 37.8057,
-      lng: -122.451755,
-      city: "San Francisco",
-      type_: "D",
-      url: "https://www.parksconservancy.org/parks/park-web-cams",
-      live: false,
-    },
-  ];
-
-  // https://sfcam.live/
-  // https://ops.alertcalifornia.org/
-  // https://www.extranomical.com/live-web-cams/
-  // https://www.sanfranciscopolice.org/publicsafetycameras
-  // https://www.parksconservancy.org/parks/park-web-cams
+  const [markers, setMarkers] = useState<MarkerPoint[]>([]);
+  useEffect(() => {
+    Papa.parse<MarkerPoint>("./public/data.csv", {
+      download: true,
+      header: true,
+      complete: (res: { data: MarkerPoint[] }) => setMarkers(res.data),
+    });
+  }, []);
+  console.log(markers);
 
   return (
     <MapContainer
@@ -75,32 +40,36 @@ export default function LeafletMap() {
         subdomains="abcd"
       />
 
-      {markers.map((p) => (
-        <CircleMarker
-          key={p.id}
-          center={[p.lat, p.lng]}
-          radius={6}
-          pathOptions={{
-            color: "#000",
-            fillColor: "#ff0000",
-            fillOpacity: 1,
-          }}
-        >
-          <Popup>
-            <Box>
-              <Text>City: {p.city}</Text>
-              <Text>Type: {p.type_}</Text>
-              <Text>
-                Live: <FaCircle color={p.live ? "green" : "red"} />
-              </Text>
-              <iframe
-                src={`https://www.youtube.com/embed/${p.url}`}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              />
-            </Box>
-          </Popup>
-        </CircleMarker>
-      ))}
+      {markers.length > 0 && (
+        <>
+          {markers.map((p) => (
+            <CircleMarker
+              key={p.id}
+              center={[p.lat, p.lng]}
+              radius={6}
+              pathOptions={{
+                color: "#000",
+                fillColor: "#ff0000",
+                fillOpacity: 1,
+              }}
+            >
+              <Popup>
+                <Box>
+                  <Text>City: {p.city}</Text>
+                  <Text>Type: {p.type_}</Text>
+                  <Text>
+                    Live: <FaCircle color={p.live ? "green" : "red"} />
+                  </Text>
+                  <iframe
+                    src={`https://www.youtube.com/embed/${p.url}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  />
+                </Box>
+              </Popup>
+            </CircleMarker>
+          ))}{" "}
+        </>
+      )}
     </MapContainer>
   );
 }
