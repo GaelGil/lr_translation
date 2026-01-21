@@ -17,7 +17,7 @@ type MarkerPoint = {
 export default function LeafletMap() {
   const [markers, setMarkers] = useState<MarkerPoint[]>([]);
   useEffect(() => {
-    Papa.parse<MarkerPoint>("./public/data.csv", {
+    Papa.parse<MarkerPoint>("data.csv", {
       download: true,
       header: true,
       complete: (res: { data: MarkerPoint[] }) => setMarkers(res.data),
