@@ -9,6 +9,7 @@ from pydantic import ValidationError
 from sqlmodel import Session
 
 from app.api.session.SessionService import SessionService
+from app.api.translate.TranslateService import TranslateService
 from app.core import security
 from app.core.config import settings
 from app.database.db import engine
@@ -76,3 +77,11 @@ def get_session_service(
 
 
 SessionServiceDep = Annotated[SessionService, Depends(get_session_service)]
+
+def get_translate_service(
+    session: SessionDep, api_service: APIServiceDep
+) -> TranslateService:
+    return TranslateService(session=session, api_service=api_service)
+
+
+TranslateServiceDep = Annotated[SessionService, Depends(get_session_service)]

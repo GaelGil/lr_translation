@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter, BackgroundTasks
 
-from app.api.deps import SessionServiceDep
+from app.api.deps import TranslateServiceDep
 from app.database.schemas.Translate import TranslateRequest
 
 router = APIRouter(prefix="/translation", tags=["translation"])
@@ -9,7 +9,7 @@ router = APIRouter(prefix="/translation", tags=["translation"])
 
 @router.post("/translate")
 async def translate(
-    session_service: SessionServiceDep,
+    translate_service: TranslateServiceDep,
     translate_req: TranslateRequest,
     background_tasks: BackgroundTasks,
 ) :
@@ -20,7 +20,7 @@ async def translate(
 
     # Start background task to generate and stream response
     background_tasks.add_task(
-        session_service.generate_response,
+        translate_service.generate_response,
         text=translate_req.text
     )
 
