@@ -20,7 +20,7 @@ async def translate(
 
     # Start background task to generate and stream response
     background_tasks.add_task(
-        translate_service.generate_response,
+        translate_service.translate,
         text=translate_req.text
     )
 

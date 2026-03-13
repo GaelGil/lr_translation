@@ -1,18 +1,11 @@
-
 from sqlmodel import Session
-
-from app.services.APIService import APIService
 
 
 class TranslateService:
-    def __init__(self, session: Session, api_service: APIService):
+    def __init__(self, session: Session):
         self.session = session
-        self.api_service = api_service
 
-    async def generate_response(
-        self,
-        text: str
-    ):
+    async def generate_response(self, text: str):
         """
 
         Get APIService to generate response
