@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Group,
   Text,
   Anchor,
   Stack,
@@ -16,27 +15,7 @@ import { useState } from "react";
 import { FiColumns, FiArrowRight } from "react-icons/fi";
 import { LOGO, PROJECT_NAME } from "@/const";
 import { Link } from "@tanstack/react-router";
-const items = [
-  { title: "Research", link: "https://openai.com/research" },
-  { title: "Safety", link: "https://openai.com/safety" },
-  { title: "For Business", link: "https://openai.com/business" },
-  { title: "For Developers", link: "https://openai.com/developers" },
-  { title: "ChatGPT", link: "https://openai.com/chatgpt" },
-  { title: "Sora", link: "https://openai.com/sora" },
-  { title: "Stories", link: "https://openai.com/stories" },
-  { title: "Company", link: "https://openai.com/company" },
-  { title: "News", link: "https://openai.com/news" },
-  { title: "ChatGPT", link: "https://openai.com/chatgpt" },
-  { title: "Sora", link: "https://openai.com/sora" },
-  { title: "Stories", link: "https://openai.com/stories" },
-  { title: "Company", link: "https://openai.com/company" },
-  { title: "News", link: "https://openai.com/news" },
-  { title: "ChatGPT", link: "https://openai.com/chatgpt" },
-  { title: "Sora", link: "https://openai.com/sora" },
-  { title: "Stories", link: "https://openai.com/stories" },
-  { title: "Company", link: "https://openai.com/company" },
-  { title: "News", link: "https://openai.com/news" },
-];
+import { FaGithub } from "react-icons/fa";
 
 interface HomeSideBarProps {
   collapsed: boolean;
@@ -45,16 +24,6 @@ interface HomeSideBarProps {
 
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
   const [hovered, setHovered] = useState(false);
-
-  const listItems = items.map(({ title, link }) => (
-    <Group key={title} gap="sm" px="md" py="sm" align="center" fz={"14px"}>
-      <Anchor key={title} href={link} target="_blank">
-        <Text c="white" ml={2}>
-          {title}
-        </Text>
-      </Anchor>
-    </Group>
-  ));
 
   return (
     <ScrollArea>
@@ -122,15 +91,21 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               <Title order={3}>Deployment</Title>
               <Text>...</Text>
 
-              <Anchor href={""} target="_blank">
-                <Text c="white" ml={2}>
-                  Deployment
-                </Text>
+              <Anchor
+                href={""}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex hover:text-primary-600"
+              >
+                <FaGithub size={24} />
               </Anchor>
-              <Anchor href={""} target="_blank">
-                <Text c="white" ml={2}>
-                  Evaluation
-                </Text>
+              <Anchor
+                href={""}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex hover:text-primary-600"
+              >
+                <FaGithub size={24} />
               </Anchor>
             </Stack>
           </Box>

@@ -10,6 +10,7 @@ import {
   Box,
   Flex,
   Select,
+  Blockquote,
 } from "@mantine/core";
 import { Button } from "@/components/ui/button";
 import InputBar from "@/components/Chat/Input/InputBar";
@@ -85,13 +86,10 @@ function HomePage() {
                 />
               </Box>
               <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
-                <InputBar
-                  chatId={undefined}
-                  setStreamingContent={() => {}}
-                  setStreamingMessageId={() => {}}
-                  setIsStreaming={() => {}}
-                  setMessageType={() => {}}
-                />
+                <Blockquote color="red">
+                  Life is like an npm install – you never know what you are
+                  going to get.
+                </Blockquote>
               </Box>
             </Flex>
           </Stack>

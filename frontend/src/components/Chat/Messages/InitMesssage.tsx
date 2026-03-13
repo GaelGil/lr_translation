@@ -4,7 +4,7 @@ const InitMessage = () => {
   return (
     <Box maw={720} ta="center">
       <Title order={2} fw={300} c="white">
-        What Can I Help With?
+        Enter text in language to translate
       </Title>
     </Box>
   );

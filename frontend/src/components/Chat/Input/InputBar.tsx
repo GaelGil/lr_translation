@@ -5,7 +5,6 @@ import useCustomToast from "@/hooks/useCustomToast";
 import { handleError } from "@/utils";
 import type { ApiError } from "@/client/core/ApiError";
 import { useForm } from "@mantine/form";
-import LeftSection from "./LeftSection";
 import { useState } from "react";
 import { useMessageSocket } from "@/hooks/useMessageSocket";
 import RightSection from "./RightSection";
@@ -158,9 +157,6 @@ const InputBar: React.FC<InputBarProps> = ({
         size="lg"
         rightSection={
           <RightSection sendMessage={sendMessage} chatForm={chatForm} />
-        }
-        leftSection={
-          <LeftSection sendMessage={sendMessage} chatForm={chatForm} />
         }
         {...chatForm.getInputProps("content")}
       />
