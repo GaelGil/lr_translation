@@ -1,11 +1,13 @@
 from sqlmodel import Session
+from app.api.websocket.ConnectionManager import manager
 
 
 class TranslateService:
     def __init__(self, session: Session):
         self.session = session
+        self.manager = manager
 
-    async def generate_response(self, text: str):
+    async def translate(self, text: str):
         """
 
         Get APIService to generate response
