@@ -78,10 +78,11 @@ def get_session_service(
 
 SessionServiceDep = Annotated[SessionService, Depends(get_session_service)]
 
+
 def get_translate_service(
-    session: SessionDep, api_service: APIServiceDep
+    session: SessionDep,
 ) -> TranslateService:
-    return TranslateService(session=session, api_service=api_service)
+    return TranslateService(session=session)
 
 
-TranslateServiceDep = Annotated[SessionService, Depends(get_session_service)]
+TranslateServiceDep = Annotated[SessionService, Depends(get_translate_service)]
