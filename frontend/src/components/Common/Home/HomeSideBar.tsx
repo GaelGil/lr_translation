@@ -106,27 +106,22 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
           <Box p={"md"}>
             <Stack>
               <Title order={3}>About</Title>
-              <Text>Model was trainned using Googles Jax</Text>
-            </Stack>
-            <Stack>
+              <Text>
+                I wanted to learn transformers in depth by implementing and
+                training one. Model was trainned using Googles Jax
+              </Text>
+
               <Title order={3}>Model Architecture</Title>
               <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-                quaerat minima ducimus doloribus dolore, inventore impedit iste
-                maxime temporibus earum beatae tenetur quisquam enim
-                reprehenderit rem necessitatibus eaque omnis deserunt.
+                I used a standard encoder decoder architecture with a sequence
+                length of 128, model dimension of 512, 8 attention heads, 6
+                encoder decoder blocks and a feed forward dimension of 2048.
+                This uses learned positional embeddings.
               </Text>
-            </Stack>
-            <Stack>
+
               <Title order={3}>Deployment</Title>
-              <Text>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque,
-                quaerat minima ducimus doloribus dolore, inventore impedit iste
-                maxime temporibus earum beatae tenetur quisquam enim
-                reprehenderit rem necessitatibus eaque omnis deserunt.
-              </Text>
-            </Stack>
-            <Stack>
+              <Text>...</Text>
+
               <Anchor href={""} target="_blank">
                 <Text c="white" ml={2}>
                   Deployment
