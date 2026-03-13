@@ -17,11 +17,12 @@ async def translate(
     Sart the chat
     """
 
-
+    message = Message()
     # Start background task to generate and stream response
     background_tasks.add_task(
         translate_service.translate,
         text=translate_req.text
+        message_id=
     )
 
     # return message
