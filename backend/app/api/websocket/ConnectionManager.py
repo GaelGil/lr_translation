@@ -14,7 +14,6 @@ class ConnectionManager:
         """
         Add a WebSocket connection to the manager.
         """
-        print("NEW WS CONNECTED FOR", message_id)
         # Accept the connection
         await websocket.accept()
         # Check if message_id is in active_connections
