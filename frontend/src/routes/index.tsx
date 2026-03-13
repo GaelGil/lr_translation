@@ -1,11 +1,19 @@
 // routes/index.tsx
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useDisclosure } from "@mantine/hooks";
-import { AppShell, Anchor, Group, Container, Stack, Box } from "@mantine/core";
+import {
+  AppShell,
+  Anchor,
+  Group,
+  Container,
+  Stack,
+  Box,
+  Flex,
+  Select,
+} from "@mantine/core";
 import { Button } from "@/components/ui/button";
 import InputBar from "@/components/Chat/Input/InputBar";
 import InitMessage from "@/components/Chat/Messages/InitMesssage";
-// import HomeBanner from "../components/Common/Home/HomeBanner";
 import { isLoggedIn } from "@/hooks/useAuth";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
 export const Route = createFileRoute("/")({
@@ -59,15 +67,33 @@ function HomePage() {
             <Box ta="center" px="md" display={"flex"}>
               <InitMessage />
             </Box>
-            <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
-              <InputBar
-                chatId={undefined}
-                setStreamingContent={() => {}}
-                setStreamingMessageId={() => {}}
-                setIsStreaming={() => {}}
-                setMessageType={() => {}}
+            <Box>
+              <Select
+                label="Language"
+                placeholder="Spanish to English"
+                data={["Spanish to English", "Spanish to Na"]}
               />
             </Box>
+            <Flex>
+              <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                <InputBar
+                  chatId={undefined}
+                  setStreamingContent={() => {}}
+                  setStreamingMessageId={() => {}}
+                  setIsStreaming={() => {}}
+                  setMessageType={() => {}}
+                />
+              </Box>
+              <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                <InputBar
+                  chatId={undefined}
+                  setStreamingContent={() => {}}
+                  setStreamingMessageId={() => {}}
+                  setIsStreaming={() => {}}
+                  setMessageType={() => {}}
+                />
+              </Box>
+            </Flex>
           </Stack>
         </Container>
       </AppShell.Main>
