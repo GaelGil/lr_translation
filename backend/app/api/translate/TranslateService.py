@@ -1,5 +1,8 @@
-from sqlmodel import Session
 from app.api.websocket.ConnectionManager import manager
+
+import asyncio
+
+from sqlmodel import Session
 
 
 class TranslateService:
@@ -7,7 +10,7 @@ class TranslateService:
         self.session = session
         self.manager = manager
 
-    async def translate(self, text: str):
+    async def translate(self, text: str, message_id: str):
         """
 
         Get APIService to generate response
@@ -18,4 +21,15 @@ class TranslateService:
             message_id (uuid.UUID): message id
 
         """
+        words = text.split()
+
+        for i, word in enumerate(words):
+            await self.manager.stream_response_chunk(
+                message_id=message_id,
+                chunk=word + " " if i < len(words) - 1 else word,
+                is_complete=i == len(words) - 1,
+            )
+            if i < len(words) - 1:
+                await asyncio.sleep(5)
+
         return text
