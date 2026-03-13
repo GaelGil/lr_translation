@@ -1,8 +1,8 @@
-from app.api.websocket.ConnectionManager import manager
-
 import asyncio
 
 from sqlmodel import Session
+
+from app.api.websocket.ConnectionManager import manager
 
 
 class TranslateService:
