@@ -1,0 +1,53 @@
+import { MessageDetail } from "@/client";
+import { Stack } from "@mantine/core";
+import { useEffect, useRef } from "react";
+import UserMesssage from "./UserMessage";
+import AssistantMesssage from "./AssistantMessage";
+interface MessagesProps {
+  messages: MessageDetail[];
+  streamingContent: string;
+  streamingMessageId: string | null;
+  messageType: string;
+  isStreaming: boolean;
+}
+
+const Messages: React.FC<MessagesProps> = ({
+  messages,
+  streamingContent,
+  streamingMessageId,
+  messageType,
+  isStreaming,
+}) => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  });
+
+  return (
+    <Stack gap="xs" w="100%">
+      {messages.map((message) => (
+        <div key={message.id}>
+          {message.role === "user" ? (
+            <UserMesssage message={message} />
+          ) : message.role === "assistant" ? (
+            <AssistantMesssage
+              message={message}
+              streamingContent={streamingContent}
+              streamingMessageId={streamingMessageId}
+              messageType={messageType}
+              isStreaming={isStreaming}
+            />
+          ) : (
+            <> </>
+          )}
+        </div>
+      ))}
+      <div ref={bottomRef} />
+    </Stack>
+  );
+};
+
+export default Messages;
