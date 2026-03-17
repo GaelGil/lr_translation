@@ -92,7 +92,9 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               <Title order={3}>Deployment</Title>
               <Text>...</Text>
               <Anchor
-                href={""}
+                href={
+                  "https://github.com/GaelGil/notebooks/blob/master/transformer/main.py"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex hover:text-primary-600"
@@ -103,7 +105,9 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 </Flex>
               </Anchor>
               <Anchor
-                href={""}
+                href={
+                  "https://github.com/GaelGil/notebooks/blob/master/transformer/transformers.ipynb"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex hover:text-primary-600"
