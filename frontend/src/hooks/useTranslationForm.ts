@@ -14,7 +14,7 @@ import useCustomToast from "@/hooks/useCustomToast";
 
 const { showErrorToast } = useCustomToast();
 
-const useAuth = () => {
+const useTranslationForm = () => {
   const [translationId, setTranslationId] = useState<string>("");
 
   const translate = useMutation<
@@ -64,4 +64,4 @@ const useAuth = () => {
   };
 };
 
-export default useAuth;
+export default useTranslationForm;

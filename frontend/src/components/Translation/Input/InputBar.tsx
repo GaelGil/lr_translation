@@ -13,6 +13,7 @@ import useCustomToast from "@/hooks/useCustomToast";
 import { useMessageSocket } from "@/hooks/useMessageSocket";
 import { handleError } from "@/utils";
 import RightSection from "./RightSection";
+import useTranslationForm from "@/hooks/useTranslationForm";
 
 interface InputBarProps {
   chatId: string | undefined;
@@ -30,6 +31,8 @@ const InputBar: React.FC<InputBarProps> = ({
   setIsStreaming,
 }) => {
   const queryClient = useQueryClient();
+  const { handleSubmit, translationForm, translate, translationId } =
+    useTranslationForm();
   const { showErrorToast } = useCustomToast();
   const [newMessageId, setNewMessageId] = useState("");
   const pendingChatRef = useRef<{
