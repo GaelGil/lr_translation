@@ -11,6 +11,10 @@ class TranslationStatus(Enum):
     COMPLETE = "completed"
 
 
+class TranslationResponseType(Enum):
+    CHUNK = "message_chunk"
+
+
 class TranslationBase(SQLModel):
     src: str = Field(sa_column=Column(Text, nullable=False))
     target: str | None  = Field(sa_column=Column(Text, nullable=True))

@@ -8,7 +8,6 @@ from jwt.exceptions import InvalidTokenError
 from pydantic import ValidationError
 from sqlmodel import Session
 
-from app.api.session.SessionService import SessionService
 from app.api.translation.TranslationService import TranslationService
 from app.core import security
 from app.core.config import settings
@@ -70,13 +69,7 @@ def get_api_service(
 APIServiceDep = Annotated[APIService, Depends(get_api_service)]
 
 
-def get_session_service(
-    session: SessionDep, api_service: APIServiceDep
-) -> SessionService:
-    return SessionService(session=session, api_service=api_service)
 
-
-SessionServiceDep = Annotated[SessionService, Depends(get_session_service)]
 
 
 def get_translate_service(

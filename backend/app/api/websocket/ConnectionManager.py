@@ -1,7 +1,6 @@
 from fastapi import WebSocket
 
-from app.database.schemas.Message import ResponseType
-
+from app.database.schemas.Translation import TranslationResponseType
 
 class ConnectionManager:
     """Manages WebSocket connections for message updates."""
@@ -54,7 +53,7 @@ class ConnectionManager:
         message_id: str,
         chunk: str,
         is_complete: bool = False,
-        msg_type: ResponseType = ResponseType.MESSAGE_CHUNK,
+        msg_type: TranslationResponseType = TranslationResponseType.CHUNK,
     ):
         """Stream a response chunk to message connections.
 
