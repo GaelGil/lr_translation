@@ -3,7 +3,6 @@
 import {
   Anchor,
   AppShell,
-  Blockquote,
   Box,
   Container,
   Flex,
@@ -13,11 +12,12 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import InputBar from "@/components/Chat/Input/InputBar";
-import InitMessage from "@/components/Chat/Messages/InitMesssage";
+import InputBar from "@/components/Translation/Input/InputBar";
+import InitMessage from "@/components/Translation/Messages/InitMesssage";
 import { Button } from "@/components/ui/button";
 import { isLoggedIn } from "@/hooks/useAuth";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
+import Translation from "@/components/Translation/Messages/Translation";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -87,10 +87,7 @@ function HomePage() {
                 />
               </Box>
               <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
-                <Blockquote color="red">
-                  Life is like an npm install – you never know what you are
-                  going to get.
-                </Blockquote>
+                <Translation />
               </Box>
             </Flex>
           </Stack>
