@@ -2,11 +2,9 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlmodel import Field, Relationship
+from sqlmodel import Field
 
-from app.database.schemas.Message import MessageBase
-from app.database.schemas.Session import SessionBase
-from app.database.schemas.ToolCall import ToolCallBase
+
 from app.database.schemas.User import UserBase
 from app.database.schemas.Translation import TranslationBase
 
@@ -15,37 +13,7 @@ from app.database.schemas.Translation import TranslationBase
 class User(UserBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     hashed_password: str
-    chat_sessions: list["Session"] = Relationship(
-        back_populates="owner", cascade_delete=True
-    )
 
-
-class Session(SessionBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    owner_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)
-    owner: User = Relationship(back_populates="chat_sessions")
-    messages: list["Message"] = Relationship(
-        back_populates="session", cascade_delete=True
-    )
-
-
-class Message(MessageBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    owner_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)
-    session_id: uuid.UUID = Field(foreign_key="session.id", nullable=False)
-    session: Session = Relationship(back_populates="messages")
-    created_at: datetime = Field(
-        default_factory=lambda: datetime.now(timezone.utc), nullable=False
-    )
-    tool_calls: list["ToolCall"] = Relationship(back_populates="message")
-
-
-class ToolCall(ToolCallBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    owner_id: uuid.UUID = Field(foreign_key="user.id", nullable=False)
-    session_id: uuid.UUID = Field(foreign_key="session.id", nullable=False)
-    message_id: uuid.UUID = Field(foreign_key="message.id", nullable=False)
-    message: Message = Relationship(back_populates="tool_calls")
 
 
 class Translation(TranslationBase, table=True)
