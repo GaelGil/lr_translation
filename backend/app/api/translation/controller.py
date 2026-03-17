@@ -2,7 +2,8 @@
 from fastapi import APIRouter, BackgroundTasks
 
 from app.api.deps import TranslateServiceDep
-from app.database.schemas.Translation import TranslationRequest, TranslationResponse
+from app.database.schemas.Translation import TranslationRequest
+from app.database.models.Translation import Translation
 
 router = APIRouter(prefix="/translation", tags=["translation"])
 
@@ -17,12 +18,12 @@ async def translate(
     Sart the chat
     """
 
-    message = TranslationResponse.model_validate(translate_req)
+    req = Translation.model_validate(translate_req)
     # Start background task to generate and stream response
     background_tasks.add_task(
         translate_service.translate,
-        text=
-        message_id=
+        text=req.src,
+        message_id=req.id
     )
 
     # return message
