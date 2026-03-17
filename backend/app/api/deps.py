@@ -85,4 +85,4 @@ def get_translate_service(
     return TranslationService(session=session)
 
 
-TranslateServiceDep = Annotated[SessionService, Depends(get_translate_service)]
+TranslateServiceDep = Annotated[TranslationService, Depends(get_translate_service)]
