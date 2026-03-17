@@ -2,6 +2,7 @@ from fastapi import WebSocket
 
 from app.database.schemas.Translation import TranslationResponseType
 
+
 class ConnectionManager:
     """Manages WebSocket connections for message updates."""
 

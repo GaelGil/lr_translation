@@ -1,5 +1,5 @@
-from enum import Enum
 import uuid
+from enum import Enum
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
@@ -17,10 +17,11 @@ class TranslationResponseType(Enum):
 
 class TranslationBase(SQLModel):
     src: str = Field(sa_column=Column(Text, nullable=False))
-    target: str | None  = Field(sa_column=Column(Text, nullable=True))
+    target: str | None = Field(sa_column=Column(Text, nullable=True))
     status: TranslationStatus = Field(
         default=TranslationStatus.COMPLETE, nullable=False
     )
+
 
 class TranslationRequest(TranslationBase):
     pass
