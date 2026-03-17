@@ -16,5 +16,8 @@ class User(UserBase, table=True):
 
 
 
-class Translation(TranslationBase, table=True)
+class Translation(TranslationBase, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc), nullable=False
+    )
