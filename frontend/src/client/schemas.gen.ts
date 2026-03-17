@@ -6,7 +6,7 @@ export const Body_login_login_access_tokenSchema = {
             anyOf: [
                 {
                     type: 'string',
-                    pattern: 'password'
+                    pattern: '^password$'
                 },
                 {
                     type: 'null'
@@ -20,6 +20,7 @@ export const Body_login_login_access_tokenSchema = {
         },
         password: {
             type: 'string',
+            format: 'password',
             title: 'Password'
         },
         scope: {
@@ -47,6 +48,7 @@ export const Body_login_login_access_tokenSchema = {
                     type: 'null'
                 }
             ],
+            format: 'password',
             title: 'Client Secret'
         }
     },
@@ -69,60 +71,16 @@ export const HTTPValidationErrorSchema = {
     title: 'HTTPValidationError'
 } as const;
 
-export const MessageDetailSchema = {
+export const MessageSchema = {
     properties: {
-        role: {
-            '$ref': '#/components/schemas/Role',
-            default: 'user'
-        },
-        content: {
+        message: {
             type: 'string',
-            title: 'Content'
-        },
-        status: {
-            '$ref': '#/components/schemas/Status',
-            default: 'complete'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        },
-        tool_calls: {
-            items: {
-                '$ref': '#/components/schemas/ToolCallDetail'
-            },
-            type: 'array',
-            title: 'Tool Calls'
+            title: 'Message'
         }
     },
     type: 'object',
-    required: ['content', 'id', 'tool_calls'],
-    title: 'MessageDetail'
-} as const;
-
-export const NewMessageSchema = {
-    properties: {
-        role: {
-            '$ref': '#/components/schemas/Role',
-            default: 'user'
-        },
-        content: {
-            type: 'string',
-            title: 'Content'
-        },
-        status: {
-            '$ref': '#/components/schemas/Status',
-            default: 'complete'
-        },
-        model_name: {
-            type: 'string',
-            title: 'Model Name'
-        }
-    },
-    type: 'object',
-    required: ['content', 'model_name'],
-    title: 'NewMessage'
+    required: ['message'],
+    title: 'Message'
 } as const;
 
 export const NewPasswordSchema = {
@@ -141,19 +99,6 @@ export const NewPasswordSchema = {
     type: 'object',
     required: ['token', 'new_password'],
     title: 'NewPassword'
-} as const;
-
-export const NewSessionSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Title'
-        }
-    },
-    type: 'object',
-    required: ['title'],
-    title: 'NewSession'
 } as const;
 
 export const PrivateUserCreateSchema = {
@@ -181,93 +126,6 @@ export const PrivateUserCreateSchema = {
     title: 'PrivateUserCreate'
 } as const;
 
-export const RoleSchema = {
-    type: 'string',
-    enum: ['user', 'assistant', 'system'],
-    title: 'Role'
-} as const;
-
-export const SessionDetailSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Title'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        },
-        messages: {
-            items: {
-                '$ref': '#/components/schemas/MessageDetail'
-            },
-            type: 'array',
-            title: 'Messages'
-        }
-    },
-    type: 'object',
-    required: ['title', 'id', 'messages'],
-    title: 'SessionDetail'
-} as const;
-
-export const SessionListSchema = {
-    properties: {
-        sessions: {
-            items: {
-                '$ref': '#/components/schemas/SessionSimple'
-            },
-            type: 'array',
-            title: 'Sessions'
-        }
-    },
-    type: 'object',
-    required: ['sessions'],
-    title: 'SessionList'
-} as const;
-
-export const SessionSimpleSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Title'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        }
-    },
-    type: 'object',
-    required: ['title', 'id'],
-    title: 'SessionSimple'
-} as const;
-
-export const StatusSchema = {
-    type: 'string',
-    enum: ['complete', 'failure', 'streaming'],
-    title: 'Status'
-} as const;
-
-export const StreamResponseBodySchema = {
-    properties: {
-        model_name: {
-            type: 'string',
-            title: 'Model Name'
-        },
-        message_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Message Id'
-        }
-    },
-    type: 'object',
-    required: ['model_name', 'message_id'],
-    title: 'StreamResponseBody'
-} as const;
-
 export const TokenSchema = {
     properties: {
         access_token: {
@@ -283,33 +141,6 @@ export const TokenSchema = {
     type: 'object',
     required: ['access_token'],
     title: 'Token'
-} as const;
-
-export const ToolCallDetailSchema = {
-    properties: {
-        name: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Name'
-        },
-        args: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Args'
-        },
-        result: {
-            type: 'string',
-            title: 'Result'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        }
-    },
-    type: 'object',
-    required: ['name', 'args', 'result', 'id'],
-    title: 'ToolCallDetail'
 } as const;
 
 export const UpdatePasswordSchema = {
@@ -330,19 +161,6 @@ export const UpdatePasswordSchema = {
     type: 'object',
     required: ['current_password', 'new_password'],
     title: 'UpdatePassword'
-} as const;
-
-export const UpdateSessionSchema = {
-    properties: {
-        title: {
-            type: 'string',
-            maxLength: 255,
-            title: 'Title'
-        }
-    },
-    type: 'object',
-    required: ['title'],
-    title: 'UpdateSession'
 } as const;
 
 export const UserCreateSchema = {
@@ -594,56 +412,4 @@ export const ValidationErrorSchema = {
     type: 'object',
     required: ['loc', 'msg', 'type'],
     title: 'ValidationError'
-} as const;
-
-export const app__database__models__MessageSchema = {
-    properties: {
-        role: {
-            '$ref': '#/components/schemas/Role',
-            default: 'user'
-        },
-        content: {
-            type: 'string',
-            title: 'Content'
-        },
-        status: {
-            '$ref': '#/components/schemas/Status',
-            default: 'complete'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        },
-        owner_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Owner Id'
-        },
-        session_id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Session Id'
-        },
-        created_at: {
-            type: 'string',
-            format: 'date-time',
-            title: 'Created At'
-        }
-    },
-    type: 'object',
-    required: ['content', 'owner_id', 'session_id'],
-    title: 'Message'
-} as const;
-
-export const app__database__schemas__Utils__MessageSchema = {
-    properties: {
-        message: {
-            type: 'string',
-            title: 'Message'
-        }
-    },
-    type: 'object',
-    required: ['message'],
-    title: 'Message'
 } as const;

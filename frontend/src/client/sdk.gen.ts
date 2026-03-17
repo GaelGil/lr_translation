@@ -3,7 +3,7 @@
 import type { CancelablePromise } from './core/CancelablePromise';
 import { OpenAPI } from './core/OpenAPI';
 import { request as __request } from './core/request';
-import type { LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, SessionGetSessionsResponse, SessionNewSessionData, SessionNewSessionResponse, SessionGetSessionData, SessionGetSessionResponse, SessionDeleteSessionData, SessionDeleteSessionResponse, SessionRenameSessionData, SessionRenameSessionResponse, SessionAddMessageData, SessionAddMessageResponse, SessionChatData, SessionChatResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
+import type { LoginLoginAccessTokenData, LoginLoginAccessTokenResponse, LoginTestTokenResponse, LoginRecoverPasswordData, LoginRecoverPasswordResponse, LoginResetPasswordData, LoginResetPasswordResponse, LoginRecoverPasswordHtmlContentData, LoginRecoverPasswordHtmlContentResponse, PrivateCreateUserData, PrivateCreateUserResponse, UsersReadUsersData, UsersReadUsersResponse, UsersCreateUserData, UsersCreateUserResponse, UsersReadUserMeResponse, UsersDeleteUserMeResponse, UsersUpdateUserMeData, UsersUpdateUserMeResponse, UsersUpdatePasswordMeData, UsersUpdatePasswordMeResponse, UsersRegisterUserData, UsersRegisterUserResponse, UsersReadUserByIdData, UsersReadUserByIdResponse, UsersUpdateUserData, UsersUpdateUserResponse, UsersDeleteUserData, UsersDeleteUserResponse, UtilsTestEmailData, UtilsTestEmailResponse, UtilsHealthCheckResponse } from './types.gen';
 
 export class LoginService {
     /**
@@ -44,7 +44,7 @@ export class LoginService {
      * Password Recovery
      * @param data The data for the request.
      * @param data.email
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static recoverPassword(data: LoginRecoverPasswordData): CancelablePromise<LoginRecoverPasswordResponse> {
@@ -65,7 +65,7 @@ export class LoginService {
      * Reset password
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static resetPassword(data: LoginResetPasswordData): CancelablePromise<LoginResetPasswordResponse> {
@@ -115,155 +115,6 @@ export class PrivateService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/api/v1/private/users/',
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-}
-
-export class SessionService {
-    /**
-     * Get Sessions
-     * Retrieve a users sessions
-     * @returns SessionList Successful Response
-     * @throws ApiError
-     */
-    public static getSessions(): CancelablePromise<SessionGetSessionsResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/session/'
-        });
-    }
-    
-    /**
-     * New Session
-     * Create a new Session
-     * @param data The data for the request.
-     * @param data.requestBody
-     * @returns string Successful Response
-     * @throws ApiError
-     */
-    public static newSession(data: SessionNewSessionData): CancelablePromise<SessionNewSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v1/session/',
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Get Session
-     * Get a Session by ID.
-     * @param data The data for the request.
-     * @param data.sessionId
-     * @returns SessionDetail Successful Response
-     * @throws ApiError
-     */
-    public static getSession(data: SessionGetSessionData): CancelablePromise<SessionGetSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/api/v1/session/{id}',
-            query: {
-                session_id: data.sessionId
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Delete Session
-     * Delete a Session
-     * @param data The data for the request.
-     * @param data.sessionId
-     * @returns app__database__schemas__Utils__Message Successful Response
-     * @throws ApiError
-     */
-    public static deleteSession(data: SessionDeleteSessionData): CancelablePromise<SessionDeleteSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/api/v1/session/{id}',
-            query: {
-                session_id: data.sessionId
-            },
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Rename Session
-     * Update a Session
-     * @param data The data for the request.
-     * @param data.sessionId
-     * @param data.requestBody
-     * @returns app__database__schemas__Utils__Message Successful Response
-     * @throws ApiError
-     */
-    public static renameSession(data: SessionRenameSessionData): CancelablePromise<SessionRenameSessionResponse> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/api/v1/session/{id}',
-            query: {
-                session_id: data.sessionId
-            },
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Add Message
-     * Add message to a session
-     * @param data The data for the request.
-     * @param data.sessionId
-     * @param data.requestBody
-     * @returns string Successful Response
-     * @throws ApiError
-     */
-    public static addMessage(data: SessionAddMessageData): CancelablePromise<SessionAddMessageResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v1/session/{session_id}/add_message',
-            path: {
-                session_id: data.sessionId
-            },
-            body: data.requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: 'Validation Error'
-            }
-        });
-    }
-    
-    /**
-     * Chat
-     * Sart the chat
-     * @param data The data for the request.
-     * @param data.sessionId
-     * @param data.requestBody
-     * @returns app__database__models__Message Successful Response
-     * @throws ApiError
-     */
-    public static chat(data: SessionChatData): CancelablePromise<SessionChatResponse> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/api/v1/session/{session_id}/chat',
-            path: {
-                session_id: data.sessionId
-            },
             body: data.requestBody,
             mediaType: 'application/json',
             errors: {
@@ -333,7 +184,7 @@ export class UsersService {
     /**
      * Delete User Me
      * Delete own user.
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static deleteUserMe(): CancelablePromise<UsersDeleteUserMeResponse> {
@@ -368,7 +219,7 @@ export class UsersService {
      * Update own password.
      * @param data The data for the request.
      * @param data.requestBody
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static updatePasswordMe(data: UsersUpdatePasswordMeData): CancelablePromise<UsersUpdatePasswordMeResponse> {
@@ -453,7 +304,7 @@ export class UsersService {
      * Delete a user.
      * @param data The data for the request.
      * @param data.userId
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static deleteUser(data: UsersDeleteUserData): CancelablePromise<UsersDeleteUserResponse> {
@@ -476,7 +327,7 @@ export class UtilsService {
      * Test emails.
      * @param data The data for the request.
      * @param data.emailTo
-     * @returns app__database__models__Message Successful Response
+     * @returns Message Successful Response
      * @throws ApiError
      */
     public static testEmail(data: UtilsTestEmailData): CancelablePromise<UtilsTestEmailResponse> {
