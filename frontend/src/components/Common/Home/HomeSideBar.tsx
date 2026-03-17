@@ -1,21 +1,22 @@
 "use client";
 
 import {
-  Box,
-  Text,
+  ActionIcon,
   Anchor,
-  Stack,
+  Box,
   Flex,
   Image,
-  ActionIcon,
   ScrollArea,
+  Stack,
+  Text,
   Title,
 } from "@mantine/core";
-import { useState } from "react";
-import { FiColumns, FiArrowRight } from "react-icons/fi";
-import { LOGO, PROJECT_NAME } from "@/const";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
+import { FiArrowRight, FiColumns } from "react-icons/fi";
+import { SiJupyter } from "react-icons/si";
+import { LOGO, PROJECT_NAME } from "@/const";
 
 interface HomeSideBarProps {
   collapsed: boolean;
@@ -90,14 +91,16 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
 
               <Title order={3}>Deployment</Title>
               <Text>...</Text>
-
               <Anchor
                 href={""}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex hover:text-primary-600"
               >
-                <FaGithub size={24} />
+                <Flex align="center" gap="xs">
+                  <FaGithub size={24} />
+                  <Text>GitHub</Text>
+                </Flex>
               </Anchor>
               <Anchor
                 href={""}
@@ -105,7 +108,10 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 rel="noopener noreferrer"
                 className="flex hover:text-primary-600"
               >
-                <FaGithub size={24} />
+                <Flex align="center" gap="xs">
+                  <SiJupyter size={24} />
+                  <Text>Jupyter</Text>
+                </Flex>
               </Anchor>
             </Stack>
           </Box>
