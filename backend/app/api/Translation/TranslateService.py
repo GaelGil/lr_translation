@@ -5,7 +5,7 @@ from sqlmodel import Session
 from app.api.websocket.ConnectionManager import manager
 
 
-class TranslateService:
+class TranslationService:
     def __init__(self, session: Session):
         self.session = session
         self.manager = manager

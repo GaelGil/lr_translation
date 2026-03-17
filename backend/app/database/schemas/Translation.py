@@ -1,4 +1,5 @@
 from enum import Enum
+import uuid
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
@@ -10,17 +11,16 @@ class TranslationStatus(Enum):
     COMPLETE = "completed"
 
 
-class TranslateRequest(SQLModel):
-    text: str = Field(nullable=False)
-
-
-class MessageBase(SQLModel):
-    text: str = Field(sa_column=Column(Text, nullable=False))
+class TranslationBase(SQLModel):
+    src: str = Field(sa_column=Column(Text, nullable=False))
+    target: str | None  = Field(sa_column=Column(Text, nullable=True))
     status: TranslationStatus = Field(
         default=TranslationStatus.COMPLETE, nullable=False
     )
 
+class TranslationRequest(TranslationBase):
+    pass
 
-class TranslateResponse(SQLModel):
-    message: str
-    status: TranslationStatus = Field(default=TranslationStatus.INPROGRESS)
+
+class TranslationResponse(TranslationBase):
+    id: uuid.UUID

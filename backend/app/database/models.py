@@ -8,6 +8,7 @@ from app.database.schemas.Message import MessageBase
 from app.database.schemas.Session import SessionBase
 from app.database.schemas.ToolCall import ToolCallBase
 from app.database.schemas.User import UserBase
+from app.database.schemas.Translation import TranslationBase
 
 
 # Database model, database table inferred from class name
@@ -45,3 +46,7 @@ class ToolCall(ToolCallBase, table=True):
     session_id: uuid.UUID = Field(foreign_key="session.id", nullable=False)
     message_id: uuid.UUID = Field(foreign_key="message.id", nullable=False)
     message: Message = Relationship(back_populates="tool_calls")
+
+
+class Translation(TranslationBase, table=True)
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
