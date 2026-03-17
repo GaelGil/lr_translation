@@ -69,9 +69,6 @@ def get_api_service(
 APIServiceDep = Annotated[APIService, Depends(get_api_service)]
 
 
-
-
-
 def get_translate_service(
     session: SessionDep,
 ) -> TranslationService:
