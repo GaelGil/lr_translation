@@ -1,21 +1,11 @@
 // routes/index.tsx
 
-import {
-  Anchor,
-  AppShell,
-  Box,
-  Container,
-  Flex,
-  Group,
-  Select,
-  Stack,
-} from "@mantine/core";
+import { AppShell, Box, Container, Flex, Select, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import InputBar from "@/components/Translation/Input/InputBar";
 import InitMessage from "@/components/Translation/Messages/InitMesssage";
-import { Button } from "@/components/ui/button";
-import { isLoggedIn } from "@/hooks/useAuth";
+
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
 import Translation from "@/components/Translation/Messages/Translation";
 export const Route = createFileRoute("/")({
@@ -23,7 +13,6 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
-  const loggedIn = isLoggedIn();
   const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false);
 
   const fullWidth = 350;
@@ -43,17 +32,6 @@ function HomePage() {
       padding="md"
       bg={"black"}
     >
-      <AppShell.Header withBorder={false} bg={"black"}>
-        <Group h="100%" px="md" justify="flex-end">
-          <Anchor
-            component={Link}
-            to={loggedIn ? "/chat" : "/auth/login"}
-            underline="never"
-          >
-            <Button radius="xl">{loggedIn ? "Chat" : "Login"}</Button>
-          </Anchor>
-        </Group>
-      </AppShell.Header>
       <AppShell.Navbar p="md" withBorder={false} bg={"black"}>
         <HomeSideBar collapsed={collapsed} toggle={toggleCollapsed} />
       </AppShell.Navbar>
