@@ -1,25 +1,27 @@
-import { Textarea } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SessionService, NewMessage, NewSession, Role, Status } from "@/client";
-import useCustomToast from "@/hooks/useCustomToast";
-import { handleError } from "@/utils";
-import type { ApiError } from "@/client/core/ApiError";
-import { useForm } from "@mantine/form";
-import { useState } from "react";
-import { useMessageSocket } from "@/hooks/useMessageSocket";
-import RightSection from "./RightSection";
-import { useRef, useEffect } from "react";
+import { Textarea } from "@mantine/core"
+import { useForm } from "@mantine/form"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useEffect, useRef, useState } from "react"
+import {
+  type TranslationRequest,
+  type TranslationResponse,
+  TranslationService,
+} from "@/client"
+import type { ApiError } from "@/client/core/ApiError"
+import { TranslationStatusSchema } from "@/client/schemas.gen"
+import useCustomToast from "@/hooks/useCustomToast"
+import { useMessageSocket } from "@/hooks/useMessageSocket"
+import { handleError } from "@/utils"
+import RightSection from "./RightSection"
+
 interface InputBarProps {
-  chatId: string | undefined;
-  setStreamingContent: (value: string) => void;
-  setStreamingMessageId: (id: string | null) => void;
-  setMessageType: (value: string) => void;
-  setIsStreaming: (value: boolean) => void;
+  chatId: string | undefined
+  setStreamingContent: (value: string) => void
+  setStreamingMessageId: (id: string | null) => void
+  setMessageType: (value: string) => void
+  setIsStreaming: (value: boolean) => void
 }
-type SendMessageResult = {
-  sessionId: string;
-  assistantMessageId: string;
-};
+
 const InputBar: React.FC<InputBarProps> = ({
   chatId,
   setStreamingContent,
@@ -27,126 +29,100 @@ const InputBar: React.FC<InputBarProps> = ({
   setMessageType,
   setIsStreaming,
 }) => {
-  const queryClient = useQueryClient();
-  const { showErrorToast } = useCustomToast();
-  const [newMessageId, setNewMessageId] = useState("");
+  const queryClient = useQueryClient()
+  const { showErrorToast } = useCustomToast()
+  const [newMessageId, setNewMessageId] = useState("")
   const pendingChatRef = useRef<{
-    sessionId: string;
-    assistantMessageId: string;
-    model_name: string;
-  } | null>(null);
+    sessionId: string
+    assistantMessageId: string
+    model_name: string
+  } | null>(null)
 
-  const sendMessage = useMutation<SendMessageResult, ApiError, NewMessage>({
-    mutationFn: async (data: NewMessage): Promise<SendMessageResult> => {
-      let sessionId = chatId;
-
-      chatForm.reset();
-      // create new session if chatId is undefined
-      if (chatId === undefined) {
-        const newSession: NewSession = { title: "New Chat" };
-
-        const newSessionId = await SessionService.newSession({
-          requestBody: newSession,
-        });
-        sessionId = newSessionId;
-      }
-      // send user message
-      await SessionService.addMessage({
-        sessionId: sessionId as string,
+  const sendMessage = useMutation<
+    TranslationResponse,
+    ApiError,
+    TranslationRequest
+  >({
+    mutationFn: async (data: TranslationRequest) => {
+      translationForm.reset()
+      const res = await TranslationService.translate({
         requestBody: data,
-      });
-
-      // send assistant message (blank for now)
-      const assistantMessageId = await SessionService.addMessage({
-        sessionId: sessionId as string,
-        requestBody: {
-          content: "",
-          role: "assistant" as Role,
-          model_name: data.model_name,
-          status: "streaming" as Status,
-        } as NewMessage,
-      });
-
-      return {
-        sessionId: sessionId as string,
-        assistantMessageId,
-      };
+      })
+      return res
     },
     onSuccess: () => {
-      chatForm.setFieldValue("prompt", "");
+      translationForm.setFieldValue("src", "")
     },
     onError: (err: ApiError) => {
-      const body = err.body as { detail?: string } | undefined;
-      const message = body?.detail ?? "An error occurred";
-      showErrorToast(message);
-      handleError(err);
+      const body = err.body as { detail?: string } | undefined
+      const message = body?.detail ?? "An error occurred"
+      showErrorToast(message)
+      handleError(err)
     },
     onSettled: () => {
-      queryClient.refetchQueries({ queryKey: ["messages", chatId] });
+      queryClient.refetchQueries({ queryKey: ["messages", chatId] })
     },
-  });
+  })
 
-  const chatForm = useForm<NewMessage>({
+  const translationForm = useForm<TranslationRequest>({
     initialValues: {
-      content: "",
-      model_name: "gpt-5-nano",
+      src: "",
+      target: null,
+      status: TranslationStatusSchema.enum[0],
     },
-  });
+  })
 
-  const handleSubmit = async (values: NewMessage) => {
+  const handleSubmit = async (values: TranslationRequest) => {
     try {
-      const { sessionId, assistantMessageId } =
-        await sendMessage.mutateAsync(values);
+      const res = await sendMessage.mutateAsync(values)
+      const sessionId = chatId || res.id
+      setNewMessageId(res.id)
       pendingChatRef.current = {
         sessionId,
-        assistantMessageId,
-        model_name: values.model_name,
-      };
-      setNewMessageId(assistantMessageId);
-      // Use sessionId (returned from mutation) instead of chatId (might be undefined for new sessions)
+        assistantMessageId: res.id,
+        model_name: "default",
+      }
       await queryClient.refetchQueries({
         queryKey: ["messages", sessionId],
-      });
+      })
     } catch (err) {
-      console.error("Error sending message or streaming:", err);
+      console.error("Error sending message or streaming:", err)
     }
-  };
+  }
 
   const { streamingMessage, isStreaming, messageType } = useMessageSocket({
     messageId: newMessageId,
     pendingChatRef,
     onMessageComplete: () => {
-      queryClient.invalidateQueries({ queryKey: ["session", chatId] });
+      queryClient.invalidateQueries({ queryKey: ["session", chatId] })
     },
-  });
-  // Pass streaming content to parent component
+  })
+
   useEffect(() => {
-    setStreamingContent(streamingMessage);
-  }, [streamingMessage, setStreamingContent]);
-  // Set streaming message ID immediately when newMessageId is set
+    setStreamingContent(streamingMessage)
+  }, [streamingMessage, setStreamingContent])
+
   useEffect(() => {
     if (newMessageId) {
-      setStreamingMessageId(newMessageId);
+      setStreamingMessageId(newMessageId)
     }
-  }, [newMessageId, setStreamingMessageId]);
+  }, [newMessageId, setStreamingMessageId])
 
-  // Update message type in parent
   useEffect(() => {
     if (messageType) {
-      setMessageType(messageType);
+      setMessageType(messageType)
     }
-  }, [messageType, setMessageType]);
+  }, [messageType, setMessageType])
 
-  // Pass isStreaming to parent
   useEffect(() => {
-    setIsStreaming(isStreaming);
-  }, [isStreaming, setIsStreaming]);
+    setIsStreaming(isStreaming)
+  }, [isStreaming, setIsStreaming])
 
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(chatForm.getValues());
+        e.preventDefault()
+        handleSubmit(translationForm.getValues())
       }}
     >
       <Textarea
@@ -156,12 +132,15 @@ const InputBar: React.FC<InputBarProps> = ({
         w="100%"
         size="lg"
         rightSection={
-          <RightSection sendMessage={sendMessage} chatForm={chatForm} />
+          <RightSection
+            sendMessage={sendMessage}
+            translationForm={translationForm}
+          />
         }
-        {...chatForm.getInputProps("content")}
+        {...translationForm.getInputProps("src")}
       />
     </form>
-  );
-};
+  )
+}
 
-export default InputBar;
+export default InputBar

@@ -143,6 +143,71 @@ export const TokenSchema = {
     title: 'Token'
 } as const;
 
+export const TranslationRequestSchema = {
+    properties: {
+        src: {
+            type: 'string',
+            title: 'Src'
+        },
+        target: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Target'
+        },
+        status: {
+            '$ref': '#/components/schemas/TranslationStatus',
+            default: 'completed'
+        }
+    },
+    type: 'object',
+    required: ['src', 'target'],
+    title: 'TranslationRequest'
+} as const;
+
+export const TranslationResponseSchema = {
+    properties: {
+        src: {
+            type: 'string',
+            title: 'Src'
+        },
+        target: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Target'
+        },
+        status: {
+            '$ref': '#/components/schemas/TranslationStatus',
+            default: 'completed'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        }
+    },
+    type: 'object',
+    required: ['src', 'target', 'id'],
+    title: 'TranslationResponse'
+} as const;
+
+export const TranslationStatusSchema = {
+    type: 'string',
+    enum: ['inporgress', 'failed', 'completed'],
+    title: 'TranslationStatus'
+} as const;
+
 export const UpdatePasswordSchema = {
     properties: {
         current_password: {

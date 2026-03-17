@@ -1,27 +1,28 @@
-import { Box, Button } from "@mantine/core";
-import { FiArrowUp } from "react-icons/fi";
-import { FaSquare } from "react-icons/fa";
+import { Box, Button } from "@mantine/core"
+import { FaSquare } from "react-icons/fa"
+import { FiArrowUp } from "react-icons/fi"
+
+import type { TranslationRequest } from "@/client"
 
 interface RightSectionProps {
-  sendMessage: { isPending: boolean };
-  chatForm: {
-    values: { content: string };
-    isValid: () => boolean;
-  };
+  sendMessage: { isPending: boolean }
+  translationForm: {
+    values: TranslationRequest
+    isValid: () => boolean
+  }
 }
 
 const RightSection: React.FC<RightSectionProps> = ({
   sendMessage,
-  chatForm,
+  translationForm,
 }) => {
-  // Only render button if there is content in chatForm
-  if (!chatForm.values.content || sendMessage.isPending) return null;
+  if (!translationForm.values.src || sendMessage.isPending) return null
 
   return (
     <Box>
       <Button
         type="submit"
-        disabled={!chatForm.isValid()}
+        disabled={!translationForm.isValid()}
         radius="xl"
         bg={sendMessage.isPending ? "gray" : "white"}
       >
@@ -32,7 +33,7 @@ const RightSection: React.FC<RightSectionProps> = ({
         )}
       </Button>
     </Box>
-  );
-};
+  )
+}
 
-export default RightSection;
+export default RightSection

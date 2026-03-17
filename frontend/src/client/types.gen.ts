@@ -34,6 +34,21 @@ export type Token = {
     token_type?: string;
 };
 
+export type TranslationRequest = {
+    src: string;
+    target: (string | null);
+    status?: TranslationStatus;
+};
+
+export type TranslationResponse = {
+    src: string;
+    target: (string | null);
+    status?: TranslationStatus;
+    id: string;
+};
+
+export type TranslationStatus = 'inporgress' | 'failed' | 'completed';
+
 export type UpdatePassword = {
     current_password: string;
     new_password: string;
@@ -116,6 +131,12 @@ export type PrivateCreateUserData = {
 };
 
 export type PrivateCreateUserResponse = (UserPublic);
+
+export type TranslationTranslateData = {
+    requestBody: TranslationRequest;
+};
+
+export type TranslationTranslateResponse = (TranslationResponse);
 
 export type UsersReadUsersData = {
     limit?: number;

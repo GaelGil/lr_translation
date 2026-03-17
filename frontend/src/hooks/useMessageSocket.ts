@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { SessionService, StreamResponseBody } from "@/client";
+// import { SessionService, type StreamResponseBody } from "@/client";
+// import { TranslationService } from "@/client";
 
 interface ChunkMessage {
   type: "message_chunk" | "tool_call" | "tool_result" | "tool_error";
@@ -104,13 +105,13 @@ export function useMessageSocket({
       // NOW trigger the backend to start streaming
       const pending = pendingChatRef.current;
       if (!pending) return;
-      SessionService.chat({
-        sessionId: pending.sessionId,
-        requestBody: {
-          model_name: pending.model_name,
-          message_id: pending.assistantMessageId,
-        } as StreamResponseBody,
-      });
+      // SessionService.chat({
+      //   sessionId: pending.sessionId,
+      //   requestBody: {
+      //     model_name: pending.model_name,
+      //     message_id: pending.assistantMessageId,
+      //   } as StreamResponseBody,
+      // });
       pendingChatRef.current = null;
     };
     ws.onmessage = (event) => {
@@ -171,7 +172,7 @@ export function useMessageSocket({
       setIsConnected(false);
       setIsStreaming(false);
     };
-  }, [messageId]); // Only depend on messageId
+  }, [messageId, pendingChatRef]); // Only depend on messageId
 
   return {
     isConnected: isConnected,

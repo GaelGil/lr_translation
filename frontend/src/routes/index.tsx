@@ -1,20 +1,21 @@
 // routes/index.tsx
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useDisclosure } from "@mantine/hooks";
+
 import {
-  AppShell,
   Anchor,
-  Group,
-  Container,
-  Stack,
-  Box,
-  Flex,
-  Select,
+  AppShell,
   Blockquote,
+  Box,
+  Container,
+  Flex,
+  Group,
+  Select,
+  Stack,
 } from "@mantine/core";
-import { Button } from "@/components/ui/button";
+import { useDisclosure } from "@mantine/hooks";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import InputBar from "@/components/Chat/Input/InputBar";
 import InitMessage from "@/components/Chat/Messages/InitMesssage";
+import { Button } from "@/components/ui/button";
 import { isLoggedIn } from "@/hooks/useAuth";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
 export const Route = createFileRoute("/")({
