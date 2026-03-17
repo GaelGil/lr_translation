@@ -2,7 +2,7 @@ from fastapi import APIRouter, BackgroundTasks
 
 from app.api.deps import TranslateServiceDep
 from app.database.models import Translation
-from app.database.schemas.Translation import TranslationRequest
+from app.database.schemas.Translation import TranslationRequest, TranslationResponse
 
 router = APIRouter(prefix="/translation", tags=["translation"])
 
@@ -12,7 +12,7 @@ async def translate(
     translate_service: TranslateServiceDep,
     translate_req: TranslationRequest,
     background_tasks: BackgroundTasks,
-):
+) -> TranslationResponse:
     """
     Sart the chat
     """
@@ -23,4 +23,4 @@ async def translate(
         translate_service.translate, text=req.src, message_id=str(req.id)
     )
 
-    # return message
+    return TranslationResponse.model_validate(req)
