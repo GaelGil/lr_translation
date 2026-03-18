@@ -1,17 +1,8 @@
 import { Textarea } from "@mantine/core";
-import { useForm } from "@mantine/form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import {
-  type TranslationRequest,
-  type TranslationResponse,
-  TranslationService,
-} from "@/client";
-import type { ApiError } from "@/client/core/ApiError";
-import { TranslationStatusSchema } from "@/client/schemas.gen";
-import useCustomToast from "@/hooks/useCustomToast";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
+
 import { useMessageSocket } from "@/hooks/useMessageSocket";
-import { handleError } from "@/utils";
 import RightSection from "./RightSection";
 import useTranslationForm from "@/hooks/useTranslationForm";
 
@@ -31,10 +22,7 @@ const InputBar: React.FC<InputBarProps> = ({
   setIsStreaming,
 }) => {
   const queryClient = useQueryClient();
-  const { handleSubmit, translationForm, translate, translationId } =
-    useTranslationForm();
-  const { showErrorToast } = useCustomToast();
-  const [newMessageId, setNewMessageId] = useState("");
+  const { handleSubmit, translationForm, translationId } = useTranslationForm();
   const pendingChatRef = useRef<{
     sessionId: string;
     assistantMessageId: string;
@@ -42,7 +30,7 @@ const InputBar: React.FC<InputBarProps> = ({
   } | null>(null);
 
   const { streamingMessage, isStreaming, messageType } = useMessageSocket({
-    messageId: newMessageId,
+    messageId: translationId,
     pendingChatRef,
     onMessageComplete: () => {
       queryClient.invalidateQueries({ queryKey: ["session", chatId] });
@@ -54,10 +42,10 @@ const InputBar: React.FC<InputBarProps> = ({
   }, [streamingMessage, setStreamingContent]);
 
   useEffect(() => {
-    if (newMessageId) {
-      setStreamingMessageId(newMessageId);
+    if (translationId) {
+      setStreamingMessageId(translationId);
     }
-  }, [newMessageId, setStreamingMessageId]);
+  }, [translationId, setStreamingMessageId]);
 
   useEffect(() => {
     if (messageType) {

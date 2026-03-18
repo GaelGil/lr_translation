@@ -3,19 +3,8 @@ import { FaSquare } from "react-icons/fa";
 import { FiArrowUp } from "react-icons/fi";
 import useTranslationForm from "@/hooks/useTranslationForm";
 
-import type { TranslationRequest } from "@/client";
-
-// interface RightSectionProps {
-//   sendMessage: { isPending: boolean }
-//   translationForm: {
-//     values: TranslationRequest
-//     isValid: () => boolean
-//   }
-// }
-
 const RightSection = () => {
-  const { handleSubmit, translationForm, translate, translationId } =
-    useTranslationForm();
+  const { translationForm, translate } = useTranslationForm();
   if (!translationForm.values.src || translate.isPending) return null;
 
   return (
