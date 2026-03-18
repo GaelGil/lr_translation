@@ -82,12 +82,7 @@ const InputBar: React.FC<InputBarProps> = ({
         autosize
         w="100%"
         size="lg"
-        rightSection={
-          <RightSection
-            sendMessage={sendMessage}
-            translationForm={translationForm}
-          />
-        }
+        rightSection={<RightSection />}
         {...translationForm.getInputProps("src")}
       />
     </form>
