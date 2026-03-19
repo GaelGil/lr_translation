@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ActionIcon,
@@ -10,21 +10,21 @@ import {
   Stack,
   Text,
   Title,
-} from "@mantine/core"
-import { Link } from "@tanstack/react-router"
-import { useState } from "react"
-import { FaGithub } from "react-icons/fa"
-import { FiArrowRight, FiColumns } from "react-icons/fi"
-import { SiJupyter } from "react-icons/si"
-import { LOGO, PROJECT_NAME } from "@/const"
+} from "@mantine/core";
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { FiArrowRight, FiColumns } from "react-icons/fi";
+import { SiJupyter } from "react-icons/si";
+import { LOGO, PROJECT_NAME } from "@/const";
 
 interface HomeSideBarProps {
-  collapsed: boolean
-  toggle: () => void
+  collapsed: boolean;
+  toggle: () => void;
 }
 
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
   return (
     <ScrollArea>
@@ -40,8 +40,8 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
               onClick={() => {
-                toggle()
-                setHovered(false)
+                toggle();
+                setHovered(false);
               }}
               style={{ cursor: "pointer", position: "relative" }}
             >
@@ -78,7 +78,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               <Title order={3}>About</Title>
               <Text>
                 I wanted to learn transformers in depth by implementing and
-                training one. Model was trainned using Googles Jax
+                training one. Model was trainned using Jax
               </Text>
 
               <Title order={3}>Model Architecture</Title>
@@ -90,7 +90,12 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               </Text>
 
               <Title order={3}>Deployment</Title>
-              <Text>...</Text>
+              <Text>
+                I used a standard encoder decoder architecture with a sequence
+                length of 128, model dimension of 512, 8 attention heads, 6
+                encoder decoder blocks and a feed forward dimension of 2048.
+                This uses learned positional embeddings.
+              </Text>
               <Anchor
                 href={
                   "https://github.com/GaelGil/notebooks/blob/master/transformer/main.py"
@@ -122,7 +127,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
         )}
       </Stack>
     </ScrollArea>
-  )
-}
+  );
+};
 
-export default HomeSideBar
+export default HomeSideBar;

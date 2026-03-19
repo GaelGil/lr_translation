@@ -104,13 +104,7 @@ export function useMessageSocket({
       // NOW trigger the backend to start streaming
       const pending = pendingChatRef.current;
       if (!pending) return;
-      // SessionService.chat({
-      //   sessionId: pending.sessionId,
-      //   requestBody: {
-      //     model_name: pending.model_name,
-      //     message_id: pending.assistantMessageId,
-      //   } as StreamResponseBody,
-      // });
+
       pendingChatRef.current = null;
     };
     ws.onmessage = (event) => {
