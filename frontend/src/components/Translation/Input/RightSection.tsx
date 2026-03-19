@@ -4,8 +4,8 @@ import { FiArrowUp } from "react-icons/fi"
 import { useTranslationContext } from "@/contexts/TranslationContext"
 
 const RightSection: React.FC = () => {
-  const { src, isSubmitting, isValid } = useTranslationContext()
-  if (!src || isSubmitting) return null
+  const { src, isSubmitting, isValid, isStreaming } = useTranslationContext()
+  if (!src || isSubmitting || isStreaming) return null
 
   return (
     <Box>

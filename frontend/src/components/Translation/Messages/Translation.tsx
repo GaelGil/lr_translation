@@ -27,11 +27,7 @@ const Translation: React.FC = () => {
           justifyContent: "space-between",
         }}
       >
-        {!src && !streamingContent ? (
-          <>{displayText}</>
-        ) : (
-          <>{streamingContent}</>
-        )}
+        {displayText}
 
         <ActionIcon variant="subtle" onClick={handleCopy} size="sm">
           {copied ? <FiCheck /> : <FiCopy />}

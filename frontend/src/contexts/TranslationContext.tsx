@@ -16,7 +16,7 @@ import {
 } from "@/client";
 import { TranslationStatusSchema } from "@/client/schemas.gen";
 import useCustomToast from "@/hooks/useCustomToast";
-import { useMessageSocket } from "@/hooks/useMessageSocket";
+import { useMessageSocket } from "@/hooks/useTransaltionSocket";
 import { handleError } from "@/utils";
 
 interface TranslationContextValue {

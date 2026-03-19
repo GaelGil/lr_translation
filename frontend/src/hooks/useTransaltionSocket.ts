@@ -29,7 +29,7 @@ interface UseMessageSocketReturn {
   isConnected: boolean;
   streamingMessage: string;
   isStreaming: boolean;
-  messageType: "message_chunk" | "tool_call" | "tool_result" | "tool_error";
+  messageType: string;
 }
 
 export function useMessageSocket({
@@ -41,138 +41,128 @@ export function useMessageSocket({
 }: UseMessageSocketOptions): UseMessageSocketReturn {
   const wsRef = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [translation, setTranslation] = useState("");
-  const [translationId, setTranslationId] = useState("");
-  const [streamingMessage, setstreamingMessage] = useState("");
+  const [streamingMessage, setStreamingMessage] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [messageType, setMessageType] = useState("");
   const fullmessageRef = useRef("");
 
-  // Store callbacks in refs to avoid reconnection loops
   const onmessageChunkRef = useRef(onMessageChunk);
   const onmessageCompleteRef = useRef(onMessageComplete);
   const onErrorRef = useRef(onError);
 
-  // Update refs when callbacks change
   useEffect(() => {
     onmessageChunkRef.current = onMessageChunk;
     onmessageCompleteRef.current = onMessageComplete;
     onErrorRef.current = onError;
   }, [onMessageChunk, onMessageComplete, onError]);
 
-  // Single effect to manage WebSocket connection
   useEffect(() => {
     if (!messageId) return;
 
-    // Determine WebSocket URL based on current location
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const host = window.location.host;
 
-    // In development, the API might be on a different port
     const apiHost = import.meta.env.VITE_API_URL
       ? new URL(import.meta.env.VITE_API_URL).host
       : host;
 
-    const url = `${protocol}//${apiHost}/api/v1/ws/message/${messageId}`;
+    const url = `${protocol}//${apiHost}/api/v1/ws/translate/${messageId}`;
 
-    console.log("Connecting to WebSocket:", url);
-    // Reset state
-    setstreamingMessage("");
+    console.log("[WebSocket] Connecting to:", url);
+    console.log("[WebSocket] Translation ID:", messageId);
+
+    setStreamingMessage("");
     fullmessageRef.current = "";
     setIsStreaming(false);
+    setIsConnected(false);
 
     const ws = new WebSocket(url);
-    console.log("messageId", messageId);
-    const pending = pendingChatRef.current;
-    if (!pending) return;
-
-    console.log("WS open, pending:", pending);
-
-    // Make sure backend knows to stream to this WS
-    // SessionService.chat({
-    //   sessionId: pending.sessionId,
-    //   requestBody: {
-    //     model_name: pending.model_name,
-    //     message_id: pending.assistantMessageId,
-    //   } as StreamResponseBody,
-    // });
-    // pendingChatRef.current = null;
 
     ws.onopen = () => {
-      console.log("WebSocket connection opened");
-      console.log("WS open, pending:", pendingChatRef.current);
+      console.log("[WebSocket] Connection opened");
       setIsConnected(true);
-      // NOW trigger the backend to start streaming
-      const pending = pendingChatRef.current;
-      if (!pending) return;
-
-      pendingChatRef.current = null;
     };
+
     ws.onmessage = (event) => {
-      console.log("Received WebSocket message:", event.data);
+      console.log("[WebSocket] Raw message received:", event.data);
+      
       try {
         const message: SocketMessage = JSON.parse(event.data);
-        console.log("event data", event);
+        console.log("[WebSocket] Parsed message:", message);
+        console.log("[WebSocket] Message type:", message.type);
+        console.log("[WebSocket] Chunk content:", message.chunk);
+        console.log("[WebSocket] Is complete:", message.is_complete);
+
         setMessageType(message.type);
+
         if (message.type === "message_chunk") {
-          // Only set isStreaming when we actually receive content
+          if (message.chunk) {
+            fullmessageRef.current += fullmessageRef.current ? ` ${message.chunk}` : message.chunk;
+          }
+          console.log("[WebSocket] Accumulated text:", fullmessageRef.current);
+          
+          setStreamingMessage(fullmessageRef.current);
+          console.log("[WebSocket] State updated, streamingMessage:", fullmessageRef.current);
+
           if (!message.is_complete) {
             setIsStreaming(true);
+            console.log("[WebSocket] Streaming started");
           }
-          console.log("message chunk", message.chunk);
-          fullmessageRef.current += message.chunk;
-          console.log(message.chunk);
-          setstreamingMessage(fullmessageRef.current);
-          // setLatestChunk(message.chunk); // <-- emit only the new chunk
-          onmessageChunkRef.current?.(message.chunk);
 
           if (message.is_complete) {
             setIsStreaming(false);
+            console.log("[WebSocket] Streaming complete");
+            console.log("[WebSocket] Final translation:", fullmessageRef.current);
             onmessageCompleteRef.current?.(fullmessageRef.current.trim());
           }
+
+          onmessageChunkRef.current?.(message.chunk);
         } else if (message.type === "tool_call") {
+          console.log("[WebSocket] Tool call received:", message.chunk);
           onmessageChunkRef.current?.(message.chunk);
         } else if (message.type === "tool_result") {
+          console.log("[WebSocket] Tool result received:", message.chunk);
           onmessageChunkRef.current?.(message.chunk);
         } else if (message.type === "message_error") {
+          console.log("[WebSocket] Error received:", message.error);
           setIsStreaming(false);
           onErrorRef.current?.(message.error);
         }
       } catch (e) {
-        console.error("Failed to parse WebSocket message:", e);
+        console.error("[WebSocket] Failed to parse message:", e);
       }
     };
 
     ws.onerror = (error) => {
-      console.error("WebSocket error:", error);
+      console.error("[WebSocket] Error:", error);
       onErrorRef.current?.("WebSocket connection error");
-      console.log("ONERROR");
     };
 
     ws.onclose = () => {
+      console.log("[WebSocket] Connection closed");
       setIsConnected(false);
       setIsStreaming(false);
-      console.log("WebSocket connection closed");
     };
 
     wsRef.current = ws;
 
-    // Cleanup on unmount or messageId change
     return () => {
       if (wsRef.current) {
+        console.log("[WebSocket] Cleaning up connection");
         wsRef.current.close();
         wsRef.current = null;
       }
       setIsConnected(false);
       setIsStreaming(false);
     };
-  }, [messageId, pendingChatRef]); // Only depend on messageId
+  }, [messageId]);
 
   return {
-    isConnected: isConnected,
-    streamingMessage: streamingMessage,
-    isStreaming: isStreaming,
-    messageType: messageType,
-  } as UseMessageSocketReturn;
+    isConnected,
+    streamingMessage,
+    isStreaming,
+    messageType,
+  };
 }
 
 export default useMessageSocket;
