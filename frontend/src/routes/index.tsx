@@ -22,7 +22,6 @@ function HomePage() {
     <TranslationProvider>
       <AppShell
         layout="alt"
-        header={{ height: 60 }}
         navbar={{
           width: sidebarWidth,
           breakpoint: "sm",
@@ -43,7 +42,7 @@ function HomePage() {
             mt="15%"
           >
             <Stack align="center">
-              <Box ta="center" px="md" display={"flex"}>
+              <Box ta="center" display={"flex"}>
                 <HeaderMessage />
               </Box>
               <Box>
