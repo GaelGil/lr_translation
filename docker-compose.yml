@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: clone
+      POSTGRES_DB: translate
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
