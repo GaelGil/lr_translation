@@ -8,7 +8,7 @@ const PLACEHOLDER =
 
 const Translation: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const { streamingContent, src } = useTranslationContext();
+  const { streamingContent } = useTranslationContext();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(streamingContent || PLACEHOLDER);
