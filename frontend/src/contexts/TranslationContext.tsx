@@ -16,7 +16,7 @@ import {
 } from "@/client";
 import { TranslationStatusSchema } from "@/client/schemas.gen";
 import useCustomToast from "@/hooks/useCustomToast";
-import { useMessageSocket } from "@/hooks/useTransaltionSocket";
+import { useTranslationSocket } from "@/hooks/useTransaltionSocket";
 import { handleError } from "@/utils";
 
 interface TranslationContextValue {
@@ -63,7 +63,7 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
     model_name: string;
   } | null>(null);
 
-  const { isStreaming, streamingMessage } = useMessageSocket({
+  const { isStreaming, streamingMessage } = useTranslationSocket({
     messageId: translationId,
     pendingChatRef,
   });

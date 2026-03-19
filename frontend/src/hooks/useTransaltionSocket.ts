@@ -1,19 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 
-interface ChunkMessage {
-  type: "message_chunk" | "tool_call" | "tool_result" | "tool_error";
+interface TranslationChunk {
+  type: "translation_chunk";
   chunk: string;
   is_complete: boolean;
 }
 
-interface ErrorMessage {
-  type: "message_error";
+interface TranslationError {
+  type: "translation_error";
   error: string;
 }
 
-type SocketMessage = ChunkMessage | ErrorMessage;
+type SocketMessage = TranslationChunk | TranslationError;
 
-interface UseMessageSocketOptions {
+interface UseTranslationSocketOptions {
   messageId: string | null;
   pendingChatRef: React.RefObject<{
     sessionId: string;
@@ -25,20 +25,19 @@ interface UseMessageSocketOptions {
   onError?: (error: string) => void;
 }
 
-interface UseMessageSocketReturn {
+interface UseTranslationSocketReturn {
   isConnected: boolean;
   streamingMessage: string;
   isStreaming: boolean;
   messageType: string;
 }
 
-export function useMessageSocket({
+export function useTranslationSocket({
   messageId,
-  pendingChatRef,
   onMessageChunk,
   onMessageComplete,
   onError,
-}: UseMessageSocketOptions): UseMessageSocketReturn {
+}: UseTranslationSocketOptions): UseTranslationSocketReturn {
   const wsRef = useRef<WebSocket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [streamingMessage, setStreamingMessage] = useState("");
@@ -85,9 +84,10 @@ export function useMessageSocket({
 
     ws.onmessage = (event) => {
       console.log("[WebSocket] Raw message received:", event.data);
-      
+
       try {
         const message: SocketMessage = JSON.parse(event.data);
+        // if (message.type !== )
         console.log("[WebSocket] Parsed message:", message);
         console.log("[WebSocket] Message type:", message.type);
         console.log("[WebSocket] Chunk content:", message.chunk);
@@ -95,14 +95,19 @@ export function useMessageSocket({
 
         setMessageType(message.type);
 
-        if (message.type === "message_chunk") {
+        if (message.type === "translation_chunk") {
           if (message.chunk) {
-            fullmessageRef.current += fullmessageRef.current ? ` ${message.chunk}` : message.chunk;
+            fullmessageRef.current += fullmessageRef.current
+              ? ` ${message.chunk}`
+              : message.chunk;
           }
           console.log("[WebSocket] Accumulated text:", fullmessageRef.current);
-          
+
           setStreamingMessage(fullmessageRef.current);
-          console.log("[WebSocket] State updated, streamingMessage:", fullmessageRef.current);
+          console.log(
+            "[WebSocket] State updated, streamingMessage:",
+            fullmessageRef.current,
+          );
 
           if (!message.is_complete) {
             setIsStreaming(true);
@@ -112,18 +117,15 @@ export function useMessageSocket({
           if (message.is_complete) {
             setIsStreaming(false);
             console.log("[WebSocket] Streaming complete");
-            console.log("[WebSocket] Final translation:", fullmessageRef.current);
+            console.log(
+              "[WebSocket] Final translation:",
+              fullmessageRef.current,
+            );
             onmessageCompleteRef.current?.(fullmessageRef.current.trim());
           }
 
           onmessageChunkRef.current?.(message.chunk);
-        } else if (message.type === "tool_call") {
-          console.log("[WebSocket] Tool call received:", message.chunk);
-          onmessageChunkRef.current?.(message.chunk);
-        } else if (message.type === "tool_result") {
-          console.log("[WebSocket] Tool result received:", message.chunk);
-          onmessageChunkRef.current?.(message.chunk);
-        } else if (message.type === "message_error") {
+        } else if (message.type === "translation_error") {
           console.log("[WebSocket] Error received:", message.error);
           setIsStreaming(false);
           onErrorRef.current?.(message.error);
@@ -165,4 +167,4 @@ export function useMessageSocket({
   };
 }
 
-export default useMessageSocket;
+export default useTranslationSocket;

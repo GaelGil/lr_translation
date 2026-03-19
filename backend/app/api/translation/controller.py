@@ -14,13 +14,15 @@ async def translate(
     background_tasks: BackgroundTasks,
 ) -> TranslationResponse:
     """
-    Sart the chat
+    Start the translation process
     """
 
-    req = Translation.model_validate(translate_req)
+    translation = Translation.model_validate(translate_req)
     # Start background task to generate and stream response
     background_tasks.add_task(
-        translate_service.translate, text=req.src, translate_id=str(req.id)
+        translate_service.translate,
+        text=translation.src,
+        translate_id=str(translation.id),
     )
 
-    return TranslationResponse.model_validate(req)
+    return TranslationResponse.model_validate(translation)
