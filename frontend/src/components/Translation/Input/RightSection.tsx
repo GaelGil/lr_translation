@@ -1,28 +1,28 @@
-import { Box, Button } from "@mantine/core";
-import { FaSquare } from "react-icons/fa";
-import { FiArrowUp } from "react-icons/fi";
-import useTranslationForm from "@/hooks/useTranslationForm";
+import { Box, Button } from "@mantine/core"
+import { FaSquare } from "react-icons/fa"
+import { FiArrowUp } from "react-icons/fi"
+import { useTranslationContext } from "@/contexts/TranslationContext"
 
-const RightSection = () => {
-  const { translationForm, translate } = useTranslationForm();
-  if (!translationForm.values.src || translate.isPending) return null;
+const RightSection: React.FC = () => {
+  const { src, isSubmitting, isValid } = useTranslationContext()
+  if (!src || isSubmitting) return null
 
   return (
     <Box>
       <Button
         type="submit"
-        disabled={!translationForm.isValid()}
+        disabled={!isValid}
         radius="xl"
-        bg={translate.isPending ? "gray" : "white"}
+        bg={isSubmitting ? "gray" : "white"}
       >
-        {translate.isPending ? (
+        {isSubmitting ? (
           <FaSquare size={24} color="white" />
         ) : (
           <FiArrowUp size={24} color="black" />
         )}
       </Button>
     </Box>
-  );
-};
+  )
+}
 
-export default RightSection;
+export default RightSection

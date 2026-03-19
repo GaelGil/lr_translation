@@ -1,67 +1,16 @@
-import { Textarea } from "@mantine/core";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import { Textarea } from "@mantine/core"
 
-import { useMessageSocket } from "@/hooks/useMessageSocket";
-import RightSection from "./RightSection";
-import useTranslationForm from "@/hooks/useTranslationForm";
+import { useTranslationContext } from "@/contexts/TranslationContext"
+import RightSection from "./RightSection"
 
-interface InputBarProps {
-  chatId: string | undefined;
-  setStreamingContent: (value: string) => void;
-  setStreamingMessageId: (id: string | null) => void;
-  setMessageType: (value: string) => void;
-  setIsStreaming: (value: boolean) => void;
-}
-
-const InputBar: React.FC<InputBarProps> = ({
-  chatId,
-  setStreamingContent,
-  setStreamingMessageId,
-  setMessageType,
-  setIsStreaming,
-}) => {
-  const queryClient = useQueryClient();
-  const { handleSubmit, translationForm, translationId } = useTranslationForm();
-  const pendingChatRef = useRef<{
-    sessionId: string;
-    assistantMessageId: string;
-    model_name: string;
-  } | null>(null);
-
-  const { streamingMessage, isStreaming, messageType } = useMessageSocket({
-    messageId: translationId,
-    pendingChatRef,
-    onMessageComplete: () => {
-      queryClient.invalidateQueries({ queryKey: ["session", chatId] });
-    },
-  });
-
-  useEffect(() => {
-    setStreamingContent(streamingMessage);
-  }, [streamingMessage, setStreamingContent]);
-
-  useEffect(() => {
-    if (translationId) {
-      setStreamingMessageId(translationId);
-    }
-  }, [translationId, setStreamingMessageId]);
-
-  useEffect(() => {
-    if (messageType) {
-      setMessageType(messageType);
-    }
-  }, [messageType, setMessageType]);
-
-  useEffect(() => {
-    setIsStreaming(isStreaming);
-  }, [isStreaming, setIsStreaming]);
+const InputBar: React.FC = () => {
+  const { src, setSrc, handleSubmit } = useTranslationContext()
 
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(translationForm.getValues());
+        e.preventDefault()
+        handleSubmit()
       }}
     >
       <Textarea
@@ -71,10 +20,11 @@ const InputBar: React.FC<InputBarProps> = ({
         w="100%"
         size="lg"
         rightSection={<RightSection />}
-        {...translationForm.getInputProps("src")}
+        value={src}
+        onChange={(e) => setSrc(e.target.value)}
       />
     </form>
-  );
-};
+  )
+}
 
-export default InputBar;
+export default InputBar

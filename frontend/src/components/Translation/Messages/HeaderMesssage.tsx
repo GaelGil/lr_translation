@@ -1,6 +1,6 @@
 import { Box, Title } from "@mantine/core";
 
-const InitMessage = () => {
+const HeaderMessage = () => {
   return (
     <Box maw={720} ta="center">
       <Title order={2} fw={300} c="white">
@@ -10,4 +10,4 @@ const InitMessage = () => {
   );
 };
 
-export default InitMessage;
+export default HeaderMessage;

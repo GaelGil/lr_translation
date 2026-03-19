@@ -1,15 +1,23 @@
-import { Blockquote, ActionIcon } from "@mantine/core";
-import { FiCopy, FiCheck } from "react-icons/fi";
+import { ActionIcon, Blockquote } from "@mantine/core";
 import { useState } from "react";
-const Translation = () => {
+import { FiCheck, FiCopy } from "react-icons/fi";
+import { useTranslationContext } from "@/contexts/TranslationContext";
+
+const PLACEHOLDER =
+  "Life is like an npm install – you never know what you are going to get.";
+
+const Translation: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const text =
-    "Life is like an npm install – you never know what you are going to get.";
+  const { streamingContent, src } = useTranslationContext();
+
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(streamingContent || PLACEHOLDER);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const displayText = streamingContent || PLACEHOLDER;
+
   return (
     <Blockquote color="red" cite={null} icon={null}>
       <div
@@ -19,7 +27,12 @@ const Translation = () => {
           justifyContent: "space-between",
         }}
       >
-        {text}
+        {!src && !streamingContent ? (
+          <>{displayText}</>
+        ) : (
+          <>{streamingContent}</>
+        )}
+
         <ActionIcon variant="subtle" onClick={handleCopy} size="sm">
           {copied ? <FiCheck /> : <FiCopy />}
         </ActionIcon>
@@ -27,4 +40,5 @@ const Translation = () => {
     </Blockquote>
   );
 };
+
 export default Translation;

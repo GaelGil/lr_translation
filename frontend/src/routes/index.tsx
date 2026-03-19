@@ -1,13 +1,11 @@
-// routes/index.tsx
-
 import { AppShell, Box, Container, Flex, Select, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import InputBar from "@/components/Translation/Input/InputBar";
-import InitMessage from "@/components/Translation/Messages/InitMesssage";
-
-import HomeSideBar from "../components/Common/Home/HomeSideBar";
+import HeaderMessage from "@/components/Translation/Messages/HeaderMesssage";
 import Translation from "@/components/Translation/Messages/Translation";
+import { TranslationProvider } from "@/contexts/TranslationContext";
+import HomeSideBar from "../components/Common/Home/HomeSideBar";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -21,56 +19,52 @@ function HomePage() {
   const sidebarWidth = collapsed ? collapsedWidth : fullWidth;
 
   return (
-    <AppShell
-      layout="alt"
-      header={{ height: 60 }}
-      navbar={{
-        width: sidebarWidth,
-        breakpoint: "sm",
-        collapsed: { mobile: false, desktop: false },
-      }}
-      padding="md"
-      bg={"black"}
-    >
-      <AppShell.Navbar p="md" withBorder={false} bg={"black"}>
-        <HomeSideBar collapsed={collapsed} toggle={toggleCollapsed} />
-      </AppShell.Navbar>
-      <AppShell.Main>
-        <Container
-          fluid
-          style={{ display: "flex", flexDirection: "column" }}
-          w="75%"
-          h="100%"
-          mt="15%"
-        >
-          <Stack align="center">
-            <Box ta="center" px="md" display={"flex"}>
-              <InitMessage />
-            </Box>
-            <Box>
-              <Select
-                label="Language"
-                placeholder="Spanish to English"
-                data={["Spanish to English", "Spanish to Na"]}
-              />
-            </Box>
-            <Flex>
-              <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
-                <InputBar
-                  chatId={undefined}
-                  setStreamingContent={() => {}}
-                  setStreamingMessageId={() => {}}
-                  setIsStreaming={() => {}}
-                  setMessageType={() => {}}
+    <TranslationProvider>
+      <AppShell
+        layout="alt"
+        header={{ height: 60 }}
+        navbar={{
+          width: sidebarWidth,
+          breakpoint: "sm",
+          collapsed: { mobile: false, desktop: false },
+        }}
+        padding="md"
+        bg={"black"}
+      >
+        <AppShell.Navbar p="md" withBorder={false} bg={"black"}>
+          <HomeSideBar collapsed={collapsed} toggle={toggleCollapsed} />
+        </AppShell.Navbar>
+        <AppShell.Main>
+          <Container
+            fluid
+            style={{ display: "flex", flexDirection: "column" }}
+            w="75%"
+            h="100%"
+            mt="15%"
+          >
+            <Stack align="center">
+              <Box ta="center" px="md" display={"flex"}>
+                <HeaderMessage />
+              </Box>
+              <Box>
+                <Select
+                  label="Language"
+                  placeholder="Spanish to English"
+                  data={["Spanish to English", "Spanish to Na"]}
                 />
               </Box>
-              <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
-                <Translation />
-              </Box>
-            </Flex>
-          </Stack>
-        </Container>
-      </AppShell.Main>
-    </AppShell>
+              <Flex>
+                <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                  <InputBar />
+                </Box>
+                <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                  <Translation />
+                </Box>
+              </Flex>
+            </Stack>
+          </Container>
+        </AppShell.Main>
+      </AppShell>
+    </TranslationProvider>
   );
 }
