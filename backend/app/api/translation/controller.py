@@ -20,7 +20,7 @@ async def translate(
     req = Translation.model_validate(translate_req)
     # Start background task to generate and stream response
     background_tasks.add_task(
-        translate_service.translate, text=req.src, message_id=str(req.id)
+        translate_service.translate, text=req.src, translate_id=str(req.id)
     )
 
     return TranslationResponse.model_validate(req)
