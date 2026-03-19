@@ -87,11 +87,12 @@ export function useTranslationSocket({
 
       try {
         const message: SocketMessage = JSON.parse(event.data);
-        // if (message.type !== )
-        console.log("[WebSocket] Parsed message:", message);
-        console.log("[WebSocket] Message type:", message.type);
-        console.log("[WebSocket] Chunk content:", message.chunk);
-        console.log("[WebSocket] Is complete:", message.is_complete);
+        if (message.type !== "translation_error") {
+          console.log("[WebSocket] Parsed message:", message);
+          console.log("[WebSocket] Message type:", message.type);
+          console.log("[WebSocket] Chunk content:", message.chunk);
+          console.log("[WebSocket] Is complete:", message.is_complete);
+        }
 
         setMessageType(message.type);
 
