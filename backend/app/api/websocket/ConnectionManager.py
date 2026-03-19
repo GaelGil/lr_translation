@@ -54,7 +54,7 @@ class ConnectionManager:
         translate_id: str,
         chunk: str,
         is_complete: bool = False,
-        msg_type: TranslationResponseType = TranslationResponseType.CHUNK,
+        msg_type: TranslationResponseType = TranslationResponseType.TRANSLATION_CHUNK,
     ):
         """Stream a response chunk to message connections.
 

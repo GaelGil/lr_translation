@@ -12,7 +12,7 @@ class TranslationStatus(Enum):
 
 
 class TranslationResponseType(Enum):
-    CHUNK = "message_chunk"
+    TRANSLATION_CHUNK = "translation_chunk"
 
 
 class TranslationBase(SQLModel):
