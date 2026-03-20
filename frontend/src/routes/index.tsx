@@ -1,4 +1,12 @@
-import { AppShell, Box, Container, Flex, Select, Stack } from "@mantine/core";
+import {
+  AppShell,
+  Box,
+  Container,
+  Flex,
+  Select,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { createFileRoute } from "@tanstack/react-router";
 import InputBar from "@/components/Translation/Input/InputBar";
@@ -42,24 +50,25 @@ function HomePage() {
             mt="15%"
           >
             <Stack align="center">
-              <Box ta="center" display={"flex"}>
+              <Box ta="center">
                 <HeaderMessage />
               </Box>
-              <Box>
-                <Select
-                  label="Language"
-                  placeholder="Spanish to English"
-                  data={["Spanish to English", "Spanish to Na"]}
-                />
-              </Box>
-              <Flex>
+              <Flex gap={"xl"}>
                 <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                  <Text>Spanish</Text>
                   <InputBar />
                 </Box>
                 <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                  <Select
+                    label="Language"
+                    placeholder="Spanish to English"
+                    data={["English", "Na"]}
+                    variant="filled"
+                  />
                   <Translation />
                 </Box>
               </Flex>
+              <Flex></Flex>
             </Stack>
           </Container>
         </AppShell.Main>
