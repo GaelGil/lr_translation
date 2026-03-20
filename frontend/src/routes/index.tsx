@@ -54,16 +54,16 @@ function HomePage() {
                 <HeaderMessage />
               </Box>
               <Flex gap={"xl"}>
-                <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                <Box w="100%" p="md" mt="xl">
                   <Text>Spanish</Text>
                   <InputBar />
                 </Box>
-                <Box w="100%" bottom={0} pos={"sticky"} p="md" mt="xl">
+                <Box w="100%" p="md" mt="xl">
                   <Select
                     label="Language"
-                    placeholder="Spanish to English"
+                    placeholder="Na"
                     data={["English", "Na"]}
-                    variant="filled"
+                    bg="transparent"
                   />
                   <Translation />
                 </Box>

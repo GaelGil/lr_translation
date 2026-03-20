@@ -24,7 +24,6 @@ const Translation: React.FC = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
         {displayText}

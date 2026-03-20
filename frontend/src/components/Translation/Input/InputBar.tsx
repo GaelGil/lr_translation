@@ -16,7 +16,7 @@ const InputBar: React.FC = () => {
     >
       <Textarea
         style={{ flex: 1 }}
-        variant="unstyled"
+        // variant="unstyled"
         placeholder={isStreaming ? "Translating..." : "Ask Anything"}
         radius="xl"
         minRows={4}
