@@ -1,17 +1,17 @@
-import { Textarea } from "@mantine/core";
+import { Textarea } from "@mantine/core"
 
-import { useTranslationContext } from "@/contexts/TranslationContext";
-import RightSection from "./RightSection";
+import { useTranslationContext } from "@/contexts/TranslationContext"
+import RightSection from "./RightSection"
 
 const InputBar: React.FC = () => {
   const { src, setSrc, handleSubmit, isStreaming, isSubmitting } =
-    useTranslationContext();
+    useTranslationContext()
 
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
+        e.preventDefault()
+        handleSubmit()
       }}
     >
       <Textarea
@@ -30,7 +30,7 @@ const InputBar: React.FC = () => {
         onChange={(e) => setSrc(e.target.value)}
       />
     </form>
-  );
-};
+  )
+}
 
-export default InputBar;
+export default InputBar

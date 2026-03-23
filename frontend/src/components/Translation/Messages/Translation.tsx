@@ -1,22 +1,22 @@
-import { ActionIcon, Blockquote } from "@mantine/core";
-import { useState } from "react";
-import { FiCheck, FiCopy } from "react-icons/fi";
-import { useTranslationContext } from "@/contexts/TranslationContext";
+import { ActionIcon, Blockquote } from "@mantine/core"
+import { useState } from "react"
+import { FiCheck, FiCopy } from "react-icons/fi"
+import { useTranslationContext } from "@/contexts/TranslationContext"
 
 const PLACEHOLDER =
-  "Life is like an npm install – you never know what you are going to get.";
+  "Life is like an npm install – you never know what you are going to get."
 
 const Translation: React.FC = () => {
-  const [copied, setCopied] = useState(false);
-  const { streamingContent } = useTranslationContext();
+  const [copied, setCopied] = useState(false)
+  const { streamingContent } = useTranslationContext()
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(streamingContent || PLACEHOLDER);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    await navigator.clipboard.writeText(streamingContent || PLACEHOLDER)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
-  const displayText = streamingContent || PLACEHOLDER;
+  const displayText = streamingContent || PLACEHOLDER
 
   return (
     <Blockquote color="red" cite={null} icon={null}>
@@ -33,7 +33,7 @@ const Translation: React.FC = () => {
         </ActionIcon>
       </div>
     </Blockquote>
-  );
-};
+  )
+}
 
-export default Translation;
+export default Translation

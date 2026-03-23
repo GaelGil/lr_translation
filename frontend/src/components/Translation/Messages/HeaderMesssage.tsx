@@ -1,4 +1,4 @@
-import { Box, Title } from "@mantine/core";
+import { Box, Title } from "@mantine/core"
 
 const HeaderMessage = () => {
   return (
@@ -7,7 +7,7 @@ const HeaderMessage = () => {
         Enter text in language to translate
       </Title>
     </Box>
-  );
-};
+  )
+}
 
-export default HeaderMessage;
+export default HeaderMessage

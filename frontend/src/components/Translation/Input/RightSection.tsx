@@ -1,11 +1,11 @@
-import { Button } from "@mantine/core";
-import { FaSquare } from "react-icons/fa";
-import { FiArrowUp } from "react-icons/fi";
-import { useTranslationContext } from "@/contexts/TranslationContext";
+import { Button } from "@mantine/core"
+import { FaSquare } from "react-icons/fa"
+import { FiArrowUp } from "react-icons/fi"
+import { useTranslationContext } from "@/contexts/TranslationContext"
 
 const RightSection: React.FC = () => {
-  const { src, isSubmitting, isValid, isStreaming } = useTranslationContext();
-  if (!src || isSubmitting || isStreaming) return null;
+  const { src, isSubmitting, isValid, isStreaming } = useTranslationContext()
+  if (!src || isSubmitting || isStreaming) return null
 
   return (
     <Button
@@ -20,7 +20,7 @@ const RightSection: React.FC = () => {
         <FiArrowUp size={80} color="black" />
       )}
     </Button>
-  );
-};
+  )
+}
 
-export default RightSection;
+export default RightSection

@@ -1,30 +1,22 @@
-import {
-  AppShell,
-  Box,
-  Container,
-  Flex,
-  Select,
-  Stack,
-  Text,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { createFileRoute } from "@tanstack/react-router";
-import InputBar from "@/components/Translation/Input/InputBar";
-import HeaderMessage from "@/components/Translation/Messages/HeaderMesssage";
-import Translation from "@/components/Translation/Messages/Translation";
-import { TranslationProvider } from "@/contexts/TranslationContext";
-import HomeSideBar from "../components/Common/Home/HomeSideBar";
+import { AppShell, Box, Container, Flex, Paper } from "@mantine/core"
+import { useDisclosure } from "@mantine/hooks"
+import { createFileRoute } from "@tanstack/react-router"
+import SourcePanel from "@/components/Translation/Input/SourcePanel"
+import TranslateButton from "@/components/Translation/Input/TranslateButton"
+import TargetPanel from "@/components/Translation/Messages/TargetPanel"
+import { TranslationProvider } from "@/contexts/TranslationContext"
+import HomeSideBar from "../components/Common/Home/HomeSideBar"
 export const Route = createFileRoute("/")({
   component: HomePage,
-});
+})
 
 function HomePage() {
-  const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false);
+  const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false)
 
-  const fullWidth = 350;
-  const collapsedWidth = 60;
+  const fullWidth = 350
+  const collapsedWidth = 60
 
-  const sidebarWidth = collapsed ? collapsedWidth : fullWidth;
+  const sidebarWidth = collapsed ? collapsedWidth : fullWidth
 
   return (
     <TranslationProvider>
@@ -44,35 +36,48 @@ function HomePage() {
         <AppShell.Main>
           <Container
             fluid
-            style={{ display: "flex", flexDirection: "column" }}
-            w="75%"
-            h="100%"
-            mt="15%"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: "100vh",
+              paddingBottom: "10vh",
+            }}
           >
-            <Stack align="center">
-              <Box ta="center">
-                <HeaderMessage />
-              </Box>
-              <Flex gap={"xl"}>
-                <Box w="100%" p="md" mt="xl">
-                  <Text>Spanish</Text>
-                  <InputBar />
+            <Paper
+              radius="lg"
+              p="xl"
+              style={{
+                backgroundColor: "#0d0d0d",
+                border: "1px solid #222",
+                width: "100%",
+                maxWidth: 800,
+              }}
+            >
+              <Flex gap="md" align="stretch" wrap="nowrap">
+                <Box style={{ flex: 1 }}>
+                  <SourcePanel />
                 </Box>
-                <Box w="100%" p="md" mt="xl">
-                  <Select
-                    label="Language"
-                    placeholder="Na"
-                    data={["English", "Na"]}
-                    bg="transparent"
-                  />
-                  <Translation />
+                <Box
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <TranslateButton />
+                </Box>
+                <Box style={{ flex: 1 }}>
+                  <TargetPanel />
                 </Box>
               </Flex>
-              <Flex></Flex>
-            </Stack>
+            </Paper>
           </Container>
         </AppShell.Main>
       </AppShell>
     </TranslationProvider>
-  );
+  )
 }
