@@ -12,12 +12,12 @@ const RightSection: React.FC = () => {
       type="submit"
       disabled={!isValid}
       radius="xl"
-      bg={isSubmitting ? "gray" : "white"}
+      bg={isSubmitting ? "gray" : "none"}
     >
       {isSubmitting ? (
-        <FaSquare size={20} color="white" />
+        <FaSquare size={15} color="white" />
       ) : (
-        <FiArrowUp size={20} color="black" />
+        <FiArrowUp size={15} color="white" />
       )}
     </Button>
   );
