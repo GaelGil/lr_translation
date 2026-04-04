@@ -15,6 +15,7 @@ import InputBar from "@/components/Translation/Input/InputBar";
 import Translation from "@/components/Translation/Messages/Translation";
 import { TranslationProvider } from "@/contexts/TranslationContext";
 import HomeSideBar from "../components/Common/Home/HomeSideBar";
+import Samples from "@/components/Translation/Samples";
 export const Route = createFileRoute("/")({
   component: HomePage,
 });
@@ -101,6 +102,7 @@ function HomePage() {
                   </Paper>
                 </Box>
               </Flex>
+              <Samples />
               {/*</Paper>*/}
             </Stack>
           </Container>

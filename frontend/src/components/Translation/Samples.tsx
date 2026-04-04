@@ -1,0 +1,146 @@
+"use client";
+
+import {
+  Accordion,
+  ActionIcon,
+  Box,
+  Flex,
+  ScrollArea,
+  Stack,
+  Text,
+  Tooltip,
+} from "@mantine/core";
+import { FiCopy, FiHelpCircle } from "react-icons/fi";
+
+interface PromptExample {
+  text: string;
+}
+
+const SENTENCES: PromptExample[] = [
+  {
+    text: "Hola, ¿Como estas?",
+  },
+  {
+    text: "Portrait of an elderly woman with weathered hands, soft cinematic lighting, shallow depth of field",
+  },
+  {
+    text: "Cyberpunk city street at night with neon signs, rain-soaked pavement reflecting colorful lights, flying vehicles in the distance",
+  },
+  {
+    text: "Hyper-realistic close-up of a dewdrop on a rose petal with refracted light and soft bokeh background",
+  },
+  {
+    text: "Ancient library with towering bookshelves, spiral staircase, warm golden lamplight, dust particles floating in the air",
+  },
+  {
+    text: "Futuristic robot sitting alone on a bench in a park, watching sunset, melancholic atmosphere, detailed mechanical design",
+  },
+  {
+    text: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
+  },
+];
+
+interface SampleSentencesProps {
+  onPromptSelect: (prompt: string) => void;
+}
+
+const Samples = ({ onPromptSelect }: SampleSentencesProps) => {
+  const handleCopy = (text: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    onPromptSelect(text);
+  };
+
+  return (
+    <Accordion
+      variant="filled"
+      styles={{
+        root: {
+          border: "none",
+        },
+        item: {
+          backgroundColor: "transparent",
+          border: "none",
+        },
+        control: {
+          padding: "xs 0",
+          backgroundColor: "transparent",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
+        },
+        content: {
+          padding: 0,
+        },
+        chevron: {
+          color: "var(--mantine-color-dimmed)",
+        },
+      }}
+    >
+      <Accordion.Item value="how-to-prompt">
+        <Accordion.Control>
+          <Flex align="center" gap="xs">
+            <FiHelpCircle size={16} color="var(--mantine-color-dimmed)" />
+            <Text size="sm" c="dimmed" fw={500}>
+              Prompt Examples
+            </Text>
+          </Flex>
+        </Accordion.Control>
+        <Accordion.Panel>
+          <Box p="xs">
+            <ScrollArea.Autosize mah={300}>
+              <Stack gap="xs">
+                {SENTENCES.map((example, index) => (
+                  <Box
+                    key={index}
+                    p="xs"
+                    style={{
+                      borderRadius: 6,
+                      border: "1px solid var(--mantine-color-dark-5)",
+                      backgroundColor: "var(--mantine-color-dark-6)",
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                    }}
+                    onClick={() => onPromptSelect(example.text)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor =
+                        "var(--mantine-color-teal-7)";
+                      e.currentTarget.style.backgroundColor =
+                        "var(--mantine-color-dark-5)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor =
+                        "var(--mantine-color-dark-5)";
+                      e.currentTarget.style.backgroundColor =
+                        "var(--mantine-color-dark-6)";
+                    }}
+                  >
+                    <Flex justify="space-between" align="flex-start">
+                      <Box style={{ flex: 1, overflow: "hidden" }}>
+                        <Text size="xs" lineClamp={2} c="gray.3">
+                          {example.text}
+                        </Text>
+                      </Box>
+                      <Tooltip label="Use this prompt" position="left">
+                        <ActionIcon
+                          size="sm"
+                          variant="subtle"
+                          color="gray"
+                          onClick={(e) => handleCopy(example.text, e)}
+                          ml="xs"
+                        >
+                          <FiCopy size={14} />
+                        </ActionIcon>
+                      </Tooltip>
+                    </Flex>
+                  </Box>
+                ))}
+              </Stack>
+            </ScrollArea.Autosize>
+          </Box>
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+  );
+};
+
+export default Samples;

@@ -1,5 +1,5 @@
-export const PROJECT_NAME = "FullStack Template"
+export const PROJECT_NAME = "Low Resource Translation";
 
-import Logo from "/assets/images/fastapi-logo.svg"
+import Logo from "/assets/images/fastapi-logo.svg";
 
-export const LOGO = Logo
+export const LOGO = Logo;
