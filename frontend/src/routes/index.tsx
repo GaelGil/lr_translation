@@ -104,8 +104,12 @@ function HomePage() {
                 </Box>
               </Flex>
               <Flex gap="md" align="stretch" wrap="nowrap">
-                <Samples />
-                <UserSubmisions />
+                <Box style={{ flex: 1 }}>
+                  <Samples />
+                </Box>
+                <Box style={{ flex: 1 }}>
+                  <UserSubmisions />
+                </Box>
               </Flex>
 
               {/*</Paper>*/}

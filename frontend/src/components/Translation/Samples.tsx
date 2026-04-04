@@ -49,7 +49,7 @@ const Samples = () => {
         </Accordion.Control>
         <Accordion.Panel>
           <Box p="xs">
-            <ScrollArea.Autosize mah={300}>
+            <ScrollArea.Autosize h={200}>
               <Stack gap="xs">
                 {SENTENCES.map((example, index) => (
                   <Box
