@@ -1,41 +1,45 @@
 "use client";
 
-import { Accordion, Box, Flex, ScrollArea, Stack, Text } from "@mantine/core";
+import { Accordion, Box, Flex, Grid, ScrollArea, Stack, Text } from "@mantine/core";
 import { FiHelpCircle } from "react-icons/fi";
 
-import { useTranslationContext } from "@/contexts/TranslationContext";
-
 interface PromptExample {
-  text: string;
+  src: string;
+  response: string;
 }
 
 const SENTENCES: PromptExample[] = [
   {
-    text: "Hola, ¿Como estas?",
+    src: "Hola, ¿Como estas?",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Portrait of an elderly woman with weathered hands, soft cinematic lighting, shallow depth of field",
+    src: "Portrait of an elderly woman with weathered hands, soft cinematic lighting, shallow depth of field",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Cyberpunk city street at night with neon signs, rain-soaked pavement reflecting colorful lights, flying vehicles in the distance",
+    src: "Cyberpunk city street at night with neon signs, rain-soaked pavement reflecting colorful lights, flying vehicles in the distance",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Hyper-realistic close-up of a dewdrop on a rose petal with refracted light and soft bokeh background",
+    src: "Hyper-realistic close-up of a dewdrop on a rose petal with refracted light and soft bokeh background",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Ancient library with towering bookshelves, spiral staircase, warm golden lamplight, dust particles floating in the air",
+    src: "Ancient library with towering bookshelves, spiral staircase, warm golden lamplight, dust particles floating in the air",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Futuristic robot sitting alone on a bench in a park, watching sunset, melancholic atmosphere, detailed mechanical design",
+    src: "Futuristic robot sitting alone on a bench in a park, watching sunset, melancholic atmosphere, detailed mechanical design",
+    response: "Hola, ¿Como estas?",
   },
   {
-    text: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
+    src: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
+    response: "Hola, ¿Como estas?",
   },
 ];
 
-const Samples = () => {
-  const { setSrc } = useTranslationContext();
-
+const UserSubmisions = () => {
   return (
     <Accordion variant="filled">
       <Accordion.Item value="how-to-prompt">
@@ -43,7 +47,7 @@ const Samples = () => {
           <Flex align="center" gap="xs">
             <FiHelpCircle size={16} color="var(--mantine-color-dimmed)" />
             <Text size="sm" fw={500}>
-              Sample Spanish Sentences
+              User Submissions
             </Text>
           </Flex>
         </Accordion.Control>
@@ -62,7 +66,6 @@ const Samples = () => {
                       cursor: "pointer",
                       transition: "all 0.2s ease",
                     }}
-                    onClick={() => setSrc(example.text)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor =
                         "var(--mantine-color-teal-7)";
@@ -79,7 +82,7 @@ const Samples = () => {
                     <Flex justify="space-between" align="flex-start">
                       <Box style={{ flex: 1, overflow: "hidden" }}>
                         <Text size="xs" lineClamp={2} c="gray.3">
-                          {example.text}
+                          {example.src}
                         </Text>
                       </Box>
                     </Flex>
@@ -94,4 +97,4 @@ const Samples = () => {
   );
 };
 
-export default Samples;
+export default UserSubmisions;
