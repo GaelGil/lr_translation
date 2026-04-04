@@ -1,24 +1,24 @@
-import { ActionIcon, Box, Textarea, Tooltip } from "@mantine/core"
-import { useState } from "react"
-import { FiCheck, FiCopy } from "react-icons/fi"
-import { useTranslationContext } from "@/contexts/TranslationContext"
+import { ActionIcon, Box, Textarea, Tooltip } from "@mantine/core";
+import { useState } from "react";
+import { FiCheck, FiCopy } from "react-icons/fi";
+import { useTranslationContext } from "@/contexts/TranslationContext";
 
 const PLACEHOLDER =
-  "Life is like an npm install – you never know what you are going to get."
+  "Life is like an npm install – you never know what you are going to get.";
 
 const Translation: React.FC = () => {
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
   const { streamingContent, isStreaming, isSubmitting } =
-    useTranslationContext()
+    useTranslationContext();
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(streamingContent || PLACEHOLDER)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    await navigator.clipboard.writeText(streamingContent || PLACEHOLDER);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-  const displayText = streamingContent || PLACEHOLDER
-  const hasContent = streamingContent.length > 0
+  const displayText = streamingContent || PLACEHOLDER;
+  const hasContent = streamingContent.length > 0;
 
   return (
     <Box
@@ -37,7 +37,7 @@ const Translation: React.FC = () => {
         maxRows={12}
         readOnly
         disabled={isStreaming || isSubmitting}
-        value={isStreaming || isSubmitting ? "" : displayText}
+        value={displayText}
         style={{ flex: 1, cursor: "default" }}
         styles={{
           input: {
@@ -66,7 +66,7 @@ const Translation: React.FC = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default Translation
+export default Translation;
