@@ -1,18 +1,18 @@
-import { ActionIcon, Box, Textarea, Tooltip } from "@mantine/core";
-import { FiX } from "react-icons/fi";
+import { ActionIcon, Box, Textarea, Tooltip } from "@mantine/core"
+import { FiX } from "react-icons/fi"
 
-import { useTranslationContext } from "@/contexts/TranslationContext";
-import RightSection from "./RightSection";
+import { useTranslationContext } from "@/contexts/TranslationContext"
+import RightSection from "./RightSection"
 
 const InputBar: React.FC = () => {
   const { src, setSrc, handleSubmit, isStreaming, isSubmitting } =
-    useTranslationContext();
+    useTranslationContext()
 
   return (
     <form
       onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
+        e.preventDefault()
+        handleSubmit()
       }}
       style={{ flex: 1, display: "flex", flexDirection: "column" }}
     >
@@ -66,7 +66,7 @@ const InputBar: React.FC = () => {
         )}
       </Box>
     </form>
-  );
-};
+  )
+}
 
-export default InputBar;
+export default InputBar

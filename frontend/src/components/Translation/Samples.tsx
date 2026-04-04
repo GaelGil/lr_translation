@@ -1,19 +1,12 @@
-"use client";
+"use client"
 
-import {
-  Accordion,
-  ActionIcon,
-  Box,
-  Flex,
-  ScrollArea,
-  Stack,
-  Text,
-  Tooltip,
-} from "@mantine/core";
-import { FiCopy, FiHelpCircle } from "react-icons/fi";
+import { Accordion, Box, Flex, ScrollArea, Stack, Text } from "@mantine/core"
+import { FiHelpCircle } from "react-icons/fi"
+
+import { useTranslationContext } from "@/contexts/TranslationContext"
 
 interface PromptExample {
-  text: string;
+  text: string
 }
 
 const SENTENCES: PromptExample[] = [
@@ -38,17 +31,10 @@ const SENTENCES: PromptExample[] = [
   {
     text: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
   },
-];
+]
 
-interface SampleSentencesProps {
-  onPromptSelect: (prompt: string) => void;
-}
-
-const Samples = ({ onPromptSelect }: SampleSentencesProps) => {
-  const handleCopy = (text: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    onPromptSelect(text);
-  };
+const Samples = () => {
+  const { setSrc } = useTranslationContext()
 
   return (
     <Accordion
@@ -100,18 +86,18 @@ const Samples = ({ onPromptSelect }: SampleSentencesProps) => {
                       cursor: "pointer",
                       transition: "all 0.2s ease",
                     }}
-                    onClick={() => onPromptSelect(example.text)}
+                    onClick={() => setSrc(example.text)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor =
-                        "var(--mantine-color-teal-7)";
+                        "var(--mantine-color-teal-7)"
                       e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-5)";
+                        "var(--mantine-color-dark-5)"
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor =
-                        "var(--mantine-color-dark-5)";
+                        "var(--mantine-color-dark-5)"
                       e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-6)";
+                        "var(--mantine-color-dark-6)"
                     }}
                   >
                     <Flex justify="space-between" align="flex-start">
@@ -120,17 +106,6 @@ const Samples = ({ onPromptSelect }: SampleSentencesProps) => {
                           {example.text}
                         </Text>
                       </Box>
-                      <Tooltip label="Use this prompt" position="left">
-                        <ActionIcon
-                          size="sm"
-                          variant="subtle"
-                          color="gray"
-                          onClick={(e) => handleCopy(example.text, e)}
-                          ml="xs"
-                        >
-                          <FiCopy size={14} />
-                        </ActionIcon>
-                      </Tooltip>
                     </Flex>
                   </Box>
                 ))}
@@ -140,7 +115,7 @@ const Samples = ({ onPromptSelect }: SampleSentencesProps) => {
         </Accordion.Panel>
       </Accordion.Item>
     </Accordion>
-  );
-};
+  )
+}
 
-export default Samples;
+export default Samples
