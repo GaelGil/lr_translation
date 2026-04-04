@@ -1,6 +1,14 @@
 "use client";
 
-import { Accordion, Box, Flex, Grid, ScrollArea, Stack, Text } from "@mantine/core";
+import {
+  Accordion,
+  Box,
+  Flex,
+  Grid,
+  ScrollArea,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { FiHelpCircle } from "react-icons/fi";
 
 interface PromptExample {
@@ -56,37 +64,42 @@ const UserSubmisions = () => {
             <ScrollArea.Autosize mah={300}>
               <Stack gap="xs">
                 {SENTENCES.map((example, index) => (
-                  <Box
-                    key={index}
-                    p="xs"
-                    style={{
-                      borderRadius: 6,
-                      border: "1px solid var(--mantine-color-dark-5)",
-                      backgroundColor: "var(--mantine-color-dark-6)",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "var(--mantine-color-teal-7)";
-                      e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-5)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "var(--mantine-color-dark-5)";
-                      e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-6)";
-                    }}
-                  >
-                    <Flex justify="space-between" align="flex-start">
-                      <Box style={{ flex: 1, overflow: "hidden" }}>
+                  <Grid key={index} gutter="xs">
+                    <Grid.Col span={6}>
+                      <Box
+                        p="xs"
+                        style={{
+                          borderRadius: 6,
+                          border: "1px solid var(--mantine-color-dark-5)",
+                          backgroundColor: "var(--mantine-color-dark-6)",
+                        }}
+                      >
+                        <Text size="xs" mb={4}>
+                          Source
+                        </Text>
                         <Text size="xs" lineClamp={2} c="gray.3">
                           {example.src}
                         </Text>
                       </Box>
-                    </Flex>
-                  </Box>
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                      <Box
+                        p="xs"
+                        style={{
+                          borderRadius: 6,
+                          border: "1px solid var(--mantine-color-dark-5)",
+                          backgroundColor: "var(--mantine-color-dark-6)",
+                        }}
+                      >
+                        <Text size="xs" c="teal" mb={4}>
+                          Target
+                        </Text>
+                        <Text size="xs" lineClamp={2} c="gray.3">
+                          {example.response}
+                        </Text>
+                      </Box>
+                    </Grid.Col>
+                  </Grid>
                 ))}
               </Stack>
             </ScrollArea.Autosize>
