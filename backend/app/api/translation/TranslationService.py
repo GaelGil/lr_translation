@@ -1,8 +1,10 @@
 import asyncio
+import uuid
 
 from sqlmodel import Session
 
 from app.api.websocket.ConnectionManager import manager
+from app.database.models import Translation
 
 
 class TranslationService:
@@ -26,5 +28,9 @@ class TranslationService:
                 is_complete=word == final_word,
             )
             await asyncio.sleep(5)
-
+        translation = self.session.get(Translation, uuid.UUID(translate_id))
+        assert translation
+        translation.target = text
+        self.session.add(translation)
+        self.session.commit()
         return text
