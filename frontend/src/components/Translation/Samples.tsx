@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Accordion, Box, Flex, ScrollArea, Stack, Text } from "@mantine/core"
-import { FiHelpCircle } from "react-icons/fi"
+import { Accordion, Box, Flex, ScrollArea, Stack, Text } from "@mantine/core";
+import { FiHelpCircle } from "react-icons/fi";
 
-import { useTranslationContext } from "@/contexts/TranslationContext"
+import { useTranslationContext } from "@/contexts/TranslationContext";
 
 interface PromptExample {
-  text: string
+  text: string;
 }
 
 const SENTENCES: PromptExample[] = [
@@ -31,13 +31,13 @@ const SENTENCES: PromptExample[] = [
   {
     text: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
   },
-]
+];
 
 const Samples = () => {
-  const { setSrc } = useTranslationContext()
+  const { setSrc } = useTranslationContext();
 
   return (
-    <Accordion variant="filled">
+    <Accordion color="white">
       <Accordion.Item value="how-to-prompt">
         <Accordion.Control>
           <Flex align="center" gap="xs">
@@ -65,15 +65,15 @@ const Samples = () => {
                     onClick={() => setSrc(example.text)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor =
-                        "var(--mantine-color-teal-7)"
+                        "var(--mantine-color-teal-7)";
                       e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-5)"
+                        "var(--mantine-color-dark-5)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.borderColor =
-                        "var(--mantine-color-dark-5)"
+                        "var(--mantine-color-dark-5)";
                       e.currentTarget.style.backgroundColor =
-                        "var(--mantine-color-dark-6)"
+                        "var(--mantine-color-dark-6)";
                     }}
                   >
                     <Flex justify="space-between" align="flex-start">
@@ -91,7 +91,7 @@ const Samples = () => {
         </Accordion.Panel>
       </Accordion.Item>
     </Accordion>
-  )
-}
+  );
+};
 
-export default Samples
+export default Samples;

@@ -38,12 +38,14 @@ export type TranslationRequest = {
     src: string;
     target: (string | null);
     status?: TranslationStatus;
+    public_status?: boolean;
 };
 
 export type TranslationResponse = {
     src: string;
     target: (string | null);
     status?: TranslationStatus;
+    public_status?: boolean;
     id: string;
 };
 

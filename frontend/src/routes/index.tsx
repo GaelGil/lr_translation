@@ -7,27 +7,27 @@ import {
   Select,
   Stack,
   Text,
-} from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
-import { createFileRoute } from "@tanstack/react-router"
-import InputBar from "@/components/Translation/Input/InputBar"
-import HeaderMessage from "@/components/Translation/Messages/HeaderMesssage"
-import Translation from "@/components/Translation/Messages/Translation"
-import Samples from "@/components/Translation/Samples"
-import UserSubmisions from "@/components/Translation/UserSubmissions"
-import { TranslationProvider } from "@/contexts/TranslationContext"
-import HomeSideBar from "../components/Common/Home/HomeSideBar"
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { createFileRoute } from "@tanstack/react-router";
+import InputBar from "@/components/Translation/Input/InputBar";
+import HeaderMessage from "@/components/Translation/Messages/HeaderMesssage";
+import Translation from "@/components/Translation/Messages/Translation";
+import Samples from "@/components/Translation/Samples";
+import UserSubmisions from "@/components/Translation/UserSubmissions";
+import { TranslationProvider } from "@/contexts/TranslationContext";
+import HomeSideBar from "../components/Common/Home/HomeSideBar";
 export const Route = createFileRoute("/")({
   component: HomePage,
-})
+});
 
 function HomePage() {
-  const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false)
+  const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(false);
 
-  const fullWidth = 350
-  const collapsedWidth = 60
+  const fullWidth = 350;
+  const collapsedWidth = 60;
 
-  const sidebarWidth = collapsed ? collapsedWidth : fullWidth
+  const sidebarWidth = collapsed ? collapsedWidth : fullWidth;
 
   return (
     <TranslationProvider>
@@ -111,12 +111,10 @@ function HomePage() {
                   <UserSubmisions />
                 </Box>
               </Flex>
-
-              {/*</Paper>*/}
             </Stack>
           </Container>
         </AppShell.Main>
       </AppShell>
     </TranslationProvider>
-  )
+  );
 }

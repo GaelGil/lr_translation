@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Accordion,
@@ -8,12 +8,12 @@ import {
   ScrollArea,
   Stack,
   Text,
-} from "@mantine/core"
-import { FiHelpCircle } from "react-icons/fi"
+} from "@mantine/core";
+import { FiHelpCircle } from "react-icons/fi";
 
 interface PromptExample {
-  src: string
-  response: string
+  src: string;
+  response: string;
 }
 
 const SENTENCES: PromptExample[] = [
@@ -45,15 +45,15 @@ const SENTENCES: PromptExample[] = [
     src: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
     response: "Hola, ¿Como estas?",
   },
-]
+];
 
 const UserSubmisions = () => {
   return (
-    <Accordion variant="filled">
+    <Accordion color="white">
       <Accordion.Item value="how-to-prompt">
         <Accordion.Control>
           <Flex align="center" gap="xs">
-            <FiHelpCircle size={16} color="var(--mantine-color-dimmed)" />
+            <FiHelpCircle size={16} color="white" />
             <Text size="sm" fw={500}>
               User Submissions
             </Text>
@@ -107,7 +107,7 @@ const UserSubmisions = () => {
         </Accordion.Panel>
       </Accordion.Item>
     </Accordion>
-  )
-}
+  );
+};
 
-export default UserSubmisions
+export default UserSubmisions;

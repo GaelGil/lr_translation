@@ -163,6 +163,11 @@ export const TranslationRequestSchema = {
         status: {
             '$ref': '#/components/schemas/TranslationStatus',
             default: 'completed'
+        },
+        public_status: {
+            type: 'boolean',
+            title: 'Public Status',
+            default: false
         }
     },
     type: 'object',
@@ -190,6 +195,11 @@ export const TranslationResponseSchema = {
         status: {
             '$ref': '#/components/schemas/TranslationStatus',
             default: 'completed'
+        },
+        public_status: {
+            type: 'boolean',
+            title: 'Public Status',
+            default: false
         },
         id: {
             type: 'string',

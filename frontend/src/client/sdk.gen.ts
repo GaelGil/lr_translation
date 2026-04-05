@@ -127,7 +127,7 @@ export class PrivateService {
 export class TranslationService {
     /**
      * Translate
-     * Sart the chat
+     * Start the translation process
      * @param data The data for the request.
      * @param data.requestBody
      * @returns TranslationResponse Successful Response
