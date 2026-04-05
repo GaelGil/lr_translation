@@ -41,7 +41,7 @@ const Samples = () => {
       <Accordion.Item value="how-to-prompt">
         <Accordion.Control>
           <Flex align="center" gap="xs">
-            <FiHelpCircle size={16} color="var(--mantine-color-dimmed)" />
+            <FiHelpCircle size={16} />
             <Text size="sm" fw={500}>
               Sample Spanish Sentences
             </Text>
