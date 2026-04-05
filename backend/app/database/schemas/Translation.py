@@ -21,6 +21,7 @@ class TranslationBase(SQLModel):
     status: TranslationStatus = Field(
         default=TranslationStatus.COMPLETE, nullable=False
     )
+    public_status: bool = Field(default=False, nullable=False)
 
 
 class TranslationRequest(TranslationBase):
