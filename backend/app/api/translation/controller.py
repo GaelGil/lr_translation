@@ -2,7 +2,11 @@ from fastapi import APIRouter, BackgroundTasks
 
 from app.api.deps import CurrentUser, TranslateServiceDep
 from app.database.models import Translation
-from app.database.schemas.Translation import TranslationRequest, TranslationResponse
+from app.database.schemas.Translation import (
+    TranslationRequest,
+    TranslationResponse,
+    Translations,
+)
 
 router = APIRouter(prefix="/translation", tags=["translation"])
 
@@ -31,16 +35,21 @@ async def translate(
 @router.post("/get_translations")
 def get_translations(
     translate_service: TranslateServiceDep, current_user: CurrentUser | None
-) -> TranslationResponse:
+) -> Translations:
     """
     Start the translation process
     """
 
     if current_user:
-        translations = translate_service.get_translations(
+        translations, error = translate_service.get_translations(
             super_user=current_user.is_superuser
         )
     else:
-        translations = translate_service.get_translations()
+        translations, error = translate_service.get_translations()
+
+    if error:
+        raise error
+
+    assert translations is not None
 
     return translations

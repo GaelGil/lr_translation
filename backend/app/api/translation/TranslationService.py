@@ -14,7 +14,9 @@ class TranslationService:
         self.session = session
         self.manager = manager
 
-    def get_translations(self, super_user: bool = False):
+    def get_translations(
+        self, super_user: bool = False
+    ) -> tuple[Translations, None] | tuple[None, HTTPException]:
         try:
             translations = self.session.exec(
                 select(Translation).where(Translation.public_status == super_user)
