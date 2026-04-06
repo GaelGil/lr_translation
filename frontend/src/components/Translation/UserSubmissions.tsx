@@ -10,44 +10,32 @@ import {
   Text,
 } from "@mantine/core";
 import { FiHelpCircle } from "react-icons/fi";
+import { TranslationService } from "@/client";
+import { useQuery } from "@tanstack/react-query";
 
-interface PromptExample {
-  src: string;
-  response: string;
+function getUserSubmissions() {
+  return {
+    queryFn: () => TranslationService.getTranslations(),
+    queryKey: ["userSubmisions"],
+  };
 }
 
-const SENTENCES: PromptExample[] = [
-  {
-    src: "Hola, ¿Como estas?",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Portrait of an elderly woman with weathered hands, soft cinematic lighting, shallow depth of field",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Cyberpunk city street at night with neon signs, rain-soaked pavement reflecting colorful lights, flying vehicles in the distance",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Hyper-realistic close-up of a dewdrop on a rose petal with refracted light and soft bokeh background",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Ancient library with towering bookshelves, spiral staircase, warm golden lamplight, dust particles floating in the air",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Futuristic robot sitting alone on a bench in a park, watching sunset, melancholic atmosphere, detailed mechanical design",
-    response: "Hola, ¿Como estas?",
-  },
-  {
-    src: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
-    response: "Hola, ¿Como estas?",
-  },
-];
-
 const UserSubmisions = () => {
+  const {
+    data: userSubmissions,
+    isLoading,
+    isError,
+  } = useQuery({
+    ...getUserSubmissions(),
+  });
+
+  if (isLoading) {
+    return <Text>Loading</Text>;
+  }
+
+  if (isError) {
+    return <Text>Error loading user submissions</Text>;
+  }
   return (
     <Accordion color="white">
       <Accordion.Item value="how-to-prompt">
@@ -63,7 +51,7 @@ const UserSubmisions = () => {
           <Box p="xs">
             <ScrollArea.Autosize h={200}>
               <Stack gap="xs">
-                {SENTENCES.map((example, index) => (
+                {userSubmissions.map((example, index) => (
                   <Grid key={index} gutter="xs">
                     <Grid.Col span={6}>
                       <Box
@@ -95,7 +83,7 @@ const UserSubmisions = () => {
                           Target
                         </Text>
                         <Text size="xs" lineClamp={2} c="gray.3">
-                          {example.response}
+                          {exampl.target}
                         </Text>
                       </Box>
                     </Grid.Col>
