@@ -51,7 +51,7 @@ const UserSubmisions = () => {
           <Box p="xs">
             <ScrollArea.Autosize h={200}>
               <Stack gap="xs">
-                {userSubmissions.map((example, index) => (
+                {userSubmissions?.translations.map((example, index) => (
                   <Grid key={index} gutter="xs">
                     <Grid.Col span={6}>
                       <Box
@@ -83,7 +83,7 @@ const UserSubmisions = () => {
                           Target
                         </Text>
                         <Text size="xs" lineClamp={2} c="gray.3">
-                          {exampl.target}
+                          {example.target}
                         </Text>
                       </Box>
                     </Grid.Col>

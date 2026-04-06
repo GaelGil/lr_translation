@@ -269,51 +269,6 @@ export const UpdatePasswordSchema = {
     title: 'UpdatePassword'
 } as const;
 
-export const UserSchema = {
-    properties: {
-        email: {
-            type: 'string',
-            maxLength: 255,
-            format: 'email',
-            title: 'Email'
-        },
-        is_active: {
-            type: 'boolean',
-            title: 'Is Active',
-            default: true
-        },
-        is_superuser: {
-            type: 'boolean',
-            title: 'Is Superuser',
-            default: false
-        },
-        full_name: {
-            anyOf: [
-                {
-                    type: 'string',
-                    maxLength: 255
-                },
-                {
-                    type: 'null'
-                }
-            ],
-            title: 'Full Name'
-        },
-        id: {
-            type: 'string',
-            format: 'uuid',
-            title: 'Id'
-        },
-        hashed_password: {
-            type: 'string',
-            title: 'Hashed Password'
-        }
-    },
-    type: 'object',
-    required: ['email', 'hashed_password'],
-    title: 'User'
-} as const;
-
 export const UserCreateSchema = {
     properties: {
         email: {

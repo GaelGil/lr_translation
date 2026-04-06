@@ -65,15 +65,6 @@ export type UpdatePassword = {
     new_password: string;
 };
 
-export type User = {
-    email: string;
-    is_active?: boolean;
-    is_superuser?: boolean;
-    full_name?: (string | null);
-    id?: string;
-    hashed_password: string;
-};
-
 export type UserCreate = {
     email: string;
     is_active?: boolean;
@@ -157,10 +148,6 @@ export type TranslationTranslateData = {
 };
 
 export type TranslationTranslateResponse = (TranslationResponse);
-
-export type TranslationGetTranslationsData = {
-    currentUser: (User | null);
-};
 
 export type TranslationGetTranslationsResponse = (Translations);
 
