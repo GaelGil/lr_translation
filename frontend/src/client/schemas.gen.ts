@@ -212,10 +212,41 @@ export const TranslationResponseSchema = {
     title: 'TranslationResponse'
 } as const;
 
+export const TranslationSimpleSchema = {
+    properties: {
+        src: {
+            type: 'string',
+            title: 'Src'
+        },
+        target: {
+            type: 'string',
+            title: 'Target'
+        }
+    },
+    type: 'object',
+    required: ['src', 'target'],
+    title: 'TranslationSimple'
+} as const;
+
 export const TranslationStatusSchema = {
     type: 'string',
     enum: ['inporgress', 'failed', 'completed'],
     title: 'TranslationStatus'
+} as const;
+
+export const TranslationsSchema = {
+    properties: {
+        translations: {
+            items: {
+                '$ref': '#/components/schemas/TranslationSimple'
+            },
+            type: 'array',
+            title: 'Translations'
+        }
+    },
+    type: 'object',
+    required: ['translations'],
+    title: 'Translations'
 } as const;
 
 export const UpdatePasswordSchema = {
@@ -236,6 +267,51 @@ export const UpdatePasswordSchema = {
     type: 'object',
     required: ['current_password', 'new_password'],
     title: 'UpdatePassword'
+} as const;
+
+export const UserSchema = {
+    properties: {
+        email: {
+            type: 'string',
+            maxLength: 255,
+            format: 'email',
+            title: 'Email'
+        },
+        is_active: {
+            type: 'boolean',
+            title: 'Is Active',
+            default: true
+        },
+        is_superuser: {
+            type: 'boolean',
+            title: 'Is Superuser',
+            default: false
+        },
+        full_name: {
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 255
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Full Name'
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        hashed_password: {
+            type: 'string',
+            title: 'Hashed Password'
+        }
+    },
+    type: 'object',
+    required: ['email', 'hashed_password'],
+    title: 'User'
 } as const;
 
 export const UserCreateSchema = {

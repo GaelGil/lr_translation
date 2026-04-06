@@ -49,11 +49,29 @@ export type TranslationResponse = {
     id: string;
 };
 
+export type Translations = {
+    translations: Array<TranslationSimple>;
+};
+
+export type TranslationSimple = {
+    src: string;
+    target: string;
+};
+
 export type TranslationStatus = 'inporgress' | 'failed' | 'completed';
 
 export type UpdatePassword = {
     current_password: string;
     new_password: string;
+};
+
+export type User = {
+    email: string;
+    is_active?: boolean;
+    is_superuser?: boolean;
+    full_name?: (string | null);
+    id?: string;
+    hashed_password: string;
 };
 
 export type UserCreate = {
@@ -139,6 +157,12 @@ export type TranslationTranslateData = {
 };
 
 export type TranslationTranslateResponse = (TranslationResponse);
+
+export type TranslationGetTranslationsData = {
+    currentUser: (User | null);
+};
+
+export type TranslationGetTranslationsResponse = (Translations);
 
 export type UsersReadUsersData = {
     limit?: number;
