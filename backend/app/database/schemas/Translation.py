@@ -30,3 +30,12 @@ class TranslationRequest(TranslationBase):
 
 class TranslationResponse(TranslationBase):
     id: uuid.UUID
+
+
+class TranslationSimple(SQLModel):
+    src: str
+    target: str
+
+
+class Translations(SQLModel):
+    translations: list[TranslationSimple]

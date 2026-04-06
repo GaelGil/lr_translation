@@ -1,16 +1,31 @@
 import asyncio
 import uuid
 
-from sqlmodel import Session
+from fastapi import HTTPException
+from sqlmodel import Session, select
 
 from app.api.websocket.ConnectionManager import manager
 from app.database.models import Translation
+from app.database.schemas.Translation import Translations, TranslationSimple
 
 
 class TranslationService:
     def __init__(self, session: Session):
         self.session = session
         self.manager = manager
+
+    def get_translations(self, super_user: bool = False):
+        try:
+            translations = self.session.exec(
+                select(Translation).where(Translation.public_status == super_user)
+            ).all()
+        except Exception as e:
+            return None, HTTPException(status_code=400, detail=str(e))
+        simple_translations = []
+        for translation in translations:
+            simple_translations.append(TranslationSimple.model_validate(translation))
+
+        return Translations(translations=simple_translations)
 
     async def translate(self, text: str, translate_id: str):
         """ """
