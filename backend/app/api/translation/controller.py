@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from app.api.deps import CurrentUser, TranslateServiceDep
+from app.api.deps import CurrentUserOptional, TranslateServiceDep
 from app.database.models import Translation
 from app.database.schemas.Translation import (
     TranslationRequest,
@@ -34,7 +34,7 @@ async def translate(
 
 @router.post("/get_translations")
 def get_translations(
-    translate_service: TranslateServiceDep, current_user: CurrentUser | None
+    translate_service: TranslateServiceDep, current_user: CurrentUserOptional
 ) -> Translations:
     """
     Start the translation process

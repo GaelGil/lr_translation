@@ -66,3 +66,13 @@ def get_translate_service(
 
 
 TranslateServiceDep = Annotated[TranslationService, Depends(get_translate_service)]
+
+
+def get_current_user_optional(session: SessionDep, token: TokenDep) -> User | None:
+    try:
+        return get_current_user(session, token)  # or handle the exception
+    except HTTPException:
+        return None
+
+
+CurrentUserOptional = Annotated[User | None, Depends(get_current_user_optional)]

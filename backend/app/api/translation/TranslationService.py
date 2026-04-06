@@ -27,7 +27,7 @@ class TranslationService:
         for translation in translations:
             simple_translations.append(TranslationSimple.model_validate(translation))
 
-        return Translations(translations=simple_translations)
+        return Translations(translations=simple_translations), None
 
     async def translate(self, text: str, translate_id: str):
         """ """
