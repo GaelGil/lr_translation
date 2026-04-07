@@ -53,9 +53,9 @@ class TranslationService:
         return text
 
     def set_status(
-        self, submission_id: uuid.UUID, status: bool
+        self, translation_id: uuid.UUID, status: bool
     ) -> tuple[bool, HTTPException] | tuple[bool, None]:
-        submission = self.session.get(Translation, submission_id)
+        submission = self.session.get(Translation, translation_id)
 
         assert submission is not None
         submission.public_status = status

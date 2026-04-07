@@ -39,3 +39,8 @@ class TranslationSimple(SQLModel):
 
 class Translations(SQLModel):
     translations: list[TranslationSimple]
+
+
+class TranslationUpdate(SQLModel):
+    id: uuid.UUID
+    new_status: bool

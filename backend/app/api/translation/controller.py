@@ -6,6 +6,7 @@ from app.database.schemas.Translation import (
     TranslationRequest,
     TranslationResponse,
     Translations,
+    TranslationUpdate,
 )
 
 router = APIRouter(prefix="/translation", tags=["translation"])
@@ -32,17 +33,20 @@ async def translate(
     return TranslationResponse.model_validate(translation)
 
 
-@router.post("/get_translations")
-def get_translations(
-    translate_service: TranslateServiceDep, current_user: CurrentUserOptional
+@router.post("/set_submission_status")
+def set_submission_status(
+    translate_service: TranslateServiceDep,
+    current_user: CurrentUser,
+    translation_update: TranslationUpdate,
 ) -> bool:
     """
     Start the translation process
     """
 
     if current_user and current_user.is_superuser:
-        set_status, error = translate_service.set_status(approved=False)
-
+        set_status, error = translate_service.set_status(
+            translation_id=translation_update.id, status=translation_update.new_status
+        )
     if error:
         raise error
 
@@ -51,9 +55,9 @@ def get_translations(
     return set_status
 
 
-@router.post("/set_submission_status")
-def set_submission_status(
-    translate_service: TranslateServiceDep, current_user: CurrentUser
+@router.post("/get_translations")
+def get_translations(
+    translate_service: TranslateServiceDep, current_user: CurrentUserOptional
 ) -> Translations:
     """
     Start the translation process
