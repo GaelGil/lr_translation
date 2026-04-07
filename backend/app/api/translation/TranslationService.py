@@ -51,3 +51,19 @@ class TranslationService:
         self.session.add(translation)
         self.session.commit()
         return text
+
+    def set_status(
+        self, submission_id: uuid.UUID, status: bool
+    ) -> tuple[bool, HTTPException] | tuple[bool, None]:
+        submission = self.session.get(Translation, submission_id)
+
+        assert submission is not None
+        submission.public_status = status
+        try:
+            self.session.add(submission)
+            self.session.commit()
+            return True, None
+        except Exception as e:
+            return False, HTTPException(
+                status_code=403, detail=f"Error  {e}: not able to update status"
+            )
