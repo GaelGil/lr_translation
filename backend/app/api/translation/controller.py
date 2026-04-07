@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from app.api.deps import CurrentUserOptional, TranslateServiceDep
+from app.api.deps import CurrentUser, CurrentUserOptional, TranslateServiceDep
 from app.database.models import Translation
 from app.database.schemas.Translation import (
     TranslationRequest,
@@ -35,12 +35,31 @@ async def translate(
 @router.post("/get_translations")
 def get_translations(
     translate_service: TranslateServiceDep, current_user: CurrentUserOptional
+) -> bool:
+    """
+    Start the translation process
+    """
+
+    if current_user and current_user.is_superuser:
+        set_status, error = translate_service.set_status(approved=False)
+
+    if error:
+        raise error
+
+    assert set_status is not None
+
+    return set_status
+
+
+@router.post("/set_submission_status")
+def set_submission_status(
+    translate_service: TranslateServiceDep, current_user: CurrentUser
 ) -> Translations:
     """
     Start the translation process
     """
 
-    if current_user:
+    if current_user and current_user.is_superuser:
         translations, error = translate_service.get_translations(
             super_user=current_user.is_superuser
         )
