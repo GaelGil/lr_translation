@@ -50,7 +50,6 @@ class TranslationService:
         translation.target = text
         self.session.add(translation)
         self.session.commit()
-        return text
 
     def set_status(
         self, translation_id: uuid.UUID, status: bool
