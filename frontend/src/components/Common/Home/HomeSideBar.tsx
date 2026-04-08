@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   ActionIcon,
@@ -10,21 +10,21 @@ import {
   Stack,
   Text,
   Title,
-} from "@mantine/core"
-import { Link } from "@tanstack/react-router"
-import { useState } from "react"
-import { FaGithub } from "react-icons/fa"
-import { FiArrowRight, FiColumns } from "react-icons/fi"
-import { SiJupyter } from "react-icons/si"
-import { LOGO, PROJECT_NAME } from "@/const"
+} from "@mantine/core";
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { FiArrowRight, FiColumns } from "react-icons/fi";
+import { SiJupyter } from "react-icons/si";
+import { LOGO, PROJECT_NAME } from "@/const";
 
 interface HomeSideBarProps {
-  collapsed: boolean
-  toggle: () => void
+  collapsed: boolean;
+  toggle: () => void;
 }
 
 const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(false);
 
   return (
     <ScrollArea>
@@ -40,8 +40,8 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
               onClick={() => {
-                toggle()
-                setHovered(false)
+                toggle();
+                setHovered(false);
               }}
               style={{ cursor: "pointer", position: "relative" }}
             >
@@ -77,8 +77,10 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
             <Stack>
               <Title order={3}>About</Title>
               <Text>
-                I wanted to learn transformers in depth by implementing and
-                training one. Model was trainned using Jax
+                I wanted to learn how transformers work. To do this I
+                implemented one using the JAX python library. This thought me
+                about training, evelation, inference and new developements since
+                the paper Attention is all you need.
               </Text>
 
               <Title order={3}>Model Architecture</Title>
@@ -127,7 +129,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
         )}
       </Stack>
     </ScrollArea>
-  )
-}
+  );
+};
 
-export default HomeSideBar
+export default HomeSideBar;

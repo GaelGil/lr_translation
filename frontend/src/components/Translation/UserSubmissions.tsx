@@ -31,13 +31,6 @@ const UserSubmisions = () => {
 
   const translations = userSubmissions?.translations;
 
-  if (isLoading) {
-    return <Text>Loading</Text>;
-  }
-
-  if (isError) {
-    return <Text>Error loading user submissions</Text>;
-  }
   return (
     <Accordion color="white">
       <Accordion.Item value="how-to-prompt">
