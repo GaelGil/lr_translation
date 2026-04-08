@@ -88,15 +88,14 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 I used a standard encoder decoder architecture with a sequence
                 length of 128, model dimension of 512, 8 attention heads, 6
                 encoder decoder blocks and a feed forward dimension of 2048.
-                This uses learned positional embeddings.
+                This uses learned positional embeddings which is different from
+                the original paper that uses fixed positional embeddings.
               </Text>
 
               <Title order={3}>Deployment</Title>
               <Text>
-                I used a standard encoder decoder architecture with a sequence
-                length of 128, model dimension of 512, 8 attention heads, 6
-                encoder decoder blocks and a feed forward dimension of 2048.
-                This uses learned positional embeddings.
+                To deploy the model I used Modal. The backend is hosted on flyio
+                and the frontend is on cloudflare.
               </Text>
               <Anchor
                 href={
