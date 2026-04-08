@@ -1,60 +1,54 @@
-import type { CSSVariablesResolver } from "@mantine/core"
-import { createTheme } from "@mantine/core"
+import type { CSSVariablesResolver } from "@mantine/core";
+import { createTheme } from "@mantine/core";
+export type colorScheme = "light" | "dark";
 
+import { useColorMode } from "./components/ui/color-mode";
 export const theme = createTheme({
   colors: {
-    red: [
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff2f59ff",
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff0033ff",
-      "#ff0033ff",
+    light: [
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
+      "#ffffff",
     ],
-    white: [
-      "#ffffffff", // shade 0
-      "#ffffffff", // shade 1
-      "#ffffffff", // shade 2
-      "#ffffffff", // shade 3
-      "#ffffffff", // shade 4
-      "#ffffffff", // shade 5
-      "#ffffffff", // shade 6
-      "#ffffffff", // shade 7
-      "#ffffffff", // shade 8
-      "#ffffffff", // shade 9
-    ],
-    dark: [
-      "#ffffffff", // shade 0
-      "#000000ff", // shade 1
-      "#000000ff", // shade 2
-      "#f6f6f6ff", // shade 3
-      "#000000ff", // shade 4
-      "#000000ff", // shade 5
-      "#000000ff", // shade 6
-      "#000000ff", // shade 7
-      "#000000ff", // shade 8
-      "#000000ff", // shade 9
+    purple: [
+      "#fffb00",
+      "#fffb00",
+      "#fffb00",
+      "#fffb00",
+      "#a200ffff", // dark mode links
+      "#fffb00",
+      "#000000ff", // light mode links/buttons
+      "#6e6e6eff", // hover buttons light mode
+      "#a200ffff", // dark mode buttons
+      "#8000caff", //hover buttons dark mode
     ],
   },
 
-  primaryColor: "white",
-})
+  primaryColor: "purple",
+});
 
-export const cssResolver: CSSVariablesResolver = () => ({
+export const cssVariablesResolver: CSSVariablesResolver = (theme) => ({
   variables: {
-    "--mantine-color-body": "black",
-    "--mantine-color-text": "white",
+    "--mantine-color-text-primary":
+      useColorMode().colorMode === "dark" ? theme.white : theme.black,
+    "--mantine-color-text-secondary":
+      useColorMode().colorMode === "dark"
+        ? theme.colors.gray[4]
+        : theme.colors.gray[6],
   },
   light: {
-    "--mantine-color-body": "black",
-    "--mantine-color-text": "white",
+    "--mantine-color-text-primary": theme.black,
+    "--mantine-color-text-secondary": theme.colors.gray[6],
   },
   dark: {
-    "--mantine-color-body": "black",
-    "--mantine-color-text": "white",
+    "--mantine-color-text-primary": theme.white,
+    "--mantine-color-text-secondary": theme.colors.gray[4],
   },
-})
+});
