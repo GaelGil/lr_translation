@@ -6,6 +6,7 @@ from sqlmodel import Session, select
 
 from app.api.websocket.ConnectionManager import manager
 from app.database.models import Translation
+from app.database.schemas.Result import Result
 from app.database.schemas.Translation import Translations, TranslationSimple
 
 
@@ -16,18 +17,20 @@ class TranslationService:
 
     def get_translations(
         self, super_user: bool = False
-    ) -> tuple[Translations, None] | tuple[None, HTTPException]:
+    ) -> Result[Translations, HTTPException]:
         try:
             translations = self.session.exec(
                 select(Translation).where(Translation.public_status == super_user)
             ).all()
         except Exception as e:
-            return None, HTTPException(status_code=400, detail=str(e))
+            return Result(
+                value=None, error=HTTPException(status_code=400, detail=str(e))
+            )
         simple_translations = []
         for translation in translations:
             simple_translations.append(TranslationSimple.model_validate(translation))
 
-        return Translations(translations=simple_translations), None
+        return Result(value=Translations(translations=simple_translations), error=None)
 
     async def translate(self, text: str, translate_id: str):
         """ """
@@ -53,7 +56,7 @@ class TranslationService:
 
     def set_status(
         self, translation_id: uuid.UUID, status: bool
-    ) -> tuple[bool, HTTPException] | tuple[bool, None]:
+    ) -> Result[bool, HTTPException]:
         submission = self.session.get(Translation, translation_id)
 
         assert submission is not None
@@ -61,8 +64,11 @@ class TranslationService:
         try:
             self.session.add(submission)
             self.session.commit()
-            return True, None
+            return Result(value=True, error=None)
         except Exception as e:
-            return False, HTTPException(
-                status_code=403, detail=f"Error  {e}: not able to update status"
+            return Result(
+                value=False,
+                error=HTTPException(
+                    status_code=403, detail=f"Error  {e}: not able to update status"
+                ),
             )
