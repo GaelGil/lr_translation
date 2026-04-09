@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
-import { Route as DashboardTranslationsRouteImport } from './routes/dashboard/translations'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthRecoverPasswordRouteImport } from './routes/auth/recover-password'
@@ -25,11 +24,6 @@ const IndexRoute = IndexRouteImport.update({
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardTranslationsRoute = DashboardTranslationsRouteImport.update({
-  id: '/dashboard/translations',
-  path: '/dashboard/translations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
@@ -59,7 +53,6 @@ export interface FileRoutesByFullPath {
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -68,7 +61,6 @@ export interface FileRoutesByTo {
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -78,7 +70,6 @@ export interface FileRoutesById {
   '/auth/recover-password': typeof AuthRecoverPasswordRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
-  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -89,7 +80,6 @@ export interface FileRouteTypes {
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
-    | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -98,7 +88,6 @@ export interface FileRouteTypes {
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
-    | '/dashboard/translations'
     | '/dashboard'
   id:
     | '__root__'
@@ -107,7 +96,6 @@ export interface FileRouteTypes {
     | '/auth/recover-password'
     | '/auth/reset-password'
     | '/auth/signup'
-    | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -117,7 +105,6 @@ export interface RootRouteChildren {
   AuthRecoverPasswordRoute: typeof AuthRecoverPasswordRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
-  DashboardTranslationsRoute: typeof DashboardTranslationsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
@@ -135,13 +122,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard/translations': {
-      id: '/dashboard/translations'
-      path: '/dashboard/translations'
-      fullPath: '/dashboard/translations'
-      preLoaderRoute: typeof DashboardTranslationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/signup': {
@@ -181,7 +161,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRecoverPasswordRoute: AuthRecoverPasswordRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSignupRoute: AuthSignupRoute,
-  DashboardTranslationsRoute: DashboardTranslationsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 export const routeTree = rootRouteImport
