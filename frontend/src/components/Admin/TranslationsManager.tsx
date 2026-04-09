@@ -5,11 +5,9 @@ import {
   Flex,
   Table,
   Text,
-  Title,
 } from "@mantine/core"
 import { useQuery } from "@tanstack/react-query"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
-import { z } from "zod"
+import { useState } from "react"
 import { TranslationService } from "@/client"
 import {
   PaginationItems,
@@ -19,32 +17,15 @@ import {
 } from "@/components/ui/pagination"
 import PendingTranslations from "@/components/Pending/PendingTranslations"
 
-const searchSchema = z.object({
-  page: z.number().catch(1),
-})
-
 const PER_PAGE = 10
 
-export const Route = createFileRoute("/dashboard/admin")({
-  component: Admin,
-  validateSearch: (search) => searchSchema.parse(search),
-})
-
-function TranslationsTable() {
-  const navigate = useNavigate({ from: Route.fullPath })
-  const { page = 1 } = Route.useSearch()
+function TranslationsManager() {
+  const [page, setPage] = useState(1)
 
   const { data, isLoading } = useQuery({
     queryFn: () => TranslationService.getTranslations(),
     queryKey: ["translations"],
   })
-
-  const setPage = (newPage: number) => {
-    navigate({
-      to: "/dashboard/admin",
-      search: (prev) => ({ ...prev, page: newPage }),
-    })
-  }
 
   const allTranslations = data?.translations ?? []
   const count = allTranslations.length
@@ -58,7 +39,7 @@ function TranslationsTable() {
   }
 
   return (
-    <>
+    <Container p={0}>
       <Table verticalSpacing="sm" highlightOnHover striped>
         <Table.Thead>
           <Table.Tr>
@@ -108,18 +89,8 @@ function TranslationsTable() {
           </PaginationRoot>
         </Flex>
       )}
-    </>
-  )
-}
-
-function Admin() {
-  return (
-    <Container maw="full">
-      <Title size="lg" pt={12} mb={12}>
-        Translations
-      </Title>
-
-      <TranslationsTable />
     </Container>
   )
 }
+
+export default TranslationsManager

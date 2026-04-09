@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as DashboardTranslationsRouteImport } from './routes/dashboard/translations'
 import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
 import { Route as DashboardAdminRouteImport } from './routes/dashboard/admin'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
@@ -26,6 +27,11 @@ const IndexRoute = IndexRouteImport.update({
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/dashboard/',
   path: '/dashboard/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardTranslationsRoute = DashboardTranslationsRouteImport.update({
+  id: '/dashboard/translations',
+  path: '/dashboard/translations',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/dashboard/admin'
     | '/dashboard/settings'
+    | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/dashboard/admin'
     | '/dashboard/settings'
+    | '/dashboard/translations'
     | '/dashboard'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/auth/signup'
     | '/dashboard/admin'
     | '/dashboard/settings'
+    | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   AuthSignupRoute: typeof AuthSignupRoute
   DashboardAdminRoute: typeof DashboardAdminRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardTranslationsRoute: typeof DashboardTranslationsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
@@ -148,6 +161,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/translations': {
+      id: '/dashboard/translations'
+      path: '/dashboard/translations'
+      fullPath: '/dashboard/translations'
+      preLoaderRoute: typeof DashboardTranslationsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/settings': {
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignupRoute: AuthSignupRoute,
   DashboardAdminRoute: DashboardAdminRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardTranslationsRoute: DashboardTranslationsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
 export const routeTree = rootRouteImport
