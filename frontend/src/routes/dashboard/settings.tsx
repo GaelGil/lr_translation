@@ -1,12 +1,11 @@
 import { Container, Tabs, Title } from "@mantine/core"
 import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
-import { FaEye, FaLock, FaSun, FaUser, FaLanguage } from "react-icons/fa"
+import { FaEye, FaLock, FaSun, FaUser } from "react-icons/fa"
 import Appearance from "@/components/UserSettings/Appearance"
 import ChangePassword from "@/components/UserSettings/ChangePassword"
 import DeleteAccount from "@/components/UserSettings/DeleteAccount"
 import UserInformation from "@/components/UserSettings/UserInformation"
-import TranslationsManager from "@/components/Admin/TranslationsManager"
 import useAuth from "@/hooks/useAuth"
 
 const tabsConfig = [
@@ -36,15 +35,6 @@ const tabsConfig = [
   },
 ]
 
-const adminTabsConfig = [
-  {
-    value: "translations",
-    title: "Translations",
-    component: TranslationsManager,
-    icon: <FaLanguage />,
-  },
-]
-
 export const Route = createFileRoute("/dashboard/settings")({
   component: UserSettings,
 })
@@ -54,7 +44,7 @@ function UserSettings() {
   const [activeTab, setActiveTab] = useState<string | null>("my-profile")
 
   const finalTabs = currentUser?.is_superuser
-    ? [...tabsConfig.slice(0, 3), ...adminTabsConfig]
+    ? tabsConfig.slice(0, 3)
     : tabsConfig
 
   if (!currentUser) {
