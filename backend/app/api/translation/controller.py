@@ -44,15 +44,16 @@ def set_submission_status(
     """
 
     if current_user and current_user.is_superuser:
-        set_status, error = translate_service.set_status(
+        result = translate_service.set_status(
             translation_id=translation_update.id, status=translation_update.new_status
         )
-    if error:
-        raise error
+    if result.is_err:
+        assert result.error
+        raise result.error
 
-    assert set_status is not None
+    assert result.value is not None
 
-    return set_status
+    return result.value
 
 
 @router.post("/get_translations")
@@ -64,15 +65,16 @@ def get_translations(
     """
 
     if current_user and current_user.is_superuser:
-        translations, error = translate_service.get_translations(
+        result = translate_service.get_translations(
             super_user=current_user.is_superuser
         )
     else:
-        translations, error = translate_service.get_translations()
+        result = translate_service.get_translations()
 
-    if error:
-        raise error
+    if result.is_err:
+        assert result.error
+        raise result.error
 
-    assert translations is not None
+    assert result.value is not None
 
-    return translations
+    return result.value
