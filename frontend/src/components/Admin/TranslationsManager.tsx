@@ -1,41 +1,36 @@
-"use client"
+"use client";
 
-import {
-  Container,
-  Flex,
-  Table,
-  Text,
-} from "@mantine/core"
-import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
-import { TranslationService } from "@/client"
+import { Container, Flex, Table, Text } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { TranslationService } from "@/client";
 import {
   PaginationItems,
   PaginationNextTrigger,
   PaginationPrevTrigger,
   PaginationRoot,
-} from "@/components/ui/pagination"
-import PendingTranslations from "@/components/Pending/PendingTranslations"
+} from "@/components/ui/pagination";
+import PendingTranslations from "@/components/Pending/PendingTranslations";
 
-const PER_PAGE = 10
+const PER_PAGE = 10;
 
 function TranslationsManager() {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
     queryFn: () => TranslationService.getTranslations(),
     queryKey: ["translations"],
-  })
+  });
 
-  const allTranslations = data?.translations ?? []
-  const count = allTranslations.length
-  const totalPages = Math.ceil(count / PER_PAGE)
+  const allTranslations = data?.translations ?? [];
+  const count = allTranslations.length;
+  const totalPages = Math.ceil(count / PER_PAGE);
 
-  const startIdx = (page - 1) * PER_PAGE
-  const translations = allTranslations.slice(startIdx, startIdx + PER_PAGE)
+  const startIdx = (page - 1) * PER_PAGE;
+  const translations = allTranslations.slice(startIdx, startIdx + PER_PAGE);
 
   if (isLoading) {
-    return <PendingTranslations />
+    return <PendingTranslations />;
   }
 
   return (
@@ -45,13 +40,15 @@ function TranslationsManager() {
           <Table.Tr>
             <Table.Th>Source</Table.Th>
             <Table.Th>Translation</Table.Th>
+            <Table.Th>Public</Table.Th>
+            <Table.Th>Set Status</Table.Th>
           </Table.Tr>
         </Table.Thead>
 
         <Table.Tbody>
           {translations.length === 0 && (
             <Table.Tr>
-              <Table.Td colSpan={2}>
+              <Table.Td colSpan={4}>
                 <Text c="dimmed">No translations found</Text>
               </Table.Td>
             </Table.Tr>
@@ -61,6 +58,16 @@ function TranslationsManager() {
             <Table.Tr key={startIdx + idx}>
               <Table.Td style={{ maxWidth: 300 }}>
                 <Text lineClamp={2}>{t.src}</Text>
+              </Table.Td>
+              <Table.Td style={{ maxWidth: 300 }}>
+                <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
+                  {t.target || "—"}
+                </Text>
+              </Table.Td>
+              <Table.Td style={{ maxWidth: 300 }}>
+                <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
+                  {t.target || "—"}
+                </Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
                 <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
@@ -90,7 +97,7 @@ function TranslationsManager() {
         </Flex>
       )}
     </Container>
-  )
+  );
 }
 
-export default TranslationsManager
+export default TranslationsManager;
