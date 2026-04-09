@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as DashboardTranslationsRouteImport } from './routes/dashboard/translations'
-import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
 import { Route as DashboardAdminRouteImport } from './routes/dashboard/admin'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
@@ -32,11 +31,6 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
 const DashboardTranslationsRoute = DashboardTranslationsRouteImport.update({
   id: '/dashboard/translations',
   path: '/dashboard/translations',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
-  id: '/dashboard/settings',
-  path: '/dashboard/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardAdminRoute = DashboardAdminRouteImport.update({
@@ -72,7 +66,6 @@ export interface FileRoutesByFullPath {
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -83,7 +76,6 @@ export interface FileRoutesByTo {
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard': typeof DashboardIndexRoute
 }
@@ -95,7 +87,6 @@ export interface FileRoutesById {
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
   '/dashboard/admin': typeof DashboardAdminRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
   '/dashboard/translations': typeof DashboardTranslationsRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -108,7 +99,6 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/signup'
     | '/dashboard/admin'
-    | '/dashboard/settings'
     | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
@@ -119,7 +109,6 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/signup'
     | '/dashboard/admin'
-    | '/dashboard/settings'
     | '/dashboard/translations'
     | '/dashboard'
   id:
@@ -130,7 +119,6 @@ export interface FileRouteTypes {
     | '/auth/reset-password'
     | '/auth/signup'
     | '/dashboard/admin'
-    | '/dashboard/settings'
     | '/dashboard/translations'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
@@ -142,7 +130,6 @@ export interface RootRouteChildren {
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
   DashboardAdminRoute: typeof DashboardAdminRoute
-  DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardTranslationsRoute: typeof DashboardTranslationsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
 }
@@ -168,13 +155,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard/translations'
       fullPath: '/dashboard/translations'
       preLoaderRoute: typeof DashboardTranslationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard/settings': {
-      id: '/dashboard/settings'
-      path: '/dashboard/settings'
-      fullPath: '/dashboard/settings'
-      preLoaderRoute: typeof DashboardSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/admin': {
@@ -222,7 +202,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSignupRoute: AuthSignupRoute,
   DashboardAdminRoute: DashboardAdminRoute,
-  DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardTranslationsRoute: DashboardTranslationsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
 }
