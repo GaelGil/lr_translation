@@ -10,7 +10,7 @@ import { MantineProvider } from "@mantine/core";
 export function CustomProvider(props: PropsWithChildren) {
   return (
     <MantineProvider theme={theme}>
-      <ColorModeProvider initialColorScheme="light">
+      <ColorModeProvider initialColorScheme="dark">
         {props.children}
       </ColorModeProvider>
       <Toaster />
