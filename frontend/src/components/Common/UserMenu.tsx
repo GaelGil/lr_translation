@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Avatar, Box, Button, Group, Text } from "@mantine/core"
-import { Link } from "@tanstack/react-router"
-import type * as React from "react"
-import { FiLogOut } from "react-icons/fi"
+import { Avatar, Button, Group, Text } from "@mantine/core";
+// import { Link } from "@tanstack/react-router";
+import type * as React from "react";
+import { FiLogOut } from "react-icons/fi";
 
-import useAuth from "@/hooks/useAuth"
-import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu"
+import useAuth from "@/hooks/useAuth";
+import { MenuContent, MenuItem, MenuRoot, MenuTrigger } from "../ui/menu";
 
 const UserMenu: React.FC = () => {
-  const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
 
   const handleLogout = async () => {
-    logout()
-  }
+    logout();
+  };
 
   return (
     <MenuRoot>
@@ -28,13 +28,13 @@ const UserMenu: React.FC = () => {
       </MenuTrigger>
 
       <MenuContent>
-        <Link to="/dashboard/settings">
+        {/*<Link to="/dashboard/settings">
           <MenuItem closeMenuOnClick>
             <Group gap="xs">
               <Box>My Profile</Box>
             </Group>
-          </MenuItem>
-        </Link>
+          </MenuItem>*/}
+        {/*</Link>*/}
 
         <MenuItem onClick={handleLogout}>
           <Group gap="xs">
@@ -44,7 +44,7 @@ const UserMenu: React.FC = () => {
         </MenuItem>
       </MenuContent>
     </MenuRoot>
-  )
-}
+  );
+};
 
-export default UserMenu
+export default UserMenu;
