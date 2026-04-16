@@ -39,7 +39,7 @@ const Samples = () => {
   return (
     <Accordion>
       <Accordion.Item value="how-to-prompt">
-        <Accordion.Control>
+        <Accordion.Control bg="transparent">
           <Flex align="center" gap="xs" c="white">
             <FiHelpCircle size={16} />
             <Text size="sm" fw={500}>

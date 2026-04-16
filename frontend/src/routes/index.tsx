@@ -96,8 +96,12 @@ function HomePage() {
                     <Select
                       placeholder="Select language"
                       data={["English", "Na"]}
-                      mb="xs"
-                      variant="unstyled"
+                      mb="md"
+                      variant="filled"
+                      styles={{ input: { color: "white" } }}
+
+                      // bg="red"
+                      // c="white"
                     />
                     <Translation />
                   </Paper>
