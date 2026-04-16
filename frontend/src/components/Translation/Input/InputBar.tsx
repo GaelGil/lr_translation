@@ -26,8 +26,8 @@ const InputBar: React.FC = () => {
       >
         <Textarea
           style={{ flex: 1 }}
-          variant="unstyled"
           c="white"
+          variant="unstyled"
           placeholder="Enter text to translate..."
           autosize
           minRows={6}
@@ -35,6 +35,7 @@ const InputBar: React.FC = () => {
           disabled={isStreaming || isSubmitting}
           value={src}
           onChange={(e) => setSrc(e.target.value)}
+          styles={{ input: { color: "white" } }}
         />
         <Box
           style={{
