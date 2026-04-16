@@ -32,10 +32,10 @@ const UserSubmisions = () => {
   const translations = userSubmissions?.translations;
 
   return (
-    <Accordion color="white">
+    <Accordion>
       <Accordion.Item value="how-to-prompt">
         <Accordion.Control>
-          <Flex align="center" gap="xs">
+          <Flex align="center" gap="xs" c="white">
             <FiHelpCircle size={16} color="white" />
             <Text size="sm" fw={500}>
               User Submissions

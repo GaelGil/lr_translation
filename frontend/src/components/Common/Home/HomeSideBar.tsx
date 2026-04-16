@@ -73,7 +73,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
         </Flex>
         {}
         {!collapsed && (
-          <Box p={"md"}>
+          <Box p={"md"} c="white">
             <Stack>
               <Title order={3}>About</Title>
               <Text>
@@ -98,6 +98,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 and the frontend is on cloudflare.
               </Text>
               <Anchor
+                c="white"
                 href={
                   "https://github.com/GaelGil/notebooks/blob/master/transformer/main.py"
                 }
@@ -111,6 +112,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
                 </Flex>
               </Anchor>
               <Anchor
+                c="white"
                 href={
                   "https://github.com/GaelGil/notebooks/blob/master/transformer/transformers.ipynb"
                 }

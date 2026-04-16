@@ -37,10 +37,10 @@ const Samples = () => {
   const { setSrc } = useTranslationContext();
 
   return (
-    <Accordion color="white">
+    <Accordion>
       <Accordion.Item value="how-to-prompt">
         <Accordion.Control>
-          <Flex align="center" gap="xs">
+          <Flex align="center" gap="xs" c="white">
             <FiHelpCircle size={16} />
             <Text size="sm" fw={500}>
               Sample Spanish Sentences

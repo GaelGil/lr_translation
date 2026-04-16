@@ -62,7 +62,7 @@ function HomePage() {
               </Box>
               {/*<Paper radius="lg" p="xl" w="100%" maw={"900"}>*/}
               <Flex gap="md" align="stretch" wrap="nowrap">
-                <Box style={{ flex: 1 }}>
+                <Box style={{ flex: 1 }} c="white">
                   <Paper
                     p="md"
                     radius="lg"
