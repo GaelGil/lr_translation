@@ -34,7 +34,7 @@ class TranslationResponse(TranslationBase):
 
 class TranslationSimple(SQLModel):
     src: str
-    translation: str
+    translation: str | None
 
 
 class TranslationDetail(TranslationBase):

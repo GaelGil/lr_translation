@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 
 from app.api.deps import CurrentUser, SessionDep, TranslateServiceDep
 from app.database.models import Translation
@@ -44,13 +44,17 @@ def set_submission_status(
     translation_update: TranslationUpdate,
 ) -> bool:
     """
-    Start the translation process
+    Set the public status of a translation (superuser only)
     """
 
-    if current_user and current_user.is_superuser:
-        result = translate_service.set_status(
-            translation_id=translation_update.id, status=translation_update.new_status
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=403, detail="Only superusers can change submission status"
         )
+
+    result = translate_service.set_status(
+        translation_id=translation_update.id, status=translation_update.new_status
+    )
     if result.is_err:
         assert result.error
         raise result.error
@@ -68,7 +72,7 @@ def get_translations_public(
     Start the translation process
     """
 
-    result = translate_service.get_translations()
+    result = translate_service.get_translations_public()
 
     if result.is_err:
         assert result.error
@@ -87,7 +91,9 @@ def get_translations(
     Start the translation process
     """
 
-    result = translate_service.get_translations(super_user=current_user.is_superuser)
+    result = translate_service.get_translations_admin(
+        super_user=current_user.is_superuser
+    )
 
     if result.is_err:
         assert result.error

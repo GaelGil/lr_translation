@@ -21,34 +21,45 @@ class TranslationService:
         self.session = session
         self.manager = manager
 
-    def get_translations(
-        self, super_user: bool = False
+    def get_translations_public(
+        self,
     ) -> Result[TranslationsAdmin | TranslationsPublic, HTTPException]:
         try:
             translations = self.session.exec(
-                select(Translation).where(Translation.public_status == super_user)
+                select(Translation).where(Translation.public_status)
             ).all()
         except Exception as e:
             return Result(
                 value=None, error=HTTPException(status_code=400, detail=str(e))
             )
-        if super_user:
-            detailed_translations = []
-            for translation in translations:
-                detailed_translations.append(
-                    TranslationDetail.model_validate(translation)
-                )
-
-            return Result(
-                value=TranslationsAdmin(translations=detailed_translations), error=None
-            )
-
         simple_translations = []
         for translation in translations:
             simple_translations.append(TranslationSimple.model_validate(translation))
 
         return Result(
             value=TranslationsPublic(translations=simple_translations), error=None
+        )
+
+    def get_translations_admin(
+        self, super_user: bool = False
+    ) -> Result[TranslationsAdmin, HTTPException]:
+        if not super_user:
+            return Result(
+                value=None,
+                error=HTTPException(status_code=403, detail="Action not allowed"),
+            )
+        try:
+            translations = self.session.exec(select(Translation)).all()
+        except Exception as e:
+            return Result(
+                value=None, error=HTTPException(status_code=400, detail=str(e))
+            )
+        detailed_translations = []
+        for translation in translations:
+            detailed_translations.append(TranslationDetail.model_validate(translation))
+
+        return Result(
+            value=TranslationsAdmin(translations=detailed_translations), error=None
         )
 
     async def translate(self, text: str, translate_id: str):
