@@ -5,7 +5,8 @@ from app.database.models import Translation
 from app.database.schemas.Translation import (
     TranslationRequest,
     TranslationResponse,
-    Translations,
+    TranslationsAdmin,
+    TranslationsPublic,
     TranslationUpdate,
 )
 
@@ -57,7 +58,9 @@ def set_submission_status(
 
 
 @router.post("/get_translations_public")
-def get_translations_public(translate_service: TranslateServiceDep) -> Translations:
+def get_translations_public(
+    translate_service: TranslateServiceDep,
+) -> TranslationsPublic:
     """
     Start the translation process
     """
@@ -68,7 +71,7 @@ def get_translations_public(translate_service: TranslateServiceDep) -> Translati
         assert result.error
         raise result.error
 
-    assert result.value is not None
+    assert result.value is not None and isinstance(result.value, TranslationsPublic)
 
     return result.value
 
@@ -76,7 +79,7 @@ def get_translations_public(translate_service: TranslateServiceDep) -> Translati
 @router.post("/get_translations")
 def get_translations(
     translate_service: TranslateServiceDep, current_user: CurrentUser
-) -> Translations:
+) -> TranslationsAdmin:
     """
     Start the translation process
     """
@@ -87,6 +90,6 @@ def get_translations(
         assert result.error
         raise result.error
 
-    assert result.value is not None
+    assert result.value is not None and isinstance(result.value, TranslationsAdmin)
 
     return result.value

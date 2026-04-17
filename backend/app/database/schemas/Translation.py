@@ -37,7 +37,17 @@ class TranslationSimple(SQLModel):
     translation: str
 
 
-class Translations(SQLModel):
+class TranslationDetail(TranslationBase):
+    id: uuid.UUID
+    correct: int
+    incorrect: int
+
+
+class TranslationsAdmin(SQLModel):
+    translations: list[TranslationDetail]
+
+
+class TranslationsPublic(SQLModel):
     translations: list[TranslationSimple]
 
 

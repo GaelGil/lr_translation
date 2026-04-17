@@ -7,7 +7,11 @@ from sqlmodel import Session, select
 from app.api.websocket.ConnectionManager import manager
 from app.database.models import Translation
 from app.database.schemas.Result import Result
-from app.database.schemas.Translation import Translations, TranslationSimple
+from app.database.schemas.Translation import (
+    TranslationsAdmin,
+    TranslationSimple,
+    TranslationsPublic,
+)
 
 
 class TranslationService:
@@ -17,7 +21,7 @@ class TranslationService:
 
     def get_translations(
         self, super_user: bool = False
-    ) -> Result[Translations, HTTPException]:
+    ) -> Result[TranslationsAdmin | TranslationsPublic, HTTPException]:
         try:
             translations = self.session.exec(
                 select(Translation).where(Translation.public_status == super_user)
@@ -26,6 +30,17 @@ class TranslationService:
             return Result(
                 value=None, error=HTTPException(status_code=400, detail=str(e))
             )
+        if super_user:
+            detailed_translations = []
+            for translation in translations:
+                detailed_translations.append(
+                    TranslationSimple.model_validate(translation)
+                )
+
+            return Result(
+                value=TranslationsAdmin(translations=detailed_translations), error=None
+            )
+
         simple_translations = []
         for translation in translations:
             simple_translations.append(TranslationSimple.model_validate(translation))
