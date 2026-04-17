@@ -28,7 +28,7 @@ function TranslationsManager() {
 
   const startIdx = (page - 1) * PER_PAGE;
   const translations = allTranslations.slice(startIdx, startIdx + PER_PAGE);
-
+  console.log(translations);
   if (isLoading) {
     return <PendingTranslations />;
   }

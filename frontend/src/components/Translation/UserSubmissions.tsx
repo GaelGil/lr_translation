@@ -4,7 +4,6 @@ import {
   Accordion,
   Box,
   Flex,
-  Grid,
   ScrollArea,
   Stack,
   Text,
@@ -44,7 +43,7 @@ const UserSubmisions = () => {
         </Accordion.Control>
         <Accordion.Panel>
           <Box p="xs">
-            <ScrollArea.Autosize h={200}>
+            <ScrollArea.Autosize>
               {isLoading ? (
                 <Text>Loading</Text>
               ) : isError ? (
@@ -52,44 +51,39 @@ const UserSubmisions = () => {
               ) : translations?.length === 0 ? (
                 <Text>Nothing here yet</Text>
               ) : (
-                <Stack gap="xs">
+                <Stack gap="md">
                   {translations?.map((example, index) => (
-                    <Grid key={index} gutter="xs">
-                      <Grid.Col span={6}>
-                        <Box
-                          p="xs"
-                          style={{
-                            borderRadius: 6,
-                            border: "1px solid var(--mantine-color-dark-5)",
-                            backgroundColor: "var(--mantine-color-dark-6)",
-                          }}
-                        >
-                          <Text size="xs" mb={4}>
-                            Source
-                          </Text>
-                          <Text size="xs" lineClamp={2} c="gray.3">
-                            {example.src}
-                          </Text>
-                        </Box>
-                      </Grid.Col>
-                      <Grid.Col span={6}>
-                        <Box
-                          p="xs"
-                          style={{
-                            borderRadius: 6,
-                            border: "1px solid var(--mantine-color-dark-5)",
-                            backgroundColor: "var(--mantine-color-dark-6)",
-                          }}
-                        >
-                          <Text size="xs" c="teal" mb={4}>
-                            Target
-                          </Text>
-                          <Text size="xs" lineClamp={2} c="gray.3">
-                            {example.translation}
-                          </Text>
-                        </Box>
-                      </Grid.Col>
-                    </Grid>
+                    <Box
+                      key={index}
+                      p="sm"
+                      style={{
+                        borderRadius: 8,
+                        border: "1px solid var(--mantine-color-dark-5)",
+                        backgroundColor: "var(--mantine-color-dark-6)",
+                      }}
+                    >
+                      <Box mb="xs">
+                        <Text size="xs" c="dimmed" mb={4}>
+                          Source
+                        </Text>
+                        <Text size="sm" c="gray.2">
+                          {example.src}
+                        </Text>
+                      </Box>
+                      <Box
+                        pt="xs"
+                        style={{
+                          borderTop: "1px dashed var(--mantine-color-dark-4)",
+                        }}
+                      >
+                        <Text size="xs" c="teal" mb={4}>
+                          Translation
+                        </Text>
+                        <Text size="sm" c="gray.2">
+                          {example.translation}
+                        </Text>
+                      </Box>
+                    </Box>
                   ))}
                 </Stack>
               )}

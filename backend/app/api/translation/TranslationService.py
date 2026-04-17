@@ -8,6 +8,7 @@ from app.api.websocket.ConnectionManager import manager
 from app.database.models import Translation
 from app.database.schemas.Result import Result
 from app.database.schemas.Translation import (
+    TranslationDetail,
     TranslationsAdmin,
     TranslationSimple,
     TranslationsPublic,
@@ -35,7 +36,7 @@ class TranslationService:
             detailed_translations = []
             for translation in translations:
                 detailed_translations.append(
-                    TranslationSimple.model_validate(translation)
+                    TranslationDetail.model_validate(translation)
                 )
 
             return Result(
