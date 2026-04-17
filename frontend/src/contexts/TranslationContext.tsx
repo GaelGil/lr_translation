@@ -1,5 +1,5 @@
-import { useForm } from "@mantine/form"
-import { useMutation } from "@tanstack/react-query"
+import { useForm } from "@mantine/form";
+import { useMutation } from "@tanstack/react-query";
 import {
   createContext,
   useCallback,
@@ -7,79 +7,79 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react"
+} from "react";
 import {
   type ApiError,
   type TranslationRequest,
   type TranslationResponse,
   TranslationService,
-} from "@/client"
-import { TranslationStatusSchema } from "@/client/schemas.gen"
-import useCustomToast from "@/hooks/useCustomToast"
-import { useTranslationSocket } from "@/hooks/useTransaltionSocket"
-import { handleError } from "@/utils"
+} from "@/client";
+import { TranslationStatusSchema } from "@/client/schemas.gen";
+import useCustomToast from "@/hooks/useCustomToast";
+import { useTranslationSocket } from "@/hooks/useTransaltionSocket";
+import { handleError } from "@/utils";
 
 interface TranslationContextValue {
-  src: string
-  target: string | null
-  setSrc: (value: string) => void
-  setTarget: (value: string | null) => void
-  handleSubmit: () => Promise<void>
-  translationId: string | null
-  isSubmitting: boolean
-  isValid: boolean
-  streamingContent: string
-  isStreaming: boolean
-  clearAll: () => void
+  src: string;
+  target: string | null;
+  setSrc: (value: string) => void;
+  setTarget: (value: string | null) => void;
+  handleSubmit: () => Promise<void>;
+  translationId: string | null;
+  isSubmitting: boolean;
+  isValid: boolean;
+  streamingContent: string;
+  isStreaming: boolean;
+  clearAll: () => void;
 }
 
-const TranslationContext = createContext<TranslationContextValue | null>(null)
+const TranslationContext = createContext<TranslationContextValue | null>(null);
 
 export const useTranslationContext = () => {
-  const context = useContext(TranslationContext)
+  const context = useContext(TranslationContext);
   if (!context) {
     throw new Error(
       "useTranslationContext must be used within TranslationProvider",
-    )
+    );
   }
-  return context
-}
+  return context;
+};
 
 interface TranslationProviderProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({
   children,
 }) => {
-  const [translationId, setTranslationId] = useState<string | null>(null)
-  const [streamingContent, setStreamingContent] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [translationId, setTranslationId] = useState<string | null>(null);
+  const [streamingContent, setStreamingContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { showErrorToast } = useCustomToast()
+  const { showErrorToast } = useCustomToast();
 
   const pendingChatRef = useRef<{
-    sessionId: string
-    assistantMessageId: string
-    model_name: string
-  } | null>(null)
+    sessionId: string;
+    assistantMessageId: string;
+    model_name: string;
+  } | null>(null);
 
   const { isStreaming, streamingMessage } = useTranslationSocket({
     messageId: translationId,
     pendingChatRef,
-  })
+  });
 
   useEffect(() => {
-    setStreamingContent(streamingMessage)
-  }, [streamingMessage])
+    setStreamingContent(streamingMessage);
+  }, [streamingMessage]);
 
   const form = useForm<TranslationRequest>({
     initialValues: {
       src: "",
-      target: null,
+      translation: null,
       status: TranslationStatusSchema.enum[0],
     },
-  })
+  });
 
   const translateMutation = useMutation<
     TranslationResponse,
@@ -89,65 +89,65 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
     mutationFn: async (data: TranslationRequest) => {
       const res = await TranslationService.translate({
         requestBody: data,
-      })
-      return res
+      });
+      return res;
     },
     onSuccess: () => {
-      form.reset()
+      form.reset();
     },
     onError: (err: ApiError) => {
-      const body = err.body as { detail?: string } | undefined
-      const message = body?.detail ?? "An error occurred"
-      showErrorToast(message)
-      handleError(err)
+      const body = err.body as { detail?: string } | undefined;
+      const message = body?.detail ?? "An error occurred";
+      showErrorToast(message);
+      handleError(err);
     },
     onSettled: () => {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     },
-  })
+  });
 
   const handleSubmit = useCallback(async () => {
-    if (!form.isValid()) return
-    if (!form.values.src.trim()) return
+    if (!form.isValid()) return;
+    if (!form.values.src.trim()) return;
 
-    setIsSubmitting(true)
-    setStreamingContent("")
+    setIsSubmitting(true);
+    setStreamingContent("");
 
     try {
-      const res = await translateMutation.mutateAsync(form.values)
-      setTranslationId(res.id)
+      const res = await translateMutation.mutateAsync(form.values);
+      setTranslationId(res.id);
     } catch (err) {
-      console.error("Error submitting translation:", err)
-      setIsSubmitting(false)
+      console.error("Error submitting translation:", err);
+      setIsSubmitting(false);
     }
-  }, [form, translateMutation])
+  }, [form, translateMutation]);
 
   const setSrc = useCallback(
     (value: string) => {
-      form.setFieldValue("src", value)
+      form.setFieldValue("src", value);
       if (value.trim()) {
-        setStreamingContent("")
+        setStreamingContent("");
       }
     },
     [form],
-  )
+  );
 
   const setTarget = useCallback(
     (value: string | null) => {
-      form.setFieldValue("target", value)
+      form.setFieldValue("target", value);
     },
     [form],
-  )
+  );
 
   const clearAll = useCallback(() => {
-    form.setFieldValue("src", "")
-    setStreamingContent("")
-    setTranslationId(null)
-  }, [form])
+    form.setFieldValue("src", "");
+    setStreamingContent("");
+    setTranslationId(null);
+  }, [form]);
 
   const value: TranslationContextValue = {
     src: form.values.src,
-    target: form.values.target,
+    target: form.values.translation,
     setSrc,
     setTarget,
     handleSubmit,
@@ -157,11 +157,11 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
     streamingContent,
     isStreaming,
     clearAll,
-  }
+  };
 
   return (
     <TranslationContext.Provider value={value}>
       {children}
     </TranslationContext.Provider>
-  )
-}
+  );
+};
