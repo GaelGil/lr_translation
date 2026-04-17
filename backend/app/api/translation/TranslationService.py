@@ -50,7 +50,7 @@ class TranslationService:
             await asyncio.sleep(5)
         translation = self.session.get(Translation, uuid.UUID(translate_id))
         assert translation
-        translation.target = text
+        translation.translation = text
         self.session.add(translation)
         self.session.commit()
 

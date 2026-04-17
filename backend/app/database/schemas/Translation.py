@@ -17,7 +17,7 @@ class TranslationResponseType(Enum):
 
 class TranslationBase(SQLModel):
     src: str = Field(sa_column=Column(Text, nullable=False))
-    target: str | None = Field(sa_column=Column(Text, nullable=True))
+    translation: str | None = Field(sa_column=Column(Text, nullable=True))
     status: TranslationStatus = Field(
         default=TranslationStatus.COMPLETE, nullable=False
     )
@@ -34,7 +34,7 @@ class TranslationResponse(TranslationBase):
 
 class TranslationSimple(SQLModel):
     src: str
-    target: str
+    translation: str
 
 
 class Translations(SQLModel):

@@ -19,3 +19,5 @@ class Translation(TranslationBase, table=True):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc), nullable=False
     )
+    correct: int = Field(default=0, nullable=True)
+    incorrect: int = Field(default=0, nullable=True)
