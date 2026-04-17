@@ -1,7 +1,7 @@
 "use client";
 
-import { Container, Flex, Table, Text } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
+import { Container, Flex, Switch, Table, Text } from "@mantine/core";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { TranslationService } from "@/client";
 import {
@@ -16,10 +16,21 @@ const PER_PAGE = 10;
 
 function TranslationsManager() {
   const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryFn: () => TranslationService.getTranslations(),
     queryKey: ["translations"],
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }: { id: string; status: boolean }) =>
+      TranslationService.setSubmissionStatus({
+        requestBody: { id, new_status: status },
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["translations"] });
+    },
   });
 
   const allTranslations = data?.translations ?? [];
@@ -28,7 +39,7 @@ function TranslationsManager() {
 
   const startIdx = (page - 1) * PER_PAGE;
   const translations = allTranslations.slice(startIdx, startIdx + PER_PAGE);
-  console.log(translations);
+
   if (isLoading) {
     return <PendingTranslations />;
   }
@@ -65,16 +76,25 @@ function TranslationsManager() {
                 <Text lineClamp={2}>{t.translation || "—"}</Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2}>{t.correct || "—"}</Text>
+                <Text lineClamp={2}>{t.correct ?? "—"}</Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2}>{t.incorrect || "—"}</Text>
+                <Text lineClamp={2}>{t.incorrect ?? "—"}</Text>
               </Table.Td>
-              <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2}>{t.translation || "—"}</Text>
+              <Table.Td style={{ maxWidth: 100 }}>
+                <Text>{t.public_status ? "Yes" : "No"}</Text>
               </Table.Td>
-              <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2}>{t.translation || "—"}</Text>
+              <Table.Td style={{ maxWidth: 100 }}>
+                <Switch
+                  checked={t.public_status}
+                  onChange={() =>
+                    updateStatusMutation.mutate({
+                      id: t.id,
+                      status: !t.public_status,
+                    })
+                  }
+                  disabled={updateStatusMutation.isPending}
+                />
               </Table.Td>
             </Table.Tr>
           ))}

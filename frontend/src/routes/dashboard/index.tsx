@@ -61,7 +61,7 @@ function Dashboard() {
     : tabsConfig.filter((tab) => !tab.adminOnly);
 
   return (
-    <Container mah="full" c="white">
+    <Container mah="full">
       <Title size="lg" pt={12} pb={12}>
         Dashboard
       </Title>
