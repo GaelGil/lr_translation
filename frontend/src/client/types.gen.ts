@@ -36,14 +36,14 @@ export type Token = {
 
 export type TranslationRequest = {
     src: string;
-    target: (string | null);
+    translation: (string | null);
     status?: TranslationStatus;
     public_status?: boolean;
 };
 
 export type TranslationResponse = {
     src: string;
-    target: (string | null);
+    translation: (string | null);
     status?: TranslationStatus;
     public_status?: boolean;
     id: string;
@@ -55,10 +55,15 @@ export type Translations = {
 
 export type TranslationSimple = {
     src: string;
-    target: string;
+    translation: string;
 };
 
 export type TranslationStatus = 'inporgress' | 'failed' | 'completed';
+
+export type TranslationUpdate = {
+    id: string;
+    new_status: boolean;
+};
 
 export type UpdatePassword = {
     current_password: string;
@@ -148,6 +153,14 @@ export type TranslationTranslateData = {
 };
 
 export type TranslationTranslateResponse = (TranslationResponse);
+
+export type TranslationSetSubmissionStatusData = {
+    requestBody: TranslationUpdate;
+};
+
+export type TranslationSetSubmissionStatusResponse = (boolean);
+
+export type TranslationGetTranslationsPublicResponse = (Translations);
 
 export type TranslationGetTranslationsResponse = (Translations);
 

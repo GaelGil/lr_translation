@@ -149,7 +149,7 @@ export const TranslationRequestSchema = {
             type: 'string',
             title: 'Src'
         },
-        target: {
+        translation: {
             anyOf: [
                 {
                     type: 'string'
@@ -158,7 +158,7 @@ export const TranslationRequestSchema = {
                     type: 'null'
                 }
             ],
-            title: 'Target'
+            title: 'Translation'
         },
         status: {
             '$ref': '#/components/schemas/TranslationStatus',
@@ -171,7 +171,7 @@ export const TranslationRequestSchema = {
         }
     },
     type: 'object',
-    required: ['src', 'target'],
+    required: ['src', 'translation'],
     title: 'TranslationRequest'
 } as const;
 
@@ -181,7 +181,7 @@ export const TranslationResponseSchema = {
             type: 'string',
             title: 'Src'
         },
-        target: {
+        translation: {
             anyOf: [
                 {
                     type: 'string'
@@ -190,7 +190,7 @@ export const TranslationResponseSchema = {
                     type: 'null'
                 }
             ],
-            title: 'Target'
+            title: 'Translation'
         },
         status: {
             '$ref': '#/components/schemas/TranslationStatus',
@@ -208,7 +208,7 @@ export const TranslationResponseSchema = {
         }
     },
     type: 'object',
-    required: ['src', 'target', 'id'],
+    required: ['src', 'translation', 'id'],
     title: 'TranslationResponse'
 } as const;
 
@@ -218,13 +218,13 @@ export const TranslationSimpleSchema = {
             type: 'string',
             title: 'Src'
         },
-        target: {
+        translation: {
             type: 'string',
-            title: 'Target'
+            title: 'Translation'
         }
     },
     type: 'object',
-    required: ['src', 'target'],
+    required: ['src', 'translation'],
     title: 'TranslationSimple'
 } as const;
 
@@ -232,6 +232,23 @@ export const TranslationStatusSchema = {
     type: 'string',
     enum: ['inporgress', 'failed', 'completed'],
     title: 'TranslationStatus'
+} as const;
+
+export const TranslationUpdateSchema = {
+    properties: {
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        new_status: {
+            type: 'boolean',
+            title: 'New Status'
+        }
+    },
+    type: 'object',
+    required: ['id', 'new_status'],
+    title: 'TranslationUpdate'
 } as const;
 
 export const TranslationsSchema = {
