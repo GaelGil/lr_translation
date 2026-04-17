@@ -36,27 +36,30 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
           px={collapsed ? "xs" : "md"}
         >
           {collapsed ? (
-            <Box
-              onMouseEnter={() => setHovered(true)}
-              onMouseLeave={() => setHovered(false)}
-              onClick={() => {
-                toggle();
-                setHovered(false);
-              }}
-              style={{ cursor: "pointer", position: "relative" }}
-            >
-              {hovered ? (
-                <ActionIcon variant="subtle" h={32} w={32}>
-                  <FiArrowRight size={18} color="white" />
-                </ActionIcon>
-              ) : (
-                <Image src={LOGO} alt={`${PROJECT_NAME} Logo`} h={25} w={25} />
-              )}
-            </Box>
+            <Anchor underline="never" component={Link} to="/auth/login">
+              <Box
+                onMouseEnter={() => setHovered(true)}
+                onMouseLeave={() => setHovered(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggle();
+                  setHovered(false);
+                }}
+                style={{ cursor: "pointer", position: "relative" }}
+              >
+                {hovered ? (
+                  <ActionIcon variant="subtle" h={32} w={32}>
+                    <FiArrowRight size={18} color="white" />
+                  </ActionIcon>
+                ) : (
+                  <Image src={LOGO} alt={`${PROJECT_NAME} Logo`} h={25} w={25} />
+                )}
+              </Box>
+            </Anchor>
           ) : (
             <>
               <Flex align="center" gap="xs">
-                <Anchor underline="never" component={Link} to="/auth/signup">
+                <Anchor underline="never" component={Link} to="/auth/login">
                   <Image
                     src={LOGO}
                     alt={`${PROJECT_NAME} Logo`}

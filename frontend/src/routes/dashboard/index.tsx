@@ -1,8 +1,23 @@
-import { Box, Container, Tabs, Text, Title } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Container,
+  Flex,
+  Tabs,
+  Text,
+  Title,
+} from "@mantine/core";
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { FaEye, FaLanguage, FaLock, FaSun, FaUser } from "react-icons/fa";
+import {
+  FaEye,
+  FaHome,
+  FaLanguage,
+  FaLock,
+  FaSun,
+  FaUser,
+} from "react-icons/fa";
 
 import useAuth from "@/hooks/useAuth";
 import TranslationsManager from "@/components/Admin/TranslationsManager";
@@ -62,9 +77,12 @@ function Dashboard() {
 
   return (
     <Container mah="full">
-      <Title size="lg" pt={12} pb={12}>
-        Dashboard
-      </Title>
+      <Flex align="center" gap="md" pt="md">
+        <ActionIcon component={Link} to="/" variant="subtle" size="lg">
+          <FaHome size={20} />
+        </ActionIcon>
+        <Title size="lg">Dashboard</Title>
+      </Flex>
 
       <Tabs defaultValue="home" onChange={setActiveTab} variant="subtle">
         <Tabs.List>
