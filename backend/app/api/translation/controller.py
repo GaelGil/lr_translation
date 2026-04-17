@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 
-from app.api.deps import CurrentUser, TranslateServiceDep
+from app.api.deps import CurrentUser, SessionDep, TranslateServiceDep
 from app.database.models import Translation
 from app.database.schemas.Translation import (
     TranslationRequest,
@@ -18,12 +18,15 @@ async def translate(
     translate_service: TranslateServiceDep,
     translate_req: TranslationRequest,
     background_tasks: BackgroundTasks,
+    session: SessionDep,
 ) -> TranslationResponse:
     """
     Start the translation process
     """
 
     translation = Translation.model_validate(translate_req)
+    session.add(translation)
+    session.commit()
     # Start background task to generate and stream response
     background_tasks.add_task(
         translate_service.translate,

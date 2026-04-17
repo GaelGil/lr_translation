@@ -11,6 +11,7 @@ from app.database.schemas.Translation import (
     TranslationsAdmin,
     TranslationSimple,
     TranslationsPublic,
+    TranslationStatus,
 )
 
 
@@ -68,6 +69,7 @@ class TranslationService:
         translation = self.session.get(Translation, uuid.UUID(translate_id))
         assert translation
         translation.translation = text
+        translation.status = TranslationStatus.COMPLETE
         self.session.add(translation)
         self.session.commit()
 
