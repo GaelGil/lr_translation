@@ -56,7 +56,7 @@ const HomeSideBar: React.FC<HomeSideBarProps> = ({ collapsed, toggle }) => {
           ) : (
             <>
               <Flex align="center" gap="xs">
-                <Anchor underline="never" component={Link} to="/">
+                <Anchor underline="never" component={Link} to="/auth/signup">
                   <Image
                     src={LOGO}
                     alt={`${PROJECT_NAME} Logo`}

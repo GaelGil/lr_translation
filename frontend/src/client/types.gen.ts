@@ -34,6 +34,16 @@ export type Token = {
     token_type?: string;
 };
 
+export type TranslationDetail = {
+    src: string;
+    translation: (string | null);
+    status?: TranslationStatus;
+    public_status?: boolean;
+    id: string;
+    correct: number;
+    incorrect: number;
+};
+
 export type TranslationRequest = {
     src: string;
     translation: (string | null);
@@ -49,13 +59,17 @@ export type TranslationResponse = {
     id: string;
 };
 
-export type Translations = {
-    translations: Array<TranslationSimple>;
+export type TranslationsAdmin = {
+    translations: Array<TranslationDetail>;
 };
 
 export type TranslationSimple = {
     src: string;
     translation: string;
+};
+
+export type TranslationsPublic = {
+    translations: Array<TranslationSimple>;
 };
 
 export type TranslationStatus = 'inporgress' | 'failed' | 'completed';
@@ -160,9 +174,9 @@ export type TranslationSetSubmissionStatusData = {
 
 export type TranslationSetSubmissionStatusResponse = (boolean);
 
-export type TranslationGetTranslationsPublicResponse = (Translations);
+export type TranslationGetTranslationsPublicResponse = (TranslationsPublic);
 
-export type TranslationGetTranslationsResponse = (Translations);
+export type TranslationGetTranslationsResponse = (TranslationsAdmin);
 
 export type UsersReadUsersData = {
     limit?: number;

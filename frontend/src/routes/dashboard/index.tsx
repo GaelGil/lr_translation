@@ -54,14 +54,14 @@ function Dashboard() {
   const { user: currentUser } = useAuth();
   const [activeTab, setActiveTab] = useState<string | null>("home");
 
-  const isSuperuser = !currentUser?.is_superuser;
+  const isSuperuser = currentUser?.is_superuser;
 
   const tabs = isSuperuser
     ? tabsConfig
     : tabsConfig.filter((tab) => !tab.adminOnly);
 
   return (
-    <Container mah="full">
+    <Container mah="full" c="white">
       <Title size="lg" pt={12} pb={12}>
         Dashboard
       </Title>

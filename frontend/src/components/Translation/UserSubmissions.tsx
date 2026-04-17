@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 
 function getUserSubmissions() {
   return {
-    queryFn: () => TranslationService.getTranslations(),
+    queryFn: () => TranslationService.getTranslationsPublic(),
     queryKey: ["userSubmisions"],
   };
 }
@@ -85,7 +85,7 @@ const UserSubmisions = () => {
                             Target
                           </Text>
                           <Text size="xs" lineClamp={2} c="gray.3">
-                            {example.target}
+                            {example.translation}
                           </Text>
                         </Box>
                       </Grid.Col>

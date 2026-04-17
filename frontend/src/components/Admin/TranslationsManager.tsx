@@ -40,6 +40,8 @@ function TranslationsManager() {
           <Table.Tr>
             <Table.Th>Source</Table.Th>
             <Table.Th>Translation</Table.Th>
+            <Table.Th>Correct</Table.Th>
+            <Table.Th>Incorrect</Table.Th>
             <Table.Th>Public</Table.Th>
             <Table.Th>Set Status</Table.Th>
           </Table.Tr>
@@ -48,7 +50,7 @@ function TranslationsManager() {
         <Table.Tbody>
           {translations.length === 0 && (
             <Table.Tr>
-              <Table.Td colSpan={4}>
+              <Table.Td colSpan={6}>
                 <Text c="dimmed">No translations found</Text>
               </Table.Td>
             </Table.Tr>
@@ -60,19 +62,19 @@ function TranslationsManager() {
                 <Text lineClamp={2}>{t.src}</Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
-                  {t.target || "—"}
-                </Text>
+                <Text lineClamp={2}>{t.translation || "—"}</Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
-                  {t.target || "—"}
-                </Text>
+                <Text lineClamp={2}>{t.correct || "—"}</Text>
               </Table.Td>
               <Table.Td style={{ maxWidth: 300 }}>
-                <Text lineClamp={2} c={t.target ? "inherit" : "dimmed"}>
-                  {t.target || "—"}
-                </Text>
+                <Text lineClamp={2}>{t.incorrect || "—"}</Text>
+              </Table.Td>
+              <Table.Td style={{ maxWidth: 300 }}>
+                <Text lineClamp={2}>{t.translation || "—"}</Text>
+              </Table.Td>
+              <Table.Td style={{ maxWidth: 300 }}>
+                <Text lineClamp={2}>{t.translation || "—"}</Text>
               </Table.Td>
             </Table.Tr>
           ))}

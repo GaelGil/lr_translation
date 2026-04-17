@@ -143,6 +143,51 @@ export const TokenSchema = {
     title: 'Token'
 } as const;
 
+export const TranslationDetailSchema = {
+    properties: {
+        src: {
+            type: 'string',
+            title: 'Src'
+        },
+        translation: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                }
+            ],
+            title: 'Translation'
+        },
+        status: {
+            '$ref': '#/components/schemas/TranslationStatus',
+            default: 'completed'
+        },
+        public_status: {
+            type: 'boolean',
+            title: 'Public Status',
+            default: false
+        },
+        id: {
+            type: 'string',
+            format: 'uuid',
+            title: 'Id'
+        },
+        correct: {
+            type: 'integer',
+            title: 'Correct'
+        },
+        incorrect: {
+            type: 'integer',
+            title: 'Incorrect'
+        }
+    },
+    type: 'object',
+    required: ['src', 'translation', 'id', 'correct', 'incorrect'],
+    title: 'TranslationDetail'
+} as const;
+
 export const TranslationRequestSchema = {
     properties: {
         src: {
@@ -251,7 +296,22 @@ export const TranslationUpdateSchema = {
     title: 'TranslationUpdate'
 } as const;
 
-export const TranslationsSchema = {
+export const TranslationsAdminSchema = {
+    properties: {
+        translations: {
+            items: {
+                '$ref': '#/components/schemas/TranslationDetail'
+            },
+            type: 'array',
+            title: 'Translations'
+        }
+    },
+    type: 'object',
+    required: ['translations'],
+    title: 'TranslationsAdmin'
+} as const;
+
+export const TranslationsPublicSchema = {
     properties: {
         translations: {
             items: {
@@ -263,7 +323,7 @@ export const TranslationsSchema = {
     },
     type: 'object',
     required: ['translations'],
-    title: 'Translations'
+    title: 'TranslationsPublic'
 } as const;
 
 export const UpdatePasswordSchema = {

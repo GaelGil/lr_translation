@@ -168,7 +168,7 @@ export class TranslationService {
     /**
      * Get Translations Public
      * Start the translation process
-     * @returns Translations Successful Response
+     * @returns TranslationsPublic Successful Response
      * @throws ApiError
      */
     public static getTranslationsPublic(): CancelablePromise<TranslationGetTranslationsPublicResponse> {
@@ -181,7 +181,7 @@ export class TranslationService {
     /**
      * Get Translations
      * Start the translation process
-     * @returns Translations Successful Response
+     * @returns TranslationsAdmin Successful Response
      * @throws ApiError
      */
     public static getTranslations(): CancelablePromise<TranslationGetTranslationsResponse> {
