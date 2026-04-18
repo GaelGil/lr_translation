@@ -44,10 +44,6 @@ class Settings(BaseSettings):
         list[AnyUrl] | str, BeforeValidator(parse_cors)
     ] = []
 
-    OPENAI_API_KEY: str
-    GOOGLE_API_KEY: str
-    COMPOSIO_API_KEY: str
-
     @computed_field  # type: ignore[prop-decorator]
     @property
     def all_cors_origins(self) -> list[str]:
