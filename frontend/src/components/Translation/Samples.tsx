@@ -11,25 +11,31 @@ interface PromptExample {
 
 const SENTENCES: PromptExample[] = [
   {
-    text: "Hola, ¿Como estas?",
+    text: "Hola, ¿cómo estás?",
   },
   {
-    text: "Portrait of an elderly woman with weathered hands, soft cinematic lighting, shallow depth of field",
+    text: "Buenos días, ¿qué tal dormiste?",
   },
   {
-    text: "Cyberpunk city street at night with neon signs, rain-soaked pavement reflecting colorful lights, flying vehicles in the distance",
+    text: "Me llamo María y soy de Mexico.",
   },
   {
-    text: "Hyper-realistic close-up of a dewdrop on a rose petal with refracted light and soft bokeh background",
+    text: "¿Dónde está la biblioteca?",
   },
   {
-    text: "Ancient library with towering bookshelves, spiral staircase, warm golden lamplight, dust particles floating in the air",
+    text: "Tengo hambre, vamos a comer algo.",
   },
   {
-    text: "Futuristic robot sitting alone on a bench in a park, watching sunset, melancholic atmosphere, detailed mechanical design",
+    text: "¿Puedes ayudarme con esta tarea?",
   },
   {
-    text: "Abstract fluid art with swirling deep blues, purples, and gold metallic accents, dynamic movement",
+    text: "Mi libro favorito es 'Cien años de soledad'.",
+  },
+  {
+    text: "Vamos al cine mañana por la noche.",
+  },
+  {
+    text: "El español es un idioma muy hermoso.",
   },
 ];
 
