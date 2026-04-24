@@ -1,11 +1,11 @@
-import { ActionIcon, Box, Textarea, Tooltip } from "@mantine/core";
+import { ActionIcon, Box, Textarea, Tooltip, Text } from "@mantine/core";
 import { FiX } from "react-icons/fi";
 
 import { useTranslationContext } from "@/contexts/TranslationContext";
 import RightSection from "./RightSection";
 
 const InputBar: React.FC = () => {
-  const { src, setSrc, handleSubmit, isStreaming, isSubmitting } =
+  const { src, setSrc, handleSubmit, isStreaming, isSubmitting, isValid } =
     useTranslationContext();
 
   return (
@@ -24,6 +24,9 @@ const InputBar: React.FC = () => {
           position: "relative",
         }}
       >
+        {!isValid && src !== "" && (
+          <Text c="red">Text must be 3 words or more</Text>
+        )}
         <Textarea
           style={{ flex: 1 }}
           c="white"

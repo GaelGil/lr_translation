@@ -85,7 +85,7 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
           return "Please enter text to translate";
         }
         const wordCount = value.trim().split(/\s+/).length;
-        if (wordCount < 5) {
+        if (wordCount < 3) {
           return `Please enter at least 5 words (you entered ${wordCount})`;
         }
         return null;
