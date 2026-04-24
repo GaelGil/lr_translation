@@ -1,6 +1,7 @@
 import uuid
 from enum import Enum
 
+from pydantic import field_validator
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
@@ -22,6 +23,16 @@ class TranslationBase(SQLModel):
         default=TranslationStatus.COMPLETE, nullable=False
     )
     public_status: bool = Field(default=False, nullable=False)
+
+    @field_validator("src")
+    @classmethod
+    def validate_word_count(cls, v: str) -> str:
+        word_count = len(v.split())
+        if word_count < 5:
+            raise ValueError(
+                f"Input must contain at least 5 words. You entered {word_count} word(s)."
+            )
+        return v
 
 
 class TranslationRequest(TranslationBase):

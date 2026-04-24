@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
 
 from app.api.deps import CurrentUser, SessionDep, TranslateServiceDep
 from app.database.models import Translation
@@ -9,12 +9,15 @@ from app.database.schemas.Translation import (
     TranslationsPublic,
     TranslationUpdate,
 )
+from app.limiter import limiter
 
 router = APIRouter(prefix="/translation", tags=["translation"])
 
 
 @router.post("/translate")
+@limiter.limit("5/minute")
 async def translate(
+    request: Request,
     translate_service: TranslateServiceDep,
     translate_req: TranslationRequest,
     background_tasks: BackgroundTasks,

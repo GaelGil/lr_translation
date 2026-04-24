@@ -29,6 +29,7 @@ dependencies = [
     "google-genai>=1.57.0",
     "composio>=0.10.7",
     "wikipedia>=1.4.0",
+    "slowapi>=0.1.9",
 ]
 
 [tool.uv]
