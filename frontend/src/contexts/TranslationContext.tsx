@@ -79,6 +79,18 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
       translation: null,
       status: TranslationStatusSchema.enum[0],
     },
+    validate: {
+      src: (value) => {
+        if (!value.trim()) {
+          return "Please enter text to translate";
+        }
+        const wordCount = value.trim().split(/\s+/).length;
+        if (wordCount < 5) {
+          return `Please enter at least 5 words (you entered ${wordCount})`;
+        }
+        return null;
+      },
+    },
   });
 
   const translateMutation = useMutation<
@@ -107,7 +119,8 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({
   });
 
   const handleSubmit = useCallback(async () => {
-    if (!form.isValid()) return;
+    const validation = form.validate();
+    if (validation.hasErrors) return;
     if (!form.values.src.trim()) return;
 
     setIsSubmitting(true);
