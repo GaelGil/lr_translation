@@ -1,6 +1,6 @@
 import {
   AppShell,
-  Badge,
+  Select,
   Box,
   Container,
   Group,
@@ -22,14 +22,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const panelStyle = {
-  background:
-    "linear-gradient(180deg, var(--app-surface-elevated), var(--app-surface))",
-  border: "1px solid var(--app-border)",
-  height: "100%",
-  display: "flex",
-  flexDirection: "column" as const,
-};
+
 
 function HomePage() {
   const [collapsed, { toggle: toggleCollapsed }] = useDisclosure(true);
@@ -83,18 +76,10 @@ function HomePage() {
                 </Text>
               </Stack>
 
-              <Paper
-                p={{ base: "md", sm: "lg" }}
-                radius="xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(139, 61, 255, 0.16), rgba(16, 16, 24, 0.92))",
-                  border: "1px solid var(--app-border)",
-                }}
-              >
+
                 <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
                   <Box c="var(--app-text)" style={{ minWidth: 0 }}>
-                    <Paper p="md" radius="lg" style={panelStyle}>
+                    <Paper p="md" radius="lg" bg="transparent" >
                       <Stack gap={4} mb="xs">
                         <Group justify="space-between" gap="xs">
                           <Text
@@ -105,34 +90,27 @@ function HomePage() {
                           >
                             Spanish
                           </Text>
-                          <Badge variant="light">Source</Badge>
                         </Group>
-                        <Text c="var(--app-text-muted)" size="xs">
-                          Enter Spanish Text
-                        </Text>
                       </Stack>
                       <InputBar />
                     </Paper>
                   </Box>
 
                   <Box style={{ minWidth: 0 }}>
-                    <Paper p="md" radius="lg" style={panelStyle}>
+                    <Paper p="md" radius="lg" >
                       <Stack gap={4} mb="xs">
                         <Group justify="space-between" gap="xs">
-                          <Text c="var(--app-text)" size="sm" fw={700}>
-                            English
-                          </Text>
-                          <Badge variant="light">Translation</Badge>
+                          <Select
+                            placeholder="Pick value"
+                            defaultValue={"English"}
+                            data={['English', 'Nahuatl']}
+                          />
                         </Group>
-                        <Text c="var(--app-text-muted)" size="xs">
-                          English Translation
-                        </Text>
                       </Stack>
                       <Translation />
                     </Paper>
                   </Box>
                 </SimpleGrid>
-              </Paper>
 
               <Stack gap="xs">
                 <Text c="var(--app-text)" fw={700} size="sm">

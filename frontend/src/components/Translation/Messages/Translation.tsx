@@ -4,7 +4,7 @@ import { FiCheck, FiCopy } from "react-icons/fi"
 import { useTranslationContext } from "@/contexts/TranslationContext"
 
 const PLACEHOLDER =
-  "Life is like an npm install – you never know what you are going to get."
+  "Translation"
 
 const Translation: React.FC = () => {
   const [copied, setCopied] = useState(false)
