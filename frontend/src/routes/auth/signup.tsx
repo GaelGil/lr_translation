@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Image, Input, Stack, Text } from "@mantine/core";
+import { Container, Image, Input, Stack, Text, Button } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import {
   createFileRoute,
@@ -9,7 +9,6 @@ import {
 } from "@tanstack/react-router";
 import { FiLock, FiUser } from "react-icons/fi";
 import type { UserRegister } from "@/client";
-import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { InputGroup } from "@/components/ui/input-group";
 import { PasswordInput } from "@/components/ui/password-input";

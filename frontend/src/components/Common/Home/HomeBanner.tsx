@@ -1,7 +1,7 @@
-import { Anchor, Box, Container, Stack, Text, Title } from "@mantine/core"
+import { Anchor, Box, Container, Stack, Text, Title, Button } from "@mantine/core"
 import { Link } from "@tanstack/react-router"
 import { PROJECT_NAME } from "@/const"
-import { Button } from "../../../components/ui/button"
+// import { Button } from "../../../components/ui/button"
 
 const HomeBanner = () => {
   const today = new Date().toLocaleDateString()

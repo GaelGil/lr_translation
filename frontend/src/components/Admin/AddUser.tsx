@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Group, Input, Stack, Text } from "@mantine/core"
+import { Button, Group, Input, Stack, Text, Checkbox } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -18,7 +18,6 @@ import {
   handleError,
   passwordRules,
 } from "@/utils"
-import { Checkbox } from "../ui/checkbox"
 import {
   DialogBody,
   DialogCloseTrigger,

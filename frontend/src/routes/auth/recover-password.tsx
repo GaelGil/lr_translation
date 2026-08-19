@@ -1,11 +1,10 @@
-import { Container, Input, Text, Title } from "@mantine/core"
+import { Container, Input, Text, Title, Button } from "@mantine/core"
 import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, redirect } from "@tanstack/react-router"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { FiMail } from "react-icons/fi"
 
 import { type ApiError, LoginService } from "@/client"
-import { Button } from "@/components/ui/button"
 import { Field } from "@/components/ui/field"
 import { InputGroup } from "@/components/ui/input-group"
 import { isLoggedIn } from "@/hooks/useAuth"

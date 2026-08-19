@@ -1,12 +1,11 @@
 "use client"
 
-import { ActionIcon, Menu } from "@mantine/core"
+import { ActionIcon, Menu, Button } from "@mantine/core"
 import { useState } from "react"
 import { BsThreeDotsVertical } from "react-icons/bs"
 import type { UserPublic } from "@/client"
 import DeleteUser from "../Admin/DeleteUser"
 import EditUser from "../Admin/EditUser"
-import { Button } from "../ui/button"
 import { MenuContent, MenuRoot, MenuTrigger } from "../ui/menu"
 
 interface UserActionsMenuProps {

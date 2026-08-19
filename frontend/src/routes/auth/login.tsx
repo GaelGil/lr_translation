@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Image, Input, Stack } from "@mantine/core";
+import { Container, Image, Input, Stack, Button } from "@mantine/core";
 import {
   createFileRoute,
   Link as RouterLink,
@@ -9,7 +9,6 @@ import {
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { FiLock, FiMail } from "react-icons/fi";
 import type { Body_login_login_access_token as AccessToken } from "@/client";
-import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { InputGroup } from "@/components/ui/input-group";
 import { PasswordInput } from "@/components/ui/password-input";

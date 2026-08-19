@@ -1,11 +1,10 @@
-import { Container, Text, Title } from "@mantine/core"
+import { Container, Text, Title, Button } from "@mantine/core"
 import { useMutation } from "@tanstack/react-query"
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router"
 import { type SubmitHandler, useForm } from "react-hook-form"
 import { FiLock } from "react-icons/fi"
 
 import { type ApiError, LoginService, type NewPassword } from "@/client"
-import { Button } from "@/components/ui/button"
 import { PasswordInput } from "@/components/ui/password-input"
 import { isLoggedIn } from "@/hooks/useAuth"
 import useCustomToast from "@/hooks/useCustomToast"
